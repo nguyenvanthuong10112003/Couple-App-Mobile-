@@ -1,0 +1,13 @@
+<!-- res/drawable/icon_with_shape.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Shape background -->
+    <item>
+        <shape android:shape="rectangle">
+            <size android:width="32dp" android:height="32dp"/>
+        </shape>
+    </item>
+
+    <!-- Icon -->
+    <item android:drawable="@drawable/icons8_user_100" />
+</layer-list>
+

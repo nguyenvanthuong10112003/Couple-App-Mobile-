@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="circle">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="radiusTopBottomRight0">
+        <item name="android:topRightRadius">0dp</item>
+        <item name="android:bottomRightRadius">0dp</item>
+    </style>
+    <style name="radiusTopBottomLeft0">
+        <item name="android:topLeftRadius">0dp</item>
+        <item name="android:bottomLeftRadius">0dp</item>
+    </style>
+    <style name="RadioButtonStyle" parent="@style/Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/primary</item>
+        <item name="android:gravity">center|left</item>
+        <item name="buttonIcon">@drawable/radiobutton_primary</item>
+    </style>
+</resources>

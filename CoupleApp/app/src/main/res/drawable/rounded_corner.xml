@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" /> <!-- Màu nền của nút -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" /> <!-- Màu trong suốt -->
+            <corners android:topLeftRadius="20dp"/> <!-- Bán kính bo tròn -->
+        </shape>
+    </item>
+</layer-list>

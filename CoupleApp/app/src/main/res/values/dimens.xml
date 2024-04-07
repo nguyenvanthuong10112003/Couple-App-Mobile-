@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="error_text_size_normal">14sp</dimen>
+    <dimen name="alert_title_text_size">18sp</dimen>
+    <dimen name="user_infouser_1">20sp</dimen>
+    <dimen name="user_infouser_2">16sp</dimen>
+    <dimen name="user_infouser_3">14sp</dimen>
+    <dimen name="alert_title_text_content">14sp</dimen>
+</resources>

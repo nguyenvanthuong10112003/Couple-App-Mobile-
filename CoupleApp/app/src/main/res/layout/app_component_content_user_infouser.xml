@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/idScrollScreen"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/idContent"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            tools:ignore="UselessParent"
+            android:id="@+id/idPageInfoUserTabView">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:alpha="0.8"
+                android:background="@color/primary" />
+            <FrameLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-80dp"
+                android:background="@drawable/circle_white"
+                android:padding="5dp">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/idPageInfoUserTabViewImageAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="avatar"
+                    android:src="@drawable/logo"
+                    android:textAlignment="center"
+                    app:shapeAppearanceOverlay="@style/circle"
+                    android:onClick="viewImageBig"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/idPageInfoUserTabViewTextAlias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/user_infouser_1"
+                android:textStyle="normal" />
+            <TextView
+                android:id="@+id/idPageInfoUserTabViewTextLifeStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:fontFamily="sans-serif"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/user_infouser_3" />
+
+            <GridLayout
+                android:id="@+id/idPageInfoUserTabViewGrid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Họ và tên: "
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="0"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:id="@+id/idPageInfoUserTabViewTextFullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="0"
+                    android:layout_column="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Ngày sinh: "
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="2"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:id="@+id/idPageInfoUserTabViewTextDob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="2"
+                    android:layout_column="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/secondary"
+                    android:layout_row="3"
+                    android:layout_columnSpan="2"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Giới tính: "
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="4"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:id="@+id/idPageInfoUserTabViewTextGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="4"
+                    android:layout_column="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/secondary"
+                    android:layout_row="5"
+                    android:layout_columnSpan="2"
+                    android:layout_column="0"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Email: "
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="6"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:id="@+id/idPageInfoUserTabViewTextEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="6"
+                    android:layout_column="1"
+                    />
+                <com.example.myapplication.component.ButtonPrimary
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:text="Chỉnh sửa"
+                    android:layout_row="7"
+                    android:layout_column="0"
+                    android:layout_columnSpan="2"
+                    android:onClick="toggleTabEdit"
+                    />
+            </GridLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/idPageInfoUserTabEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:alpha="0.8"
+                android:background="@color/primary" />
+
+            <FrameLayout
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-80dp"
+                android:background="@drawable/circle_white"
+                android:padding="5dp"
+                android:onClick="openImagePicker"
+                android:clickable="true"
+                android:focusable="true"
+                >
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/idPageInfoUserTabEditImageAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="avatar"
+                    android:src="@drawable/logo"
+                    android:textAlignment="center"
+                    app:shapeAppearanceOverlay="@style/circle"
+                    android:onClick="openImagePicker"/>
+                <FrameLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom|right"
+                    android:background="@drawable/circle_white_border"
+                    android:onClick="openImagePicker"
+                    tools:ignore="RtlHardcoded">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/camera_primary"
+                        android:layout_gravity="center"
+                        android:onClick="openImagePicker"
+                        />
+                </FrameLayout>
+            </FrameLayout>
+            <LinearLayout
+                android:id="@+id/idPageInfoUserTabEditGrid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Họ và tên"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <com.example.myapplication.component.Input
+                    android:id="@+id/idPageInfoUserTabEditInputFullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Biệt danh (nếu có)"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <com.example.myapplication.component.Input
+                    android:id="@+id/idPageInfoUserTabEditInputAlias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Giới tính"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <RadioGroup
+                    android:id="@+id/idPageInfoUserTabEditRadioGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <RadioButton
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dp"
+                        android:text="Nam"
+                        android:textColor="@color/secondary" />
+
+                    <RadioButton
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nữ"
+                        android:textColor="@color/secondary" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Ngày sinh"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <com.example.myapplication.component.InputDate
+                    android:id="@+id/idPageInfoUserTabEditInputDob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </com.example.myapplication.component.InputDate>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Email"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <com.example.myapplication.component.Input
+                    android:id="@+id/idPageInfoUserTabEditInputEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:text=""
+                    />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Tiểu sử"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_row="11"
+                    android:layout_column="0"
+                    >
+                    <com.example.myapplication.component.InputArea
+                        android:id="@+id/idPageInfoUserTabEditInputLifeStory"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        />
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+                    <com.example.myapplication.component.ButtonSecondary
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Hủy bỏ"
+                        android:layout_marginRight="10dp"
+                        android:onClick="toggleTabEdit"/>
+                    <com.example.myapplication.component.ButtonPrimary
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Lưu"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>

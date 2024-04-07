@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Couple App</string>
+    <string name="title_activity_user_info_page">UserInfoActivityPage</string>
+</resources>

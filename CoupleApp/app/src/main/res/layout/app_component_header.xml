@@ -1,0 +1,26 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="7"
+    android:background="@drawable/rounded_corner"
+    android:padding="10dp"
+    android:id="@+id/idHeader">
+    <ImageButton
+        android:id="@+id/header_backPage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center|start"
+        android:background="@drawable/icons8_left_48"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/header_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="Couple App"
+        android:textColor="@color/white"
+        android:visibility="visible" />
+</FrameLayout>

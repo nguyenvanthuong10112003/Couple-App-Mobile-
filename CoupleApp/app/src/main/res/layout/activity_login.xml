@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginActivity"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    android:id="@+id/idScreen"
+    >
+    <!-- Body !-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:id="@+id/idBody"
+        >
+        <!-- Content !-->
+        <include layout="@layout/app_component_content_login" />
+        <!-- Loading !-->
+        <include layout="@layout/app_component_loading" />
+    </FrameLayout>
+</LinearLayout>
