@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:weightSum="10"
     android:layout_gravity="center"
-    android:id="@+id/idHeader">
+    android:id="@+id/idFooter">
     <FrameLayout
         android:id="@+id/idBtnPageHome"
         android:layout_width="0dp"
@@ -19,7 +19,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:background="@drawable/icons8_home_100"
+            android:background="@drawable/ic_home"
             android:onClick="toPage"
             />
     </FrameLayout>
@@ -34,7 +34,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:background="@drawable/icons8_calendar_100"
+            android:background="@drawable/ic_calendar"
             android:onClick="toPage"
             />
     </FrameLayout>
@@ -46,10 +46,10 @@
         android:onClick="toPage"
         >
         <ImageButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
-            android:background="@drawable/icons8_circled_envelope_100"
+            android:background="@drawable/ic_message"
             android:onClick="toPage"
             />
     </FrameLayout>
@@ -64,7 +64,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:background="@drawable/icons8_story_100"
+            android:background="@drawable/ic_album"
             android:onClick="toPage"
             />
     </FrameLayout>
@@ -79,7 +79,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:background="@drawable/icons8_user_100"
+            android:background="@drawable/ic_user_footer"
             android:onClick="toPage"
             />
     </FrameLayout>

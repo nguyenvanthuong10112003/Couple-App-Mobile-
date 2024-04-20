@@ -13,7 +13,8 @@
         android:src="@drawable/ic_baseline_back_64"
         android:layout_gravity="center"
         android:onClick="backPage"
-        />
+        android:background="@color/white"
+        android:contentDescription="TODO" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,11 +101,13 @@
             android:id="@+id/step1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible"
+            >
             <com.example.myapplication.component.InputEmail
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/inputEmail"
+                android:id="@+id/idPageForgotInputEmail"
                 />
             <TextView
                 android:id="@+id/messageEmail"
@@ -120,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Xác nhận"
-                android:onClick="step1"
+                android:onClick="startStep1"
                 android:layout_marginBottom="20dp"
             />
         </LinearLayout>
@@ -130,15 +133,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.example.myapplication.component.InputUsername
-                android:maxLength="6"
-                android:inputType="phone"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/inputAuthenCode"
-                android:drawableLeft="@drawable/input_ic_key"
-                android:hint="Nhập mã xác thực"
-                />
+                android:orientation="horizontal"
+                >
+                <com.example.myapplication.component.InputUsername
+                    android:maxLength="6"
+                    android:inputType="phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/idPageForgotInputAuthenCode"
+                    android:drawableLeft="@drawable/input_ic_key"
+                    android:hint="Nhập mã xác thực"
+                    android:layout_toLeftOf="@+id/idPageForgotBtnGuiLai"
+                    />
+                <com.example.myapplication.component.ButtonPrimary
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gửi lại"
+                    android:id="@+id/idPageForgotBtnGuiLai"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:onClick="startStep1"
+                    />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/messageAuthenCode"
                 android:layout_width="match_parent"
@@ -153,15 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Xác nhận"
-                android:onClick="step2"
-                />
-            <com.example.myapplication.component.ButtonSecondary
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Trở về"
-                android:onClick="cancelStep2"
-                android:layout_marginBottom="20dp"
+                android:onClick="startStep2"
                 />
         </LinearLayout>
         <LinearLayout
@@ -173,7 +185,7 @@
             <com.example.myapplication.component.InputPassword
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/inputNewPassword"
+                android:id="@+id/idPageForgotInputNewPassword"
                 android:hint="Nhập mật khẩu mới"
                 />
             <TextView
@@ -188,7 +200,7 @@
             <com.example.myapplication.component.InputPassword
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/inputRepeatNewPassword"
+                android:id="@+id/idPageForgotInputReNewPassword"
                 android:hint="Nhập lại mẩu khẩu mới"
                 />
             <TextView
@@ -205,15 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Xác nhận"
-                android:onClick="step3"
-                />
-            <com.example.myapplication.component.ButtonSecondary
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Trở về"
-                android:onClick="cancelStep3"
-                android:layout_marginBottom="20dp"
+                android:onClick="startStep3"
                 />
         </LinearLayout>
     </FrameLayout>

@@ -4,7 +4,6 @@ package com.example.myapplication.component;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,29 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.Converter;
-import com.example.myapplication.view.SystemAlert;
 
 public class Alert extends FrameLayout {
     private TextView titleAlert;
     private TextView messageAlert;
     private ButtonSecondary btnCancelAlert;
     private ButtonPrimary btnAcceptAlert;
+    private Runnable whenClose;
+    private Runnable whenOpen;
 
-    public Alert(@NonNull Context context) {
+    public Alert(@NonNull Context context, Runnable whenOpen, Runnable whenClose) {
         super(context);
-        init();
-    }
-    public Alert(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-    public Alert(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        this.whenOpen = whenOpen;
+        this.whenClose = whenClose;
         init();
     }
     private void init() {
@@ -110,17 +103,7 @@ public class Alert extends FrameLayout {
         btnCancelAlert.setMinWidth((int) Converter.dpToPx(scale, 50));
         btnCancelAlert.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnCancelAlert.setVisibility(View.INVISIBLE);
-        btnCancelAlert.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hide();
-                if (onClickButtonCancel == null)
-                    return;
-                onClickButtonCancel.run();
-            }
-        });
         box2.addView(btnCancelAlert);
-
         btnAcceptAlert = new ButtonPrimary(getContext());
         layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -134,18 +117,20 @@ public class Alert extends FrameLayout {
             @Override
             public void onClick(View v) {
                 hide();
-                if (onClickButtonAccept == null)
-                    return;
-                onClickButtonAccept.run();
+                if (onClickButtonAccept != null)
+                    onClickButtonAccept.run();
+                onClickButtonAccept = null;
+                hide();
             }
         });
         btnCancelAlert.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 hide();
-                if (onClickButtonCancel == null)
-                    return;
-                onClickButtonCancel.run();
+                if (onClickButtonCancel != null)
+                    onClickButtonCancel.run();
+                onClickButtonCancel = null;
+                hide();
             }
         });
 
@@ -163,34 +148,35 @@ public class Alert extends FrameLayout {
         btnCancelAlert.setText("Hủy bỏ");
         messageAlert.setText("");
         btnCancelAlert.setVisibility(View.INVISIBLE);
-        onClickButtonCancel = new Runnable() {
-            @Override
-            public void run() {}
-        };
-        onClickButtonAccept = new Runnable() {
-            @Override
-            public void run() {}
-        };
     }
 
     private void hide() {
+        if (whenClose != null)
+            whenClose.run();
         setVisibility(View.INVISIBLE);
         isOpenAlert = false;
+        resert();
     }
     public boolean isOpenAlert() {
         return isOpenAlert;
     }
     private boolean isOpenAlert = false;
-
     private Runnable onClickButtonAccept;
     private Runnable onClickButtonCancel;
     public void show(String message) {
         messageAlert.setText(message);
         setVisibility(View.VISIBLE);
         isOpenAlert = true;
+        if (whenOpen != null)
+            whenOpen.run();
     }
     public void show(String message, Runnable onClickButtonAccept) {
         show(message);
+        this.onClickButtonAccept = onClickButtonAccept;
+    }
+    public void show(String message, String textPrimary, Runnable onClickButtonAccept) {
+        show(message);
+        this.btnAcceptAlert.setText(textPrimary);
         this.onClickButtonAccept = onClickButtonAccept;
     }
     public void show(String message, String textCancel, String textPrimary, Runnable onClickButtonCancel ,Runnable onClickButtonAccept)

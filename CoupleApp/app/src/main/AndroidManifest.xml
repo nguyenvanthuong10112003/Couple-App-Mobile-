@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,32 +17,51 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.UserInfoActivityPage"
+            android:name=".view.PageChild.HomeDetailUser"
             android:exported="false" />
         <activity
-            android:name=".view.ForgotActivity"
+            android:name=".view.PageChild.HomeUpdateInfoPage"
             android:exported="false" />
         <activity
-            android:name=".view.LoginActivity"
-            android:exported="false" />
+            android:name=".view.PageChild.UserSecurityActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.RegisterActivity"
-            android:exported="false" />
+            android:name=".view.PageChild.UserInfoActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.UserActivityPage"
-            android:exported="false" />
+            android:name=".view.Authentication.ForgotActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.StoryActivityPage"
-            android:exported="false" />
+            android:name=".view.Authentication.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.MessageActivityPage"
-            android:exported="false" />
+            android:name=".view.Authentication.RegisterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.CalendarActivityPage"
-            android:exported="false" />
+            android:name=".view.PageMain.UserActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.HomeActivityPage"
-            android:exported="true">
+            android:name=".view.PageMain.StoryActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PageMain.MessageActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PageMain.CalendarActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PageMain.HomeActivityPage"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
 
 public class User {
     @SerializedName("id")
@@ -27,10 +28,20 @@ public class User {
     private Time timeCreate;
     @SerializedName("urlAvatar")
     private String urlAvatar;
+    @SerializedName("invite")
+    private DateInvitation invite;
+
+    public DateInvitation getInvite() {
+        return invite;
+    }
+
+    public void setInvite(DateInvitation invite) {
+        this.invite = invite;
+    }
 
     public User(int id, String fullName, String alias, Time dob,
                 boolean gender, String lifeStory, String username,
-                String email, Time timeCreate, String urlAvatar) {
+                String email, Time timeCreate, String urlAvatar, DateInvitation invite) {
         this.id = id;
         this.fullName = fullName;
         this.alias = alias;
@@ -41,6 +52,7 @@ public class User {
         this.email = email;
         this.timeCreate = timeCreate;
         this.urlAvatar = urlAvatar;
+        this.invite = invite;
     }
 
     public void setId(int id) {
@@ -101,6 +113,10 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Time getTimeCreate() {

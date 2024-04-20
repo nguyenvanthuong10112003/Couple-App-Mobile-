@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Couple App</string>
     <string name="title_activity_user_info_page">UserInfoActivityPage</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="repassword">Nhập lại mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="dob">Ngày sinh</string>
+    <string name="gender">Giới tính</string>
+    <string name="life_story">Tiểu sử</string>
+    <string name="email">Email</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/primary"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:text="Tháng"
+        android:paddingLeft="10dp"
+        android:textColor="@color/white"
+        android:layout_centerVertical="true"
+        />
+    <TextView
+        android:id="@+id/idSpinnerSelected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Item"
+        android:textSize="16sp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_muitenxuong_24"
+        android:background="@color/primary"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        />
+</RelativeLayout>

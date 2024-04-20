@@ -8,4 +8,5 @@ public class DefineSharedPreferencesUserAuthen {
     public static final String ALIAS = "ALIAS";
     public static final String URL_AVATAR = "URL_AVATAR";
     public static final String FULL_NAME = "FULL_NAME";
+    public static final String EMAIL = "EMAIL";
 }

@@ -73,7 +73,7 @@ public class InputDate extends LinearLayout {
 
         inputDay.setHint("dd");
         inputMonth.setHint("mm");
-        inputYear.setHint("dddd");
+        inputYear.setHint("yyyy");
 
         inputDay.setInputType(InputType.TYPE_CLASS_NUMBER);
         inputMonth.setInputType(InputType.TYPE_CLASS_NUMBER);

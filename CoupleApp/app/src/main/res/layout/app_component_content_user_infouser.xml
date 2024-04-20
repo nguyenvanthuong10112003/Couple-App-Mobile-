@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:scrollbars="none"
     >
     <FrameLayout
         android:layout_width="match_parent"
@@ -169,6 +170,7 @@
                     android:layout_row="5"
                     android:layout_columnSpan="2"
                     android:layout_column="0"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,19 +186,52 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:inputType="textMultiLine"
-                    android:scrollbars="vertical"
+                    android:layout_marginRight="90dp"
                     android:text=""
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/user_infouser_2"
                     android:layout_row="6"
                     android:layout_column="1"
                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.6"
+                    android:background="@color/secondary"
+                    android:layout_row="7"
+                    android:layout_columnSpan="2"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Ngày tạo: "
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    android:layout_row="8"
+                    android:layout_column="0"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/idPageInfoUserTabViewTextTimeCreate"
+                    android:layout_row="8"
+                    android:layout_column="1"
+                    android:fontFamily="sans-serif"
+                    android:text=""
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/user_infouser_2"
+                    />
+
                 <com.example.myapplication.component.ButtonPrimary
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:text="Chỉnh sửa"
-                    android:layout_row="7"
+                    android:layout_row="9"
                     android:layout_column="0"
                     android:layout_columnSpan="2"
                     android:onClick="toggleTabEdit"
@@ -214,7 +249,6 @@
                 android:layout_height="180dp"
                 android:alpha="0.8"
                 android:background="@color/primary" />
-
             <FrameLayout
                 android:layout_width="160dp"
                 android:layout_height="160dp"
@@ -223,8 +257,6 @@
                 android:background="@drawable/circle_white"
                 android:padding="5dp"
                 android:onClick="openImagePicker"
-                android:clickable="true"
-                android:focusable="true"
                 >
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/idPageInfoUserTabEditImageAvatar"
@@ -300,24 +332,33 @@
                 <RadioGroup
                     android:id="@+id/idPageInfoUserTabEditRadioGender"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal"
                     >
-
                     <RadioButton
+                        android:id="@+id/idPageInfoUserTabEditRadioGenderMale"
                         style="@style/RadioButtonStyle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="50dp"
                         android:text="Nam"
-                        android:textColor="@color/secondary" />
+                        android:textColor="@color/secondary"
+                        android:button="@drawable/radiobutton_primary"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/user_infouser_2"
+                        />
 
                     <RadioButton
+                        android:id="@+id/idPageInfoUserTabEditRadioGenderFeMale"
                         style="@style/RadioButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nữ"
-                        android:textColor="@color/secondary" />
+                        android:textColor="@color/secondary"
+                        android:button="@drawable/radiobutton_primary"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/user_infouser_2"
+                        />
                 </RadioGroup>
 
                 <TextView
@@ -397,7 +438,8 @@
                         android:layout_width="0dp"
                         android:layout_marginTop="10dp"
                         android:text="Lưu"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:onClick="sendEdit"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

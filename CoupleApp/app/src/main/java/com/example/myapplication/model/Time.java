@@ -1,15 +1,24 @@
 package com.example.myapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Time {
-    public static final int DifferentUtcAndVietNam = 7;
-    public static final String TimeZoneUTC = "UTC";
     String date;
     @SerializedName("timezone_type")
     int timezoneType;
     @SerializedName("timezone")
     String timeZone;
+    public Time(String date) {
+        this.date = date;
+    }
+
+    public Time() {
+
+    }
+
     public Time(String date, int timezoneType, String timeZone) {
         this.date = date;
         this.timezoneType = timezoneType;

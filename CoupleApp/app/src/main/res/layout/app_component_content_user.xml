@@ -51,11 +51,12 @@
         android:background="@color/secondary_active"
         android:alpha="0.1"
         />
-    <TableRow android:layout_width="match_parent"
+    <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
         tools:ignore="UselessParent"
-        android:id="@+id/ibBtnToLayoutAccount"
+        android:id="@+id/ibBtnToPageSecurity"
         >
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="24dp"

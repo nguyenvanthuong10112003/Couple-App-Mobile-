@@ -1,0 +1,5 @@
+<!-- res/drawable/rectangle_with_shadow.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/primary_active" />
+</shape>

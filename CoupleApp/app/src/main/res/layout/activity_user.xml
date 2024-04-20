@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.UserActivityPage">
+    tools:context=".view.PageMain.UserActivityPage">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

@@ -1,4 +1,5 @@
-<vector android:height="64dp" android:viewportHeight="512"
-    android:viewportWidth="512" android:width="64dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#ee3e7b" android:pathData="M48,256c0,114.87 93.13,208 208,208s208,-93.13 208,-208S370.87,48 256,48 48,141.13 48,256ZM300,364.27 L169.91,256 300,147.73Z"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/ic_baseline_back_64_press"/>
+    <item android:drawable="@drawable/ic_baseline_back_64_normal"/>
+</selector>

@@ -15,14 +15,20 @@ public class UserLogin {
         private String avatar;
         @SerializedName("fullName")
         private String fullName;
+        @SerializedName("email")
+        private String email;
         // Constructor
-        public UserLogin(int id, String username, String token, String alias, String avatar, String fullName) {
+        public UserLogin(int id, String username, String token, String alias, String avatar, String fullName, String email) {
                 this.id = id;
                 this.username = username;
                 this.token = token;
                 this.alias = alias;
                 this.avatar = avatar;
                 this.fullName = fullName;
+                this.email = email;
+        }
+        public UserLogin() {
+
         }
         // Getters
         public int getId() {
@@ -61,5 +67,13 @@ public class UserLogin {
         }
         public void setFullName(String fullName) {
                 this.fullName = fullName;
+        }
+
+        public String getEmail() {
+                return email;
+        }
+
+        public void setEmail(String email) {
+                this.email = email;
         }
 }

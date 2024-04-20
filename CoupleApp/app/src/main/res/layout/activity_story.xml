@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.StoryActivityPage">
+    tools:context=".view.PageMain.StoryActivityPage">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             <!-- Loading !-->
             <include layout="@layout/app_component_loading" />
             <!-- Content !-->
-            <include layout="@layout/app_component_content_home"/>
+            <include layout="@layout/app_component_content_story"/>
         </FrameLayout>
         <!-- Footer !-->
         <include layout="@layout/app_component_footer" />

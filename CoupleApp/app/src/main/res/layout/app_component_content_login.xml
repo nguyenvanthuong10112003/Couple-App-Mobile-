@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:gravity="top"
     android:padding="20dp"
-    android:id="@+id/idContent">
+    android:id="@+id/idContent"
+    >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,46 +60,52 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:textColor="@color/danger"
-        android:textSize="0sp"
-        android:text=""
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:textSize="14sp"
-        android:text="Quên mật khẩu"
-        android:textAlignment="textEnd"
-        android:textColor="@drawable/link_primary"
-        android:id="@+id/linkToPageForgot"
-        android:onClick="toPage"
+        android:text=""
         />
     <com.example.myapplication.component.ButtonPrimary
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đăng nhập"
         android:onClick="login"
-        android:layout_marginBottom="20dp"
         />
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Không có tài khoản đăng nhập?"
+        android:textStyle="bold"
+        android:text="Quên mật khẩu?"
         android:textAlignment="center"
-        android:textColor="@color/secondary"
-        android:fontFamily="sans-serif"
-        />
-    <TextView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đăng ký"
-        android:id="@+id/linkToPageRegister"
-        android:background="@drawable/input_primary_normal"
-        android:textSize="14dp"
         android:textColor="@drawable/link_primary"
+        android:id="@+id/linkToPageForgot"
         android:onClick="toPage"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center|bottom"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Không có tài khoản đăng nhập? "
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:fontFamily="sans-serif"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký"
+            android:textStyle="bold"
+            android:id="@+id/linkToPageRegister"
+            android:background="@drawable/input_primary_normal"
+            android:textSize="14dp"
+            android:textColor="@drawable/link_primary"
+            android:onClick="toPage"
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,10 @@
 package com.example.myapplication.model;
 
 public class Response <T> {
+    public static final int NEED_LOGIN = -1;
+    public static final int ERROR = 0;
+    public static final int SUCCESS = 1;
+    public static final int EXPIRED = -2;
     private int status;
     private String message;
     private T data;

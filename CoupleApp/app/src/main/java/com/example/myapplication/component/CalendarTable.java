@@ -1,6 +1,7 @@
 package com.example.myapplication.component;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -44,8 +45,10 @@ public class CalendarTable extends TableLayout {
         for (int i = 0; i < 7; i++) {
             item = ItemCalendar.createCalendar(context, widthParent, names[i]);
             item.setOnClickListener(null);
+            item.setTextColor(ContextCompat.getColor(context, R.color.white));
             tableRow.addView(item);
         }
+        tableRow.setBackground(new ColorDrawable(ContextCompat.getColor(context, R.color.primary)));
         tableLayout.addView(tableRow);
         if (firstDayOfMonth != DayOfWeek.MONDAY)
         {
