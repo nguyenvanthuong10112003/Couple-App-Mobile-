@@ -19,7 +19,6 @@ public class BasePageMainActivity extends BasePageAuthActivity {
     protected int idBtnPage = R.id.idBtnPageHome;
     protected View btnPage;
     protected View screen;
-    protected Couple couple;
     private static final long DOUBLE_BACK_PRESS_DELAY = 2000;
     private long lastBackPressTime = 0;
     @Override
@@ -40,12 +39,6 @@ public class BasePageMainActivity extends BasePageAuthActivity {
             return;
         Intent intent = null;
         View parent = (View) view.getParent();
-        if (couple == null && !(
-                view.getId() == R.id.idBtnPageHome || parent.getId() == R.id.idBtnPageHome ||
-                view.getId() ==  R.id.idBtnPageUser || parent.getId() == R.id.idBtnPageUser)) {
-            alert.show("Bạn cần ghép cặp đôi mới có thể sử dụng chức năng này");
-            return;
-        }
         if ((view.getId() == R.id.idBtnPageHome ||
                 parent.getId() == R.id.idBtnPageHome) &&
                 !this.getClass().equals(HomeActivityPage.class))
@@ -73,13 +66,11 @@ public class BasePageMainActivity extends BasePageAuthActivity {
     }
     @Override
     public void onBackPressed() {
-        if (alert.isOpenAlert())
-            return;
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastBackPressTime <= DOUBLE_BACK_PRESS_DELAY) {
             super.onBackPressed();
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            finishAffinity();
+            finish();
         } else {
             lastBackPressTime = currentTime;
             Toast.makeText(this, "Nhấn thêm một lần nữa để thoát", Toast.LENGTH_SHORT).show();

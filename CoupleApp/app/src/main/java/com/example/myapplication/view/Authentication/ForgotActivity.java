@@ -2,7 +2,6 @@ package com.example.myapplication.view.Authentication;
 
 import androidx.core.content.ContextCompat;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,14 +9,10 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.StringHelper;
-import com.example.myapplication.model.Response;
-import com.example.myapplication.model.UserForgot;
+import com.example.myapplication.model.ResponseAPI;
 import com.example.myapplication.service.api_service.AccountApiService;
 import com.example.myapplication.service.api_service.ApiService;
 import com.example.myapplication.view.BasePage.BasePage;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,15 +81,15 @@ public class ForgotActivity extends BasePage {
         }
         startLoading();
         accountApiService.forgot(email)
-            .enqueue(new Callback<Response>() {
+            .enqueue(new Callback<ResponseAPI>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(Call<ResponseAPI> call, retrofit2.Response<ResponseAPI> response) {
                     stopLoading();
                     if (!response.isSuccessful())
                         alert.show("Get an error");
-                    else if (response.body().getStatus() == Response.ERROR)
+                    else if (response.body().getStatus() == ResponseAPI.ERROR)
                         alert.show(response.body().getMessage());
-                    else if (response.body().getStatus() == Response.SUCCESS)
+                    else if (response.body().getStatus() == ResponseAPI.SUCCESS)
                     {
                         if (step == 1)
                             step1();
@@ -103,7 +98,7 @@ public class ForgotActivity extends BasePage {
                     }
                 }
                 @Override
-                public void onFailure(Call<Response> call, Throwable throwable) {
+                public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
                     stopLoading();
                     alert.show("Có lỗi xảy ra, vui lòng thử lại sau");
                 }
@@ -123,21 +118,21 @@ public class ForgotActivity extends BasePage {
         }
         startLoading();
         accountApiService.forgot(email, authenCode)
-            .enqueue(new Callback<Response>() {
+            .enqueue(new Callback<ResponseAPI>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(Call<ResponseAPI> call, retrofit2.Response<ResponseAPI> response) {
                     stopLoading();
                     if (!response.isSuccessful())
                         alert.show("Get an error");
-                    else if (response.body().getStatus() == Response.ERROR)
+                    else if (response.body().getStatus() == ResponseAPI.ERROR)
                         alert.show(response.body().getMessage());
-                    else if (response.body().getStatus() == Response.SUCCESS) {
+                    else if (response.body().getStatus() == ResponseAPI.SUCCESS) {
                         alert.show("Xác thực thành công, vui lòng đổi mật khẩu mới");
                         step2();
                     }
                 }
                 @Override
-                public void onFailure(Call<Response> call, Throwable throwable) {
+                public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
                     stopLoading();
                     alert.show("Có lỗi xảy ra, vui lòng thử lại sau");
                 }
@@ -167,15 +162,15 @@ public class ForgotActivity extends BasePage {
         }
         startLoading();
         accountApiService.forgot(email, authenCode, newPassword)
-            .enqueue(new Callback<Response>() {
+            .enqueue(new Callback<ResponseAPI>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(Call<ResponseAPI> call, retrofit2.Response<ResponseAPI> response) {
                     stopLoading();
                     if (!response.isSuccessful())
                         alert.show("Get an error");
-                    else if (response.body().getStatus() == Response.ERROR)
+                    else if (response.body().getStatus() == ResponseAPI.ERROR)
                         alert.show(response.body().getMessage());
-                    else if (response.body().getStatus() == Response.EXPIRED)
+                    else if (response.body().getStatus() == ResponseAPI.EXPIRED)
                         alert.show("Mã xác thực đã quá hạn sử dụng", new Runnable() {
                             @Override
                             public void run() {
@@ -184,7 +179,7 @@ public class ForgotActivity extends BasePage {
                                 step1();
                             }
                         });
-                    else if (response.body().getStatus() == Response.SUCCESS)
+                    else if (response.body().getStatus() == ResponseAPI.SUCCESS)
                         alert.show("Đổi mật khẩu thành công", new Runnable() {
                             @Override
                             public void run() {
@@ -193,7 +188,7 @@ public class ForgotActivity extends BasePage {
                         });
                 }
                 @Override
-                public void onFailure(Call<Response> call, Throwable throwable) {
+                public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
                     stopLoading();
                     alert.show("Có lỗi xảy ra, vui lòng thử lại sau" + throwable.toString());
                 }

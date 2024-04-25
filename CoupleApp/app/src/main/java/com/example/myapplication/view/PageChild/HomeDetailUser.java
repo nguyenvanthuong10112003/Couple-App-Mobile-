@@ -1,23 +1,17 @@
 package com.example.myapplication.view.PageChild;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.component.ImageViewFull;
+import com.example.myapplication.view.Component.ImageViewFull;
 import com.example.myapplication.helper.DateHelper;
-import com.example.myapplication.model.User;
 import com.example.myapplication.parcelable.UserParcelable;
 import com.example.myapplication.view.BasePage.BasePageAuthActivity;
-import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
@@ -66,9 +60,8 @@ public class HomeDetailUser extends BasePageAuthActivity {
         textGender.setText(user.getGender() ? "Nam" : "Nữ");
         textEmail.setText(user.getEmail());
         if (user.getUrlAvatar() != null && !user.getUrlAvatar().isEmpty())
-            try {
-                Picasso.get().load(user.getUrlAvatar()).into(viewAvatar);}
-            catch (Exception e) {viewAvatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.account_svgrepo_com));}
+            try {Picasso.get().load(user.getUrlAvatar()).into(viewAvatar);}
+            catch (Exception e) {viewAvatar.setBackgroundResource(R.drawable.account_svgrepo_com);}
         String[]split = user.getFullName() != null ? user.getFullName().split("") : new String[]{"<Chưa đặt tên>"};
         textAlias.setText(user.getAlias() != null && !user.getAlias().isEmpty() ?
                 user.getAlias() : split[split.length - 1]);

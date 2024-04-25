@@ -37,6 +37,14 @@ public class DateHelper {
         return to2(localDate.getDayOfMonth()) + "-" + to2(localDate.getMonthValue()) + "-" + localDate.getYear();
     }
 
+    public static String toDateString(LocalDate date)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return to2(date.getDayOfMonth()) + "/" + to2(date.getMonthValue()) + "/" + date.getYear();
+        }
+        return null;
+    }
+
     public static String toDateServe(LocalDate date)
     {
         if (date == null)
@@ -98,8 +106,22 @@ public class DateHelper {
         khoangCach = Math.abs(now.until(localDate, ChronoUnit.SECONDS));
         return khoangCach + " giây trước";
     }
+    public static long demNgay(Time time) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+            return -1;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDate = LocalDateTime.parse(time.getDate().substring(0, 19), formatter);
+        LocalDateTime now = LocalDateTime.now();
+        return Math.abs(now.until(localDate, ChronoUnit.DAYS));
+    }
 
-    private static String to2(int s) {
+    public static String to2(int s) {
+        String str = String.valueOf(s);
+        if (str.length() >= 2)
+            return str;
+        return "0" + str;
+    }
+    public static String to2(long s) {
         String str = String.valueOf(s);
         if (str.length() >= 2)
             return str;

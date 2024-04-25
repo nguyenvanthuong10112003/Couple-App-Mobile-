@@ -1,9 +1,8 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 

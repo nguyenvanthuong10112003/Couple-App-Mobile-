@@ -9,30 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
-import com.example.myapplication.component.ImageViewFull;
-import com.example.myapplication.component.InputDate;
+import com.example.myapplication.view.Component.ImageViewFull;
+import com.example.myapplication.view.Component.InputDate;
 import com.example.myapplication.define.DefineSharedPreferencesUserAuthen;
 import com.example.myapplication.define.DefineUserAttrRequest;
 import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.helper.RealPathUtil;
 import com.example.myapplication.helper.StringHelper;
-import com.example.myapplication.model.Response;
 import com.example.myapplication.model.User;
-import com.example.myapplication.service.api_service.ApiService;
-import com.example.myapplication.service.api_service.UserApiService;
 import com.example.myapplication.view.BasePage.BasePageAuthActivity;
-import com.example.myapplication.view.Authentication.LoginActivity;
+import com.example.myapplication.viewmodel.UserModels;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
@@ -44,11 +39,8 @@ import java.util.HashMap;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class UserInfoActivityPage extends BasePageAuthActivity {
-    private User currentUser;
     private View tabView;
     private View tabEdit;
     private EditText inputFullname;
@@ -68,7 +60,7 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
     private ImageViewFull layoutZoom;
     private TextView textTimeCreate;
     private Uri uriAvatar;
-    private UserApiService userApiService;
+    private User currentUser;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,21 +89,31 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
         textEmail = findViewById(R.id.idPageInfoUserTabViewTextEmail);
         viewAvatar = findViewById(R.id.idPageInfoUserTabViewImageAvatar);
         textTimeCreate = findViewById(R.id.idPageInfoUserTabViewTextTimeCreate);
+
+        baseModels = new ViewModelProvider(this).get(UserModels.class);
     }
 
     @Override
     protected void setting() {
         super.setting();
-        //Xử lý sự kiện khi bàn phím bật lên
         settingInputText(content);
-        userApiService = ApiService.createApiServiceWithAuth(this, UserApiService.class, token);
         findViewById(R.id.header_backPage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressedWithResult();
             }
         });
-        loadUser();
+        ((UserModels) baseModels).getUser()
+            .observe(this, user -> {
+                if (user == null)
+                    logout();
+                else {
+                    currentUser = user;
+                    setupContentView();
+                }
+            });
+        step = 1;
+        startLoad();
     }
     private void settingInputText(View view) {
         if (view instanceof  ViewGroup)
@@ -133,38 +135,50 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
             });
         }
     }
-    private void loadUser() {
-        if (currentUser != null)
-            return;
-        content.setVisibility(View.INVISIBLE);
-        startLoading();
-        userApiService.mind().enqueue(new Callback<Response<User>>() {
-            @Override
-            public void onResponse(Call<Response<User>> call, retrofit2.Response<Response<User>> response) {
-                stopLoading();
-                if (!response.isSuccessful())
-                    alert.show("Get an error",
-                        new Runnable() {@Override public void run() {onBackPressed();}});
-                else if (response.body().getStatus() == -1)
-                    logout();
-                else if (response.body().getStatus() == 1) {
-                    currentUser = response.body().getData();
-                    setupContentView();
-                    content.setVisibility(View.VISIBLE);
-                }
-                else
-                    alert.show(response.body().getMessage(),
-                        new Runnable() {@Override public void run() {onBackPressed();}});
-            }
-            @Override
-            public void onFailure(Call<Response<User>> call, Throwable throwable) {
-                stopLoading();
-                alert.show("Có lỗi xảy ra, vui lòng thử lại sau.", "Trở về", "Tải lại",
-                        new Runnable() {@Override public void run() {onBackPressed();}},
-                        new Runnable() {@Override public void run() {loadUser();}});
-            }
-        });
+    @Override
+    protected void startLoad() {
+        switch (step) {
+            case 1: ((UserModels) baseModels).initUser(); break;
+        }
     }
+
+    @Override
+    protected void whenSuccess() {
+        switch (step) {
+            case 2: {
+                toggleTabEdit(null);
+                HashMap<String, String> map = new HashMap<>();
+                map.put(DefineSharedPreferencesUserAuthen.URL_AVATAR, currentUser.getUrlAvatar());
+                map.put(DefineSharedPreferencesUserAuthen.ALIAS, currentUser.getAlias());
+                map.put(DefineSharedPreferencesUserAuthen.FULL_NAME, currentUser.getFullName());
+                map.put(DefineSharedPreferencesUserAuthen.EMAIL, currentUser.getEmail());
+                dataLocalManager.saveDatas(
+                    DefineSharedPreferencesUserAuthen.PATH, map
+                );
+            } break;
+        }
+    }
+
+    @Override
+    protected void whenServerError() {
+        String message = "Có lỗi xảy ra, vui lòng thử lại sau";
+        switch (step) {
+            case 1: alert.show(message, "Tải lại", "Trở về", new Runnable() {
+                @Override
+                public void run() {
+                    startLoad();
+                }
+            }, new Runnable() {
+                @Override
+                public void run() {
+                    onBackPressed();
+                }
+            });
+            break;
+            default: alert.show(message);
+        }
+    }
+
     private void setupContentView() {
         textFullname.setText(currentUser.getFullName());
         textDob.setText(DateHelper.toDateString(currentUser.getDob()));
@@ -172,7 +186,7 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
         textEmail.setText(currentUser.getEmail());
         if (currentUser.getUrlAvatar() != null && !currentUser.getUrlAvatar().isEmpty())
             try {Picasso.get().load(currentUser.getUrlAvatar()).into(viewAvatar);}
-            catch (Exception e) {viewAvatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.account_svgrepo_com));}
+            catch (Exception e) {viewAvatar.setBackgroundResource(R.drawable.account_svgrepo_com);}
         String[]split = currentUser.getFullName().split("");
         textAlias.setText(currentUser.getAlias() != null && !currentUser.getAlias().isEmpty() ?
                 currentUser.getAlias() : split[split.length - 1]);
@@ -195,15 +209,12 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
         inputEmail.setText(currentUser.getEmail());
         if (currentUser.getUrlAvatar() != null && !currentUser.getUrlAvatar().isEmpty())
             try {Picasso.get().load(currentUser.getUrlAvatar()).into(inputAvatar);}
-            catch (Exception e) {inputAvatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.account_svgrepo_com));}
+            catch (Exception e) {inputAvatar.setBackgroundResource(R.drawable.account_svgrepo_com);}
         inputAlias.setText(currentUser.getAlias());
         inputLifeStory.setText(currentUser.getLifeStory());
     }
     public void toggleTabEdit(View v) {
         if (tabView.getVisibility() == View.VISIBLE) {
-            try {
-                Picasso.get().load(userLogin.getAvatar()).into(inputAvatar);
-            } catch (Exception e) {inputAvatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.account_svgrepo_com));}
             setupContentEdit();
             inputFullname.requestFocus();
             inputFullname.setSelection(inputFullname.getText().length());
@@ -284,52 +295,13 @@ public class UserInfoActivityPage extends BasePageAuthActivity {
             multipartBodyAvt =
                     MultipartBody.Part.createFormData(DefineUserAttrRequest.imageAvatar, file.getName(), requestBodyAvatar);
         }
-        startLoading();
-        userApiService.edit(multipartBodyAvt,
-                        RequestBody.create(fullName, type),
-                        RequestBody.create(DateHelper.toDateServe(dob), type),
-                        RequestBody.create(alias, type),
-                        RequestBody.create(email, type),
-                        RequestBody.create(gender ? "true" : "false", type),
-                        RequestBody.create(lifeStory, type))
-            .enqueue(new Callback<Response<User>>() {
-                @Override
-                public void onResponse(Call<Response<User>> call, retrofit2.Response<Response<User>> response) {
-                    stopLoading();
-                    if (!response.isSuccessful())
-                        alert.show("Get an error");
-                    else if (response.body().getStatus() == Response.NEED_LOGIN)
-                        logout();
-                    else if (response.body().getStatus() == Response.ERROR)
-                        alert.show(response.body().getMessage());
-                    else if (response.body().getStatus() == Response.SUCCESS) {
-                        currentUser = response.body().getData();
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put(DefineSharedPreferencesUserAuthen.URL_AVATAR, currentUser.getUrlAvatar());
-                        map.put(DefineSharedPreferencesUserAuthen.ALIAS, currentUser.getAlias());
-                        map.put(DefineSharedPreferencesUserAuthen.FULL_NAME, currentUser.getFullName());
-                        map.put(DefineSharedPreferencesUserAuthen.EMAIL, currentUser.getEmail());
-                        dataLocalManager.saveDatas(
-                            DefineSharedPreferencesUserAuthen.PATH, map
-                        );
-                        userLogin.setAlias(currentUser.getAlias());
-                        userLogin.setAvatar(currentUser.getUrlAvatar());
-                        userLogin.setFullName(currentUser.getFullName());
-                        alert.show("Lưu thành công", new Runnable() {
-                            @Override
-                            public void run() {
-                                toggleTabEdit(null);
-                            }
-                        });
-                    }
-                }
-                @Override
-                public void onFailure(Call<Response<User>> call, Throwable throwable) {
-                    stopLoading();
-                    alert.show("Có lỗi xảy ra, vui lòng thử lại sau.", "Trở về", "Thử lại",
-                            null, new Runnable() {@Override public void run() {sendEdit(null);}
-                            });
-                }
-            });
+        step = 2;
+        ((UserModels) baseModels).edit(multipartBodyAvt,
+            RequestBody.create(fullName, type),
+            RequestBody.create(DateHelper.toDateServe(dob), type),
+            RequestBody.create(alias, type),
+            RequestBody.create(email, type),
+            RequestBody.create(gender ? "true" : "false", type),
+            RequestBody.create(lifeStory, type));
     }
 }

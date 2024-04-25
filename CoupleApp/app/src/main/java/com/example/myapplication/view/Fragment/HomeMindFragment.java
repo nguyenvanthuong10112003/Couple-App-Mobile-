@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,37 +33,47 @@ public class HomeMindFragment extends Fragment {
     private LinkedList<User> datas;
     private UserLogin currentUser;
     private HomeModels homeModels;
+    private String nameSearch;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        nameSearch = "";
         View view = inflater.inflate(R.layout.fragment_home_mind, container, false);
         homeModels = new ViewModelProvider(requireActivity()).get(HomeModels.class);
         homeModels.getUserLogin().observe(getViewLifecycleOwner(), userLogin -> {
             currentUser = userLogin;
         });
+        LinearLayout group = view.findViewById(R.id.idFragmentHomeMindContainer);
         homeModels.getLiveList().observe(getViewLifecycleOwner(), listData -> {
             datas = listData;
-            setup(view);
+            setup(group);
+        });
+        homeModels.getNameSearch().observe(getViewLifecycleOwner(), nameSearch -> {
+            this.nameSearch = nameSearch;
+            setup(group);
         });
         return view;
     }
-    private void setup(View view) {
+    private void setup(LinearLayout container) {
         if (datas == null || datas.size() == 0 || currentUser == null) {
             return;
         }
-        LinearLayout container = view.findViewById(R.id.idFragmentHomeMindContainer);
+        container.removeAllViews();
         float scale = getResources().getDisplayMetrics().density;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                (int) Converter.dpToPx(scale, 0.5f)
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            (int) Converter.dpToPx(scale, 0.5f)
         ));
         for (User user : datas) {
-            if (user.getInvite() == null || user.getInvite().getReceiverId() != currentUser.getId())
+            if (!(nameSearch == null || nameSearch.isEmpty() || user.getFullName() == null ||
+                    user.getFullName().isEmpty() ||
+                    user.getFullName().startsWith(nameSearch)) ||
+                    user.getInvite() == null || user.getInvite().getReceiverId() != currentUser.getId())
                 continue;
             View viewChild = LayoutInflater.from(getContext())
-                .inflate(R.layout.fragment_home_component_feedback, container, false);
+                    .inflate(R.layout.fragment_home_component_feedback, container, false);
             ((TextView)viewChild.findViewById(R.id.idFragmentHomeIdTextName)).setText(
-                user.getFullName() != null && !user.getFullName().isEmpty() ? user.getFullName() : "<Chưa đặt tên>");
+                    user.getFullName() != null && !user.getFullName().isEmpty() ? user.getFullName() : "<Chưa đặt tên>");
             ShapeableImageView imageAvatar = viewChild.findViewById(R.id.idFragmentHomeIdImageAvatar);
             try {
                 if (user.getUrlAvatar() != null && !user.getUrlAvatar().isEmpty()) {
@@ -91,6 +102,22 @@ public class HomeMindFragment extends Fragment {
             nganCach.setLayoutParams(layoutParams);
             nganCach.setBackground(new ColorDrawable(ContextCompat.getColor(getContext(), R.color.secondary)));
             container.addView(nganCach);
+            TextView btnTuChoi = viewChild.findViewById(R.id.idFragmentHomeTuChoi);
+            TextView btnAccept = viewChild.findViewById(R.id.idFragmentHomeAccept);
+            if (btnTuChoi != null)
+                btnTuChoi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.phanHoiLoiMoiHenHo(user.getInvite().getId(), false);
+                    }
+                });
+            if (btnAccept != null)
+                btnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.phanHoiLoiMoiHenHo(user.getInvite().getId(), true);
+                    }
+                });
         }
     }
 }

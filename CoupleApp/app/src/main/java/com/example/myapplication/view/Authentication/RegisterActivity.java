@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.StringHelper;
-import com.example.myapplication.model.Response;
+import com.example.myapplication.model.ResponseAPI;
 import com.example.myapplication.service.api_service.AccountApiService;
 import com.example.myapplication.service.api_service.ApiService;
 import com.example.myapplication.view.BasePage.BasePage;
@@ -59,15 +59,15 @@ public class RegisterActivity extends BasePage {
         }
         startLoading();
         accountApiService.register(email, password, username)
-            .enqueue(new Callback<Response>() {
+            .enqueue(new Callback<ResponseAPI>() {
                 @Override
-                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                public void onResponse(Call<ResponseAPI> call, retrofit2.Response<ResponseAPI> response) {
                     stopLoading();
                     if (!response.isSuccessful())
                         alert.show("Get an error");
-                    else if (response.body().getStatus() == Response.ERROR)
+                    else if (response.body().getStatus() == ResponseAPI.ERROR)
                         alert.show(response.body().getMessage());
-                    else if (response.body().getStatus() == Response.SUCCESS) {
+                    else if (response.body().getStatus() == ResponseAPI.SUCCESS) {
                         alert.show("Đăng ký thành công", new Runnable() {
                             @Override
                             public void run() {
@@ -77,7 +77,7 @@ public class RegisterActivity extends BasePage {
                     }
                 }
                 @Override
-                public void onFailure(Call<Response> call, Throwable throwable) {
+                public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
                     stopLoading();
                     alert.show("Có lỗi xảy ra, vui lòng thử lại sau");
                 }

@@ -1,4 +1,4 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -7,22 +7,27 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-
+import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.DateHelper;
+import com.example.myapplication.view.Component.ItemCalendar;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 public class CalendarTable extends TableLayout {
-    private View selected;
+    private MutableLiveData<View> liveSelected = new MutableLiveData<>();
+    private int currentMonth;
+    private int currentYear;
     public CalendarTable(Context context) {
         super(context);
     }
     public void setSelectedItem(View view) {
-        this.selected = view;
+        this.liveSelected.setValue(view);
         OnChangeSelected(view);
     }
     public CalendarTable(Context context, AttributeSet attrs) {
@@ -31,12 +36,14 @@ public class CalendarTable extends TableLayout {
     public void OnChangeSelected(View v) {
 
     }
-    public static CalendarTable createCalendar(Context context, CalendarTable tableLayout,
-                                             DayOfWeek firstDayOfMonth, int currentDay, int month, int year) {
+    public static CalendarTable createCalendar(Context context, CalendarTable tableLayout, int currentDay, int month, int year) {
         if (tableLayout.getChildCount() > 0)
             tableLayout.removeAllViews();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
             return tableLayout;
+        DayOfWeek firstDayOfMonth = LocalDate.of(year, month, 1).getDayOfWeek();
+        tableLayout.currentMonth = month;
+        tableLayout.currentYear = year;
         int day = 1;
         TableRow tableRow = new TableRow(context);
         ItemCalendar item;
@@ -77,7 +84,7 @@ public class CalendarTable extends TableLayout {
                 if (day == currentDay) {
                     item.setBackground(ContextCompat.getDrawable(context, R.drawable.cal_item_active));
                     item.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    tableLayout.selected = item;
+                    tableLayout.liveSelected.setValue(item);
                 }
                 day++;
                 tableRow.addView(item);
@@ -85,6 +92,8 @@ public class CalendarTable extends TableLayout {
             tableLayout.addView(tableRow);
         }
         int numDaysOfMonth = DateHelper.getNumDayOfMonth(year, month);
+        if (currentDay > numDaysOfMonth)
+            currentDay = numDaysOfMonth;
         for (int i = day; i <= numDaysOfMonth; ) {
             tableRow = new TableRow(context);
             int dayOfNextMonth = 1;
@@ -98,7 +107,7 @@ public class CalendarTable extends TableLayout {
                 else if (i == currentDay) {
                     item.setBackground(ContextCompat.getDrawable(context, R.drawable.cal_item_active));
                     item.setTextColor(ContextCompat.getColor(context, R.color.white));
-                    tableLayout.selected = item;
+                    tableLayout.liveSelected.setValue(item);
                 }
                 i++;
                 tableRow.addView(item);
@@ -106,5 +115,8 @@ public class CalendarTable extends TableLayout {
             tableLayout.addView(tableRow);
         }
         return tableLayout;
+    }
+    public MutableLiveData<View> getSelectedItem() {
+        return liveSelected;
     }
 }

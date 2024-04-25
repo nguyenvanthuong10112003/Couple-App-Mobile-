@@ -1,12 +1,9 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
-import android.icu.text.ListFormatter;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.EditText;
 
 import androidx.core.content.ContextCompat;
 

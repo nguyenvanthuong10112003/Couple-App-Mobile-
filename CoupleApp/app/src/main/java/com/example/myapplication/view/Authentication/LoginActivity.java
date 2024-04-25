@@ -13,7 +13,7 @@ import com.example.myapplication.define.DefineSharedPreferencesUserAuthen;
 import com.example.myapplication.helper.DataLocalManager;
 import com.example.myapplication.helper.StringHelper;
 import com.example.myapplication.model.UserLogin;
-import com.example.myapplication.model.Response;
+import com.example.myapplication.model.ResponseAPI;
 import com.example.myapplication.service.api_service.AccountApiService;
 import com.example.myapplication.service.api_service.ApiService;
 import com.example.myapplication.view.BasePage.BasePage;
@@ -70,17 +70,17 @@ public class LoginActivity extends BasePage {
         }
         startLoading();
         accountApiService.login(inputUsername.getText().toString(), inputPassword.getText().toString())
-            .enqueue(new Callback<Response<UserLogin>>() {
+            .enqueue(new Callback<ResponseAPI<UserLogin>>() {
                 @Override
-                public void onResponse(Call<Response<UserLogin>> call, retrofit2.Response<Response<UserLogin>> response) {
+                public void onResponse(Call<ResponseAPI<UserLogin>> call, retrofit2.Response<ResponseAPI<UserLogin>> response) {
                     stopLoading();
                     if (!response.isSuccessful())
                     {
                         alert.show("Get an error");
                         return;
                     }
-                    Response<UserLogin> responseApi = response.body();
-                    if (responseApi.getStatus() == Response.SUCCESS) {
+                    ResponseAPI<UserLogin> responseApi = response.body();
+                    if (responseApi.getStatus() == ResponseAPI.SUCCESS) {
                         DataLocalManager.init(getApplicationContext());
                         DataLocalManager dataLocalManager = DataLocalManager.getInstance();
                         HashMap<String, String> mapDataSaves = new HashMap<>();
@@ -104,7 +104,7 @@ public class LoginActivity extends BasePage {
                 }
 
                 @Override
-                public void onFailure(Call<Response<UserLogin>> call, Throwable throwable) {
+                public void onFailure(Call<ResponseAPI<UserLogin>> call, Throwable throwable) {
                     stopLoading();
                     messageError.setText("Đăng nhập thất bại");
                     inputUsername.requestFocus();

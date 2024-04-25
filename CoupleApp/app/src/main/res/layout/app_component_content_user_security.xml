@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/user_infouser_3"
-            android:text="thuong2003"
+            android:text=""
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textAlignment="textEnd"
@@ -75,7 +75,7 @@
                         android:src="@drawable/ic_baseline_eye_2_32" />
                 </LinearLayout>
             </LinearLayout>
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,35 +100,35 @@
                 android:layout_gravity="center"
                 android:textColor="@color/primary"
                 />
-            <com.example.myapplication.component.InputPassword
+            <com.example.myapplication.view.Component.InputPassword
                 android:id="@+id/idPageSercurityLayoutChangePasswordInputOldPassword"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mật khẩu cũ"
                 />
-            <com.example.myapplication.component.InputPassword
+            <com.example.myapplication.view.Component.InputPassword
                 android:id="@+id/idPageSercurityLayoutChangePasswordInputNewPassword"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mật khẩu mới"
                 />
-            <com.example.myapplication.component.InputPassword
+            <com.example.myapplication.view.Component.InputPassword
                 android:id="@+id/idPageSercurityLayoutChangePasswordInputRepeatNewPassword"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Xác nhận mật khẩu mới"
                 />
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Xác nhận"
                 android:onClick="startChangePassword"
                 />
-            <com.example.myapplication.component.ButtonSecondary
+            <com.example.myapplication.view.Component.ButtonSecondary
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

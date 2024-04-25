@@ -73,12 +73,22 @@
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             >
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
+                android:id="@+id/idFragmentHomeAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Đồng ý"
                 android:textSize="12sp"
+                />
+            <com.example.myapplication.view.Component.ButtonSecondary
+                android:id="@+id/idFragmentHomeTuChoi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Từ chối"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
                 />
         </LinearLayout>
     </LinearLayout>

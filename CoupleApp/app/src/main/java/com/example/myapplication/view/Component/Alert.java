@@ -1,4 +1,4 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 
 import android.content.Context;
@@ -120,7 +120,6 @@ public class Alert extends FrameLayout {
                 if (onClickButtonAccept != null)
                     onClickButtonAccept.run();
                 onClickButtonAccept = null;
-                hide();
             }
         });
         btnCancelAlert.setOnClickListener(new OnClickListener() {
@@ -130,7 +129,6 @@ public class Alert extends FrameLayout {
                 if (onClickButtonCancel != null)
                     onClickButtonCancel.run();
                 onClickButtonCancel = null;
-                hide();
             }
         });
 

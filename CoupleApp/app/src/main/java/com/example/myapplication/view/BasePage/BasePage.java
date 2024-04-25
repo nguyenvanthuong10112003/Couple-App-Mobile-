@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
-import com.example.myapplication.component.Alert;
+import com.example.myapplication.view.Component.Alert;
 import com.example.myapplication.view.Interface.SystemLoading;
 
 public class BasePage extends AppCompatActivity
@@ -137,6 +137,10 @@ public class BasePage extends AppCompatActivity
             activityLaucher.launch(intent);
     }
 
+    public void showAlert(String message) {
+        alert.show(message);
+    }
+
     @Override
     public void onBackPressed() {
         if (isBusy())
@@ -151,7 +155,9 @@ public class BasePage extends AppCompatActivity
         setResult(RESULT_OK, resultIntent);
         finish();
     }
-
+    public Alert getAlert() {
+        return alert;
+    }
     protected void resert() {
 
     }

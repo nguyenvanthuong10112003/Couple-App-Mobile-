@@ -31,39 +31,42 @@
                 android:layout_marginRight="10dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/idPageMessageImageAvatar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/anh_dai_dien_4"
                     app:shapeAppearanceOverlay="@style/circle" />
 
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/circle_offline" />
+<!--                <View-->
+<!--                    android:layout_width="8dp"-->
+<!--                    android:layout_height="8dp"-->
+<!--                    android:layout_gravity="right|bottom"-->
+<!--                    android:layout_marginRight="2dp"-->
+<!--                    android:layout_marginBottom="2dp"-->
+<!--                    android:background="@drawable/circle_offline" />-->
             </FrameLayout>
 
             <TextView
+                android:id="@+id/idPageMessageTextName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="1"
-                android:text="Nguyễn Văn Thường"
+                android:layout_rowSpan="2"
+                android:text="Nggdyey"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:alpha="0.6"
-                android:text="Đang hoạt động"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_row="1"-->
+<!--                android:layout_column="1"-->
+<!--                android:alpha="0.6"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="12sp" />-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,45 +87,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:id="@+id/idPageMessageListMessage"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="5dp"
-                    >
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/anh_dai_dien_4"
-                        app:shapeAppearanceOverlay="@style/circle"
-                        android:layout_gravity="top|left"
-                        android:layout_marginRight="5dp"
-                        />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxWidth="300dp"
-                            android:text="Em yêu anh "
-                            android:padding="10dp"
-                            android:textColor="@color/white"
-                            android:background="@drawable/background_message_primary"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12 phút trước"
-                            android:textSize="10sp"
-                            android:textColor="@color/secondary"
-                            android:fontFamily="serif"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="(Chưa có tin nhắn nào)"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondary"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    />
             </LinearLayout>
         </ScrollView>
 
@@ -157,6 +132,7 @@
                     android:layout_weight="9"
                     />
                 <TextView
+                    android:id="@+id/idPageMessageBtnSendMessage"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
@@ -164,6 +140,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right|center"
                     android:layout_margin="5dp"
+                    android:alpha="0.4"
                     />
             </LinearLayout>
             <View

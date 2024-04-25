@@ -104,7 +104,7 @@
             android:orientation="vertical"
             android:visibility="visible"
             >
-            <com.example.myapplication.component.InputEmail
+            <com.example.myapplication.view.Component.InputEmail
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputEmail"
@@ -118,7 +118,7 @@
                 android:textSize="14sp"
                 android:text=""
                 />
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
-                <com.example.myapplication.component.InputUsername
+                <com.example.myapplication.view.Component.InputUsername
                     android:maxLength="6"
                     android:inputType="phone"
                     android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     android:hint="Nhập mã xác thực"
                     android:layout_toLeftOf="@+id/idPageForgotBtnGuiLai"
                     />
-                <com.example.myapplication.component.ButtonPrimary
+                <com.example.myapplication.view.Component.ButtonPrimary
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gửi lại"
@@ -168,7 +168,7 @@
                 android:textSize="14sp"
                 android:text=""
                 />
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -182,7 +182,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.example.myapplication.component.InputPassword
+            <com.example.myapplication.view.Component.InputPassword
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputNewPassword"
@@ -197,7 +197,7 @@
                 android:textSize="14sp"
                 android:text=""
                 />
-            <com.example.myapplication.component.InputPassword
+            <com.example.myapplication.view.Component.InputPassword
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputReNewPassword"
@@ -212,7 +212,7 @@
                 android:textSize="14sp"
                 android:text=""
                 />
-            <com.example.myapplication.component.ButtonPrimary
+            <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

@@ -36,7 +36,7 @@
         android:text=""
         android:layout_marginBottom="10dp"
         />
-    <com.example.myapplication.component.InputUsername
+    <com.example.myapplication.view.Component.InputUsername
         android:id="@+id/inputUsernameLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -49,7 +49,7 @@
         android:textSize="@dimen/error_text_size_normal"
         android:text=""
         />
-    <com.example.myapplication.component.InputPassword
+    <com.example.myapplication.view.Component.InputPassword
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputPasswordLogin"
@@ -63,7 +63,7 @@
         android:textSize="14sp"
         android:text=""
         />
-    <com.example.myapplication.component.ButtonPrimary
+    <com.example.myapplication.view.Component.ButtonPrimary
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đăng nhập"

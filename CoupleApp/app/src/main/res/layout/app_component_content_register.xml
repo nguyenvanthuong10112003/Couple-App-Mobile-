@@ -25,7 +25,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginTop="40dp"
         />
-    <com.example.myapplication.component.InputEmail
+    <com.example.myapplication.view.Component.InputEmail
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputEmail"
@@ -39,7 +39,7 @@
         android:textSize="14sp"
         android:text=""
         />
-    <com.example.myapplication.component.InputUsername
+    <com.example.myapplication.view.Component.InputUsername
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputUsername"
@@ -53,7 +53,7 @@
         android:textSize="14sp"
         android:text=""
         />
-    <com.example.myapplication.component.InputPassword
+    <com.example.myapplication.view.Component.InputPassword
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputPassword"
@@ -67,7 +67,7 @@
         android:textSize="14sp"
         android:text=""
         />
-    <com.example.myapplication.component.InputPassword
+    <com.example.myapplication.view.Component.InputPassword
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputRepeatPassword"
@@ -82,7 +82,7 @@
         android:textSize="14sp"
         android:text=""
         />
-    <com.example.myapplication.component.ButtonPrimary
+    <com.example.myapplication.view.Component.ButtonPrimary
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đăng ký"

@@ -1,19 +1,12 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.text.Layout;
-import android.text.style.AlignmentSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.widget.TextView;
 
-import androidx.annotation.GravityInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-
-import com.example.myapplication.R;
 
 public class Button extends androidx.appcompat.widget.AppCompatTextView {
     public Button(@NonNull Context context) {

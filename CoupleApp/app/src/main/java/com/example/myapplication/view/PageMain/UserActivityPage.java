@@ -44,20 +44,21 @@ public class UserActivityPage extends BasePageMainActivity {
         else if (id == R.id.ibBtnToPageSecurity)
             toPage(UserSecurityActivityPage.class);
     }
+
     @Override
     protected void resert() {
-        checkLogin();
-        setupUser();
+        baseModels.getUserLogin();
     }
 
-    private void setupUser() {
+    @Override
+    protected void onChangCurrentUser() {
+        super.onChangCurrentUser();
         if (userLogin.getAlias() != null && !userLogin.getAlias().isEmpty())
             nameUser.setText(userLogin.getAlias());
         else if (userLogin.getFullName() != null && !userLogin.getFullName().isEmpty()) {
             String[] nameSplits = userLogin.getFullName().split(" ");
             nameUser.setText(nameSplits[nameSplits.length - 1]);
-        }
-        else
+        } else
             nameUser.setText("<Chưa đặt tên>");
         if (userLogin.getAvatar() != null && !userLogin.getAvatar().isEmpty())
             try {
@@ -67,7 +68,6 @@ public class UserActivityPage extends BasePageMainActivity {
     @Override
     protected void setting() {
         super.setting();
-        setupUser();
         colorTouchDown = new ColorDrawable(ContextCompat.getColor(getBaseContext(), R.color.white_active));
         colorTouchUp = new ColorDrawable(ContextCompat.getColor(getBaseContext(), R.color.white));
         TableLayout table = (TableLayout) content;

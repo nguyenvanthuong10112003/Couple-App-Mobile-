@@ -1,33 +1,27 @@
 package com.example.myapplication.view.PageChild;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.myapplication.R;
-import com.example.myapplication.component.InputDate;
+import com.example.myapplication.view.Component.InputDate;
 import com.example.myapplication.define.DefineSharedPreferencesUserAuthen;
 import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.helper.StringHelper;
-import com.example.myapplication.model.Response;
-import com.example.myapplication.model.User;
-import com.example.myapplication.model.UserLogin;
-import com.example.myapplication.service.api_service.ApiService;
 import com.example.myapplication.service.api_service.UserApiService;
 import com.example.myapplication.view.BasePage.BasePageAuthActivity;
+import com.example.myapplication.viewmodel.UserModels;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class HomeUpdateInfoPage extends BasePageAuthActivity {
     private EditText inputFullName;
@@ -53,6 +47,7 @@ public class HomeUpdateInfoPage extends BasePageAuthActivity {
         inputGender = findViewById(R.id.idPageHomeUpdateInfoInputGender);
         inputDob = findViewById(R.id.idPageHomeUpdateInfoInputDob);
         inputEmail = findViewById(R.id.idPageHomeUpdateInfoEmail);
+        baseModels = new ViewModelProvider(this).get(UserModels.class);
     }
 
     @Override
@@ -66,6 +61,13 @@ public class HomeUpdateInfoPage extends BasePageAuthActivity {
         });
         findViewById(R.id.header_logo).setVisibility(View.VISIBLE);
         findViewById(R.id.header_backPage).setVisibility(View.INVISIBLE);
+
+    }
+
+    @Override
+    protected void onChangCurrentUser() {
+        super.onChangCurrentUser();
+        inputEmail.setText(userLogin.getEmail());
     }
 
     @Override
@@ -79,6 +81,18 @@ public class HomeUpdateInfoPage extends BasePageAuthActivity {
             lastBackPressTime = currentTime;
             Toast.makeText(this, "Nhấn thêm một lần nữa để thoát", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void whenSuccess() {
+        super.onBackPressedWithResult();
+        HashMap<String, String> map = new HashMap<>();
+        map.put(DefineSharedPreferencesUserAuthen.ALIAS, inputAlias.getText().toString());
+        map.put(DefineSharedPreferencesUserAuthen.FULL_NAME, inputFullName.getText().toString());
+        map.put(DefineSharedPreferencesUserAuthen.EMAIL, inputEmail.getText().toString());
+        dataLocalManager.saveDatas(
+                DefineSharedPreferencesUserAuthen.PATH, map
+        );
     }
 
     public void update(View view) {
@@ -109,41 +123,13 @@ public class HomeUpdateInfoPage extends BasePageAuthActivity {
             alert.show("Email không đúng định dạng");
             return;
         }
-
-        startLoading();
-        userApiService = ApiService.createApiServiceWithAuth(this, UserApiService.class, token);
         MediaType type = MediaType.parse("multipart/form-data");
-        userApiService.edit(null,
-                        RequestBody.create(fullName, type),
-                        RequestBody.create(DateHelper.toDateServe(dob), type),
-                        RequestBody.create(alias, type),
-                        RequestBody.create(email, type),
-                        RequestBody.create(gender ? "true" : "false", type),
-                        null)
-                .enqueue(new Callback<Response<User>>() {
-                    @Override
-                    public void onResponse(Call<Response<User>> call, retrofit2.Response<Response<User>> response) {
-                        stopLoading();
-                        if (!response.isSuccessful())
-                            alert.show("Get an error");
-                        else if (response.body().getStatus() == Response.NEED_LOGIN)
-                            logout();
-                        else if (response.body().getStatus() == Response.ERROR)
-                            alert.show(response.body().getMessage());
-                        else if (response.body().getStatus() == Response.SUCCESS) {
-                            alert.show("Thành công", new Runnable() {
-                                @Override
-                                public void run() {
-                                    HomeUpdateInfoPage.super.onBackPressed();
-                                }
-                            });
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Response<User>> call, Throwable throwable) {
-                        stopLoading();
-                        alert.show("Có lỗi xảy ra, vui lòng thử lại sau.");
-                    }
-                });
+        ((UserModels) baseModels).edit(null,
+            RequestBody.create(fullName, type),
+            RequestBody.create(DateHelper.toDateServe(dob), type),
+            RequestBody.create(alias, type),
+            RequestBody.create(email, type),
+            RequestBody.create(gender ? "true" : "false", type),
+            null);
     }
 }

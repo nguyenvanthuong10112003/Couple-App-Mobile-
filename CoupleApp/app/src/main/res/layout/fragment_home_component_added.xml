@@ -73,7 +73,8 @@
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             >
-            <com.example.myapplication.component.ButtonSecondary
+            <com.example.myapplication.view.Component.ButtonSecondary
+                android:id="@+id/idFragmentHomeCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"

@@ -3,17 +3,15 @@ package com.example.myapplication.view.PageChild;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import com.example.myapplication.R;
-import com.example.myapplication.model.Response;
-import com.example.myapplication.service.api_service.ApiService;
-import com.example.myapplication.service.api_service.UserApiService;
-import com.example.myapplication.view.BasePage.BasePageAuthActivity;
-import com.example.myapplication.view.Authentication.LoginActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+import com.example.myapplication.R;
+import com.example.myapplication.model.UserLogin;
+import com.example.myapplication.view.BasePage.BasePageAuthActivity;
+import com.example.myapplication.viewmodel.UserModels;
 
 public class UserSecurityActivityPage extends BasePageAuthActivity {
     View layoutView;
@@ -21,6 +19,7 @@ public class UserSecurityActivityPage extends BasePageAuthActivity {
     EditText inputNewPassword;
     EditText inputRepeatNewPassword;
     EditText inputOldPassword;
+    TextView textUsername;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +33,12 @@ public class UserSecurityActivityPage extends BasePageAuthActivity {
     }
 
     @Override
+    protected void onChangCurrentUser() {
+        super.onChangCurrentUser();
+        textUsername.setText(userLogin.getUsername());
+    }
+
+    @Override
     protected void getData() {
         super.getData();
         layoutView = findViewById(R.id.idPageSercurityLayoutView);
@@ -41,6 +46,8 @@ public class UserSecurityActivityPage extends BasePageAuthActivity {
         inputNewPassword = findViewById(R.id.idPageSercurityLayoutChangePasswordInputNewPassword);
         inputRepeatNewPassword = findViewById(R.id.idPageSercurityLayoutChangePasswordInputRepeatNewPassword);
         inputOldPassword = findViewById(R.id.idPageSercurityLayoutChangePasswordInputOldPassword);
+        baseModels = new ViewModelProvider(this).get(UserModels.class);
+        textUsername = findViewById(R.id.idPageUserSecurityViewUsername);
     }
     public void toggleLayout(View v) {
         if (layoutView.getVisibility() == View.VISIBLE) {
@@ -70,39 +77,12 @@ public class UserSecurityActivityPage extends BasePageAuthActivity {
             alert.show("Mật khẩu phải có tối thiểu 6 ký tự");
             return;
         }
-        startLoading();
-        UserApiService userApiService = ApiService.createApiServiceWithAuth(this, UserApiService.class, token);
-        userApiService.changePassword(oldPassword, newPassword)
-                .enqueue(new Callback<Response>() {
-                    @Override
-                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                        stopLoading();
-                        if (!response.isSuccessful())
-                            alert.show("Get an error" + response.message());
-                        else if (response.body().getStatus() == Response.NEED_LOGIN)
-                            logout();
-                        else if (response.body().getStatus() == Response.ERROR)
-                            alert.show(response.body().getMessage());
-                        else
-                            alert.show("Đổi mật khẩu thành công", new Runnable() {
-                                @Override
-                                public void run() {
-                                    toggleLayout(null);
-                                }
-                            });
-                    }
+        ((UserModels) baseModels).updatePassword(oldPassword, newPassword);
+    }
 
-                    @Override
-                    public void onFailure(Call<Response> call, Throwable throwable) {
-                        stopLoading();
-                        alert.show("Có lỗi xảy ra, vui lòng thử lại sau." ,
-                                "Trở về", "Thử lại", null, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startChangePassword(null);
-                                    }
-                                });
-                    }
-                });
+    @Override
+    protected void whenSuccess() {
+        super.whenSuccess();
+        toggleLayout(null);
     }
 }

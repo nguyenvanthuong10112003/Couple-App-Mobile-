@@ -1,8 +1,6 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 
@@ -22,7 +19,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.helper.Converter;
 import com.example.myapplication.helper.DateHelper;
 
-import java.sql.Date;
 import java.time.LocalDate;
 public class InputDate extends LinearLayout {
     private Input inputDay;

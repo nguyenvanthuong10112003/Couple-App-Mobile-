@@ -20,8 +20,38 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/primary"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             />
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/input_primary_border_full"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_search"
+                android:layout_marginLeft="10dp"
+                />
+            <EditText
+                android:id="@+id/idPageHomeInputSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:hint="Nhập tên người muốn tìm"
+                android:textSize="14sp"
+                android:textColorHint="@color/secondary"
+                android:textColor="@color/black"
+                android:background="@drawable/transparent_background"
+                android:textCursorDrawable="@drawable/custom_cursor_color"
+                />
+        </LinearLayout>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/idPageHomeTabLayout"
             android:layout_width="match_parent"
@@ -49,26 +79,20 @@
                 android:layout_height="match_parent"
                 android:text="Đến tôi" />
         </com.google.android.material.tabs.TabLayout>
-
-        <ScrollView
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/idPageHomeViewPager2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            >
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/idPageHomeViewPager2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </ScrollView>
+            />
     </LinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:id="@+id/idPageHomeLayoutCouple"
         >
         <ImageView
+            android:id="@+id/idPageHomeHinhNen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/hinh_nen_tinh_yeu_taihinhanh_vn__7_"
@@ -83,6 +107,7 @@
                 android:layout_height="30dp"
                 android:background="@color/black_alpha_2"
                 android:gravity="right"
+                android:clickable="true"
                 >
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/idPageHomeToolBarMenu"
@@ -100,11 +125,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:clickable="true"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -119,7 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -134,7 +160,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -149,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -164,7 +190,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -179,7 +205,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19"
+                    android:text="0"
                     android:background="@drawable/border_solid_white_1"
                     android:padding="5dp"
                     android:layout_margin="5dp"
@@ -198,6 +224,7 @@
                 android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
+                android:clickable="true"
                 >
                 <ImageView
                     android:layout_width="match_parent"
@@ -222,7 +249,6 @@
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
                             android:textColor="@color/white"
-                            android:text="10/11/2003"
                             android:textStyle="bold"
                             />
                         <TextView
@@ -252,7 +278,6 @@
                             android:id="@+id/idPageHomeLayoutCoupleSoNgayYeuNhau"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="29"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             android:textSize="20sp"
@@ -276,25 +301,27 @@
                 android:paddingTop="30dp"
                 android:gravity="center"
                 android:background="@color/black_alpha_2"
+                android:weightSum="5"
+                android:clickable="true"
                 >
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:layout_weight="2"
                     >
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/idPageHomeLayoutCoupleImageDoiPhuong"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:src="@drawable/anh_dai_dien_4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/account_svgrepo_com"
                         app:shapeAppearanceOverlay="@style/circle"
                         />
                     <TextView
                         android:id="@+id/idPageHomeLayoutCoupleTenDoiPhuong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nguyễn Văn Thường"
                         android:textColor="@color/white"
                         android:maxWidth="150dp"
                         android:textSize="16dp"
@@ -311,42 +338,43 @@
                             android:id="@+id/idPageHomeLayoutCoupleGioiTinhDoiPhuong"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/ic_male"
                             />
                         <TextView
                             android:layout_marginLeft="2dp"
                             android:id="@+id/idPageHomeLayoutCoupleNgaySinhDoiPhuong"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="18/12/2003"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             />
                     </LinearLayout>
                 </LinearLayout>
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/idPageHomeImageLove"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icons8_love_64"
+                    android:layout_weight="1"
                     />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
+                    android:layout_weight="2"
                     >
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/idPageHomeLayoutCoupleImageBanThan"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:src="@drawable/anh_dai_dien_4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/account_svgrepo_com"
                         app:shapeAppearanceOverlay="@style/circle"
                         />
                     <TextView
                         android:id="@+id/idPageHomeLayoutCoupleTenBanThan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nguyễn Văn Thường"
+                        android:text=""
                         android:textColor="@color/white"
                         android:maxWidth="150dp"
                         android:textSize="16dp"
@@ -363,14 +391,13 @@
                             android:id="@+id/idPageHomeLayoutCoupleGioiTinhBanThan"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/ic_female"
                             />
                         <TextView
                             android:layout_marginLeft="2dp"
                             android:id="@+id/idPageHomeLayoutCoupleNgaySinhBanThan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="18/12/2003"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             />

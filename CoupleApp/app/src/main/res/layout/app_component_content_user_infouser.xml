@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="avatar"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/account_svgrepo_com"
                     android:textAlignment="center"
                     app:shapeAppearanceOverlay="@style/circle"
                     android:onClick="viewImageBig"/>
@@ -227,7 +227,7 @@
                     android:textSize="@dimen/user_infouser_2"
                     />
 
-                <com.example.myapplication.component.ButtonPrimary
+                <com.example.myapplication.view.Component.ButtonPrimary
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:text="Chỉnh sửa"
@@ -263,7 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="avatar"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/account_svgrepo_com"
                     android:textAlignment="center"
                     app:shapeAppearanceOverlay="@style/circle"
                     android:onClick="openImagePicker"/>
@@ -299,7 +299,7 @@
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/user_infouser_2"/>
 
-                <com.example.myapplication.component.Input
+                <com.example.myapplication.view.Component.Input
                     android:id="@+id/idPageInfoUserTabEditInputFullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/user_infouser_2"/>
 
-                <com.example.myapplication.component.Input
+                <com.example.myapplication.view.Component.Input
                     android:id="@+id/idPageInfoUserTabEditInputAlias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -370,12 +370,12 @@
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/user_infouser_2"/>
 
-                <com.example.myapplication.component.InputDate
+                <com.example.myapplication.view.Component.InputDate
                     android:id="@+id/idPageInfoUserTabEditInputDob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
-                </com.example.myapplication.component.InputDate>
+                </com.example.myapplication.view.Component.InputDate>
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -386,7 +386,7 @@
                     android:textColor="@color/secondary"
                     android:textSize="@dimen/user_infouser_2"/>
 
-                <com.example.myapplication.component.Input
+                <com.example.myapplication.view.Component.Input
                     android:id="@+id/idPageInfoUserTabEditInputEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -409,7 +409,7 @@
                     android:layout_row="11"
                     android:layout_column="0"
                     >
-                    <com.example.myapplication.component.InputArea
+                    <com.example.myapplication.view.Component.InputArea
                         android:id="@+id/idPageInfoUserTabEditInputLifeStory"
                         android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
@@ -424,7 +424,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2"
                     >
-                    <com.example.myapplication.component.ButtonSecondary
+                    <com.example.myapplication.view.Component.ButtonSecondary
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_width="0dp"
@@ -432,7 +432,7 @@
                         android:text="Hủy bỏ"
                         android:layout_marginRight="10dp"
                         android:onClick="toggleTabEdit"/>
-                    <com.example.myapplication.component.ButtonPrimary
+                    <com.example.myapplication.view.Component.ButtonPrimary
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_width="0dp"

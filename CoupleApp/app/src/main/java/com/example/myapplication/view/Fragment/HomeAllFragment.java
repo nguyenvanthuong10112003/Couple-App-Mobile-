@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.helper.Converter;
 import com.example.myapplication.helper.DateHelper;
+import com.example.myapplication.helper.HttpHelper;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.UserLogin;
 import com.example.myapplication.parcelable.UserParcelable;
 import com.example.myapplication.view.PageChild.HomeDetailUser;
+import com.example.myapplication.repository.DateInvitationRepository;
 import com.example.myapplication.viewmodel.HomeModels;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
@@ -30,33 +33,44 @@ import java.util.LinkedList;
 
 public class HomeAllFragment extends Fragment {
     private LinkedList<User> datas;
+    private String nameSearch;
     private UserLogin currentUser;
     private HomeModels homeModels;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        nameSearch = "";
         View view = inflater.inflate(R.layout.fragment_home_all, container, false);
         homeModels = new ViewModelProvider(requireActivity()).get(HomeModels.class);
         homeModels.getUserLogin().observe(getViewLifecycleOwner(), userLogin -> {
             this.currentUser = userLogin;
         });
+        LinearLayout group = view.findViewById(R.id.idFragmentHomeAllContainer);
         homeModels.getLiveList().observe(getViewLifecycleOwner(), listData -> {
             datas = listData;
-            setup(view);
+            setup(group);
+        });
+        homeModels.getNameSearch().observe(getViewLifecycleOwner(), nameSearch -> {
+            this.nameSearch = nameSearch;
+            setup(group);
         });
         return view;
     }
-    private void setup(View view) {
+    private void setup(LinearLayout container) {
         if (datas == null || datas.size() == 0 || currentUser == null) {
             return;
         }
-        LinearLayout container = view.findViewById(R.id.idFragmentHomeAllContainer);
+        container.removeAllViews();
         float scale = getResources().getDisplayMetrics().density;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                (int) Converter.dpToPx(scale, 0.5f)
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            (int) Converter.dpToPx(scale, 0.5f)
         ));
         for (User user : datas) {
+            if (!(nameSearch == null || nameSearch.isEmpty() || user.getFullName() == null ||
+                user.getFullName().isEmpty() ||
+                user.getFullName().startsWith(nameSearch)))
+                continue;
             View viewChild;
             if (user.getInvite() == null)
                 viewChild = LayoutInflater.from(getContext())
@@ -99,6 +113,38 @@ public class HomeAllFragment extends Fragment {
             nganCach.setLayoutParams(layoutParams);
             nganCach.setBackground(new ColorDrawable(ContextCompat.getColor(getContext(), R.color.secondary)));
             container.addView(nganCach);
+            TextView btnAdd = viewChild.findViewById(R.id.idFragmentHomeAdd);
+            TextView btnCancel = viewChild.findViewById(R.id.idFragmentHomeCancel);
+            TextView btnAccept = viewChild.findViewById(R.id.idFragmentHomeAccept);
+            TextView btnTuChoi = viewChild.findViewById(R.id.idFragmentHomeTuChoi);
+            if (btnAdd != null)
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.moiHenHo(user.getId());
+                    }
+                });
+            if (btnCancel != null)
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.huyMoiHenHo(user.getInvite().getId());
+                    }
+                });
+            if (btnTuChoi != null)
+                btnTuChoi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.phanHoiLoiMoiHenHo(user.getInvite().getId(), false);
+                    }
+                });
+            if (btnAccept != null)
+                btnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeModels.phanHoiLoiMoiHenHo(user.getInvite().getId(), true);
+                    }
+                });
         }
     }
 }

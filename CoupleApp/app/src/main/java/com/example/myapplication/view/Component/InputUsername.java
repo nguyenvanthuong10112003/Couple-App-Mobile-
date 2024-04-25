@@ -1,4 +1,4 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

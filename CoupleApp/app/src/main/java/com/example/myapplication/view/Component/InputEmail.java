@@ -1,10 +1,9 @@
-package com.example.myapplication.component;
+package com.example.myapplication.view.Component;
 
 import android.content.Context;
 import android.text.InputType;
 import android.util.AttributeSet;
 
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
