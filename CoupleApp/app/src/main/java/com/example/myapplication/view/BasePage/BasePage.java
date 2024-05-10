@@ -26,7 +26,7 @@ public class BasePage extends AppCompatActivity
     protected View decorView;
     protected FrameLayout body;
     protected boolean isLoading = false;
-    private ActivityResultLauncher<Intent> activityLaucher;
+    protected ActivityResultLauncher<Intent> activityLaucher;
     protected View header;
     protected View footer;
     protected void init() {

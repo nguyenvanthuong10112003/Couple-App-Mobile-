@@ -1,5 +1,6 @@
 package com.example.myapplication.view.Component;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
@@ -15,6 +16,7 @@ public class ItemCalendar extends AppCompatTextView {
     public ItemCalendar(Context context) {
         super(context);
     }
+    @SuppressLint("ResourceAsColor")
     private void init(int widthParent, String text) {
         setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         if (widthParent > 0)
@@ -22,7 +24,8 @@ public class ItemCalendar extends AppCompatTextView {
         setText(text);
         setTextSize(16);
         setTypeface(Typeface.DEFAULT);
-        setPadding(0,40,0,40);
+        setPadding(0,30,0,30);
+        setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +41,7 @@ public class ItemCalendar extends AppCompatTextView {
                         item.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
                     }
                 }
-                tableLayout.setSelectedItem(v);
+                tableLayout.setSelectedItem((TextView) v);
                 setBackground(ContextCompat.getDrawable(getContext(), R.drawable.cal_item_active));
                 setTextColor(ContextCompat.getColor(getContext(), R.color.white));
             }

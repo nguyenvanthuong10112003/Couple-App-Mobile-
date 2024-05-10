@@ -31,21 +31,21 @@ public class UserRepository extends BaseRepository {
         stateLoading.setValue(true);
         userApiService.changePassword(oldPassword, newPassword)
             .enqueue(new Callback<ResponseAPI>() {
-                @Override
-                public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
-                    stateLoading.setValue(false);
-                    if (!response.isSuccessful())
-                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
-                    else
-                        responseAPI.setValue(response.body());
-                }
+            @Override
+            public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
+                stateLoading.setValue(false);
+                if (!response.isSuccessful())
+                    Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
+                else
+                    responseAPI.setValue(response.body());
+            }
 
-                @Override
-                public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
-                    stateLoading.setValue(false);
-                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onFailure(Call<ResponseAPI> call, Throwable throwable) {
+                stateLoading.setValue(false);
+                Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public MutableLiveData<User> getUser() {

@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.R;
 import com.example.myapplication.define.DefineSharedPreferencesUserAuthen;
 import com.example.myapplication.helper.DataLocalManager;
-import com.example.myapplication.helper.HttpHelper;
 import com.example.myapplication.model.ResponseAPI;
 import com.example.myapplication.model.UserLogin;
-import com.example.myapplication.view.Authentication.LoginActivity;
-import com.example.myapplication.view.PageChild.HomeUpdateInfoPage;
+import com.example.myapplication.view.PageAuthen.LoginActivity;
 import com.example.myapplication.viewmodel.BaseModels;
 import com.example.myapplication.viewmodel.HomeModels;
 
@@ -79,9 +77,8 @@ public class BasePageAuthActivity extends BasePage {
             });
     }
     protected void whenNoHaveCouple() {};
-    protected void onChangCurrentUser() {startLoad();}
+    protected void onChangCurrentUser() {}
     protected void startLoad() {}
     protected void whenSuccess() {}
-    protected void whenServerError() {
-    }
+    protected void whenServerError() {}
 }

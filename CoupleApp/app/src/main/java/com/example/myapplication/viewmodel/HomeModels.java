@@ -37,10 +37,11 @@ public class HomeModels extends BaseModels {
         super(application);
     }
     public void initLiveList() {
-        dateInvitationRepository.getListUser().observeForever(list -> {
-            if (list != null)
-                listUser.setValue(list);
-        });
+        if (listUser.getValue() == null || listUser.getValue().size() == 0)
+            dateInvitationRepository.getListUser().observeForever(list -> {
+                if (list != null)
+                    listUser.setValue(list);
+            });
     }
     public MutableLiveData<String> getNameSearch() {
         return nameSearch;
@@ -56,7 +57,8 @@ public class HomeModels extends BaseModels {
     public MutableLiveData<Couple> getLiveCouple() {
         if (userLogin.getValue() == null)
             return null;
-        coupleRepository.getCoupleMutableLiveData().observeForever(this.couple::setValue);
+        if (couple.getValue() == null)
+            coupleRepository.getCoupleMutableLiveData().observeForever(this.couple::setValue);
         return couple;
     }
     public MutableLiveData<FarewellRequest> getFarewellRequestLiveData() {return farewellRequestRepository.getFarewellRequestMutableLiveData();}

@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,9 +22,9 @@ import com.example.myapplication.helper.DateHelper;
 
 import java.time.LocalDate;
 public class InputDate extends LinearLayout {
-    private Input inputDay;
-    private Input inputMonth;
-    private Input inputYear;
+    protected Input inputDay;
+    protected Input inputMonth;
+    protected Input inputYear;
     public InputDate(Context context) {
         super(context);
         init();
@@ -44,7 +45,7 @@ public class InputDate extends LinearLayout {
         init();
     }
 
-    private void init() {
+    protected void init() {
         setOrientation(LinearLayout.HORIZONTAL);
 
         inputDay = new Input(getContext());
@@ -52,15 +53,15 @@ public class InputDate extends LinearLayout {
         inputYear = new Input(getContext());
 
         ViewGroup.LayoutParams params = new LinearLayoutCompat.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         );
 
         setLayoutParams(params);
 
         params = new LinearLayoutCompat.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
         );
 
         inputDay.setLayoutParams(params);
@@ -115,7 +116,12 @@ public class InputDate extends LinearLayout {
         addView(textView1);
         addView(inputYear);
 
+        inputDay.setMaxLines(1);
+        inputMonth.setMaxLines(1);
+        inputYear.setMaxLines(1);
+
         inputMonth.setOnKeyListener(new OnKeyListener() {
+            int lastLength = -1;
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP) {
@@ -130,6 +136,8 @@ public class InputDate extends LinearLayout {
                     } finally {
                         inputMonth.setSelection(inputMonth.getText().length());
                     }
+                    if (inputMonth.getText().length() == 2)
+                        inputYear.requestFocus();
                 }
                 return false;
             }
@@ -164,21 +172,51 @@ public class InputDate extends LinearLayout {
                     String day = inputDay.getText().toString();
                     try {
                         int dayInt = Integer.parseInt(day);
-                        if (dayInt > 0 && dayInt <= 28)
-                            return false;
-                        checkInput();
+                        if (!(dayInt > 0 && dayInt <= 28))
+                            checkInput();
                     } catch (Exception e)
                     {
                         inputDay.setText("1");
                     } finally {
                         inputDay.setSelection(inputDay.getText().length());
                     }
+                    if (inputDay.getText().length() == 2)
+                        inputMonth.requestFocus();
                 }
                 return false;
             }
         });
+
+        inputDay.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE) {
+                    inputMonth.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        inputMonth.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE) {
+                    inputYear.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        inputYear.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return false;
+            }
+        });
     }
-    private void checkInput() {
+    protected void checkInput() {
         try {
             int month = Integer.parseInt(inputMonth.getText().toString());
             int day = Integer.parseInt(inputDay.getText().toString());
@@ -201,7 +239,15 @@ public class InputDate extends LinearLayout {
         }
         return null;
     }
-
+    public boolean setDate(LocalDate date) {
+        if (date != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                inputDay.setText(String.valueOf(date.getDayOfMonth()));
+            inputMonth.setText(String.valueOf(date.getMonthValue()));
+            inputYear.setText(String.valueOf(date.getYear()));
+            return true;
+        }
+        return false;
+    }
     public boolean setDate(int year, int month, int day) {
         if (year > 0 && month > 0 && month < 13)
             if (day > 0 && day <= DateHelper.getNumDayOfMonth(year, month))

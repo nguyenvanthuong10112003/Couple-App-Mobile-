@@ -58,19 +58,8 @@ public class MessageRepository extends BaseRepository {
                     stateLoading.setValue(false);
                     if (!response.isSuccessful())
                         Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
-                    else {
-                        if (response.body().getStatus() == ResponseAPI.SUCCESS)
-                        {
-                            ListMessage list = liveListMessage.getValue();
-                            if (list == null) return;
-                            if (list.getMessages() == null) list.setMessages(new LinkedList<>());
-                            LinkedList<Message> s = list.getMessages();
-                            s.add(response.body().getData());
-                            list.setMessages(s);
-                            liveListMessage.setValue(list);
-                        }
+                    else
                         responseAPI.setValue(response.body());
-                    }
                 }
 
                 @Override

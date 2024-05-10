@@ -6,7 +6,9 @@ public class Message {
     private Time timeSend;
     private Time timeRead;
     private String content;
+    public Message() {
 
+    }
     public Message(int id, int senderId, Time timeSend, Time timeRead, String content) {
         this.id = id;
         this.senderId = senderId;

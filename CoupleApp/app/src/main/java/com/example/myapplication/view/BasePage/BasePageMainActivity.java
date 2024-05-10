@@ -35,8 +35,6 @@ public class BasePageMainActivity extends BasePageAuthActivity {
         findViewById(R.id.header_logo).setVisibility(View.VISIBLE);
     }
     public void toPage(View view) {
-        if (isBusy())
-            return;
         Intent intent = null;
         View parent = (View) view.getParent();
         if ((view.getId() == R.id.idBtnPageHome ||
@@ -64,13 +62,14 @@ public class BasePageMainActivity extends BasePageAuthActivity {
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
+
     @Override
     public void onBackPressed() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastBackPressTime <= DOUBLE_BACK_PRESS_DELAY) {
             super.onBackPressed();
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            finish();
+            finishAffinity();
         } else {
             lastBackPressTime = currentTime;
             Toast.makeText(this, "Nhấn thêm một lần nữa để thoát", Toast.LENGTH_SHORT).show();

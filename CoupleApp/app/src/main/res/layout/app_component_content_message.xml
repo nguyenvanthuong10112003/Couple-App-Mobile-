@@ -34,8 +34,9 @@
                     android:id="@+id/idPageMessageImageAvatar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/anh_dai_dien_4"
-                    app:shapeAppearanceOverlay="@style/circle" />
+                    android:src="@drawable/account_svgrepo_com"
+                    app:shapeAppearanceOverlay="@style/circle"
+                    />
 
 <!--                <View-->
 <!--                    android:layout_width="8dp"-->
@@ -53,7 +54,7 @@
                 android:layout_row="0"
                 android:layout_column="1"
                 android:layout_rowSpan="2"
-                android:text="Nggdyey"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_gravity="center"
@@ -76,31 +77,34 @@
                 android:src="@drawable/ic_info" />
         </GridLayout>
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/idPageMessageBoxInput"
             android:layout_below="@+id/gridLayout"
             android:scrollbars="none"
             >
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/anh_nen_hop_thoai"
+                />
+            <TextView
+                android:id="@+id/idPageMessageTextNoAny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Chưa có tin nhắn nào)"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="50dp"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/idPageMessageRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/idPageMessageListMessage"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="(Chưa có tin nhắn nào)"
-                    android:textSize="16sp"
-                    android:textColor="@color/secondary"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    />
-            </LinearLayout>
-        </ScrollView>
-
+                />
+        </FrameLayout>
         <LinearLayout
             android:id="@+id/idPageMessageBoxInput"
             android:layout_width="match_parent"
@@ -109,6 +113,11 @@
             android:orientation="vertical"
             android:layout_alignParentBottom="true"
             >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/white"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

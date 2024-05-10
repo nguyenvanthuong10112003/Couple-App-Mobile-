@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputEmail"
+        android:maxLines="1"
         />
     <TextView
         android:id="@+id/messageEmail"
@@ -43,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputUsername"
+        android:maxLines="1"
         />
     <TextView
         android:id="@+id/messageUsername"
@@ -66,12 +68,14 @@
         android:textColor="@color/danger"
         android:textSize="14sp"
         android:text=""
+        android:maxLines="1"
         />
     <com.example.myapplication.view.Component.InputPassword
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inputRepeatPassword"
         android:hint="Xác nhận mật khẩu"
+        android:maxLines="1"
         />
     <TextView
         android:id="@+id/messageRepeatPassword"

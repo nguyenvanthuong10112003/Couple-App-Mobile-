@@ -106,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mật khẩu cũ"
+                android:maxLines="1"
                 />
             <com.example.myapplication.view.Component.InputPassword
                 android:id="@+id/idPageSercurityLayoutChangePasswordInputNewPassword"
@@ -113,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mật khẩu mới"
+                android:maxLines="1"
                 />
             <com.example.myapplication.view.Component.InputPassword
                 android:id="@+id/idPageSercurityLayoutChangePasswordInputRepeatNewPassword"
@@ -120,6 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Xác nhận mật khẩu mới"
+                android:maxLines="1"
                 />
             <com.example.myapplication.view.Component.ButtonPrimary
                 android:layout_marginTop="20dp"

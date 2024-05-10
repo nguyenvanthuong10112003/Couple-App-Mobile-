@@ -31,7 +31,6 @@ public class HomeUpdateInfoPage extends BasePageAuthActivity {
     private EditText inputEmail;
     private static final long DOUBLE_BACK_PRESS_DELAY = 2000;
     private long lastBackPressTime = 0;
-    private UserApiService userApiService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

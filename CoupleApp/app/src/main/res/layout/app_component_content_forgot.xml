@@ -108,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputEmail"
+                android:maxLines="1"
                 />
             <TextView
                 android:id="@+id/messageEmail"
@@ -148,6 +149,7 @@
                     android:drawableLeft="@drawable/input_ic_key"
                     android:hint="Nhập mã xác thực"
                     android:layout_toLeftOf="@+id/idPageForgotBtnGuiLai"
+                    android:maxLines="1"
                     />
                 <com.example.myapplication.view.Component.ButtonPrimary
                     android:layout_width="wrap_content"
@@ -187,6 +189,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputNewPassword"
                 android:hint="Nhập mật khẩu mới"
+                android:maxLines="1"
                 />
             <TextView
                 android:id="@+id/messageNewPassword"
@@ -202,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/idPageForgotInputReNewPassword"
                 android:hint="Nhập lại mẩu khẩu mới"
+                android:maxLines="1"
                 />
             <TextView
                 android:id="@+id/messageRepeatNewPassword"

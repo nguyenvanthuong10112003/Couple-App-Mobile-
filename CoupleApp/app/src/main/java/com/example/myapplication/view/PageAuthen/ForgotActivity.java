@@ -1,4 +1,4 @@
-package com.example.myapplication.view.Authentication;
+package com.example.myapplication.view.PageAuthen;
 
 import androidx.core.content.ContextCompat;
 

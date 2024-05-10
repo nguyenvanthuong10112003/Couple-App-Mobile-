@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,15 +23,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.myapplication.R;
 import com.example.myapplication.define.DefineCoupleAttrRequest;
-import com.example.myapplication.define.DefineUserAttrRequest;
 import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.helper.RealPathUtil;
 import com.example.myapplication.model.Couple;
 import com.example.myapplication.model.FarewellRequest;
-import com.example.myapplication.model.ResponseAPI;
-import com.example.myapplication.model.UserLogin;
 import com.example.myapplication.parcelable.UserParcelable;
-import com.example.myapplication.view.Authentication.LoginActivity;
 import com.example.myapplication.view.BasePage.BasePageMainActivity;
 import com.example.myapplication.view.PageChild.HomeDetailUser;
 import com.example.myapplication.view.PageChild.HomeUpdateInfoPage;
@@ -248,6 +242,7 @@ public class HomeActivityPage extends BasePageMainActivity {
                         Toast.LENGTH_SHORT).show();
                 break;
         }
+        step = -1;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -354,6 +349,11 @@ public class HomeActivityPage extends BasePageMainActivity {
                             ((TextView)listTime.getChildAt(6)).setText(DateHelper.to2(hours));
                             ((TextView)listTime.getChildAt(8)).setText(DateHelper.to2(minutes));
                             ((TextView)listTime.getChildAt(10)).setText(DateHelper.to2(seconds));
+
+                            long day = Integer.parseInt(textNgayYeuNhau.getText().toString());
+                            long nextDay = DateHelper.demNgay(couple.getTimeStart());
+                            if (day < nextDay) 
+                                textNgayYeuNhau.setText(String.valueOf(nextDay));
                         }
                     });
                     try {
@@ -371,7 +371,7 @@ public class HomeActivityPage extends BasePageMainActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.idTitleFinish) {
-            alert.show("Bạn có chắc chắn muốn chia tay chứ?", "Hủy bỏ", "Xác nhận",
+            alert.show("Bạn có chắc chắn muốn gửi yêu cầu chia tay chứ?", "Hủy bỏ", "Xác nhận",
                 null, new Runnable() {
                     @Override
                     public void run() {

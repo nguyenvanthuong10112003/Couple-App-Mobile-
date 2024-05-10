@@ -1,4 +1,4 @@
-package com.example.myapplication.view.Authentication;
+package com.example.myapplication.view.PageAuthen;
 
 import android.content.Context;
 import android.os.Bundle;

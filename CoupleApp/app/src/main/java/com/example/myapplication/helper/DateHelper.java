@@ -28,6 +28,16 @@ public class DateHelper {
         return 28;
     }
 
+    public static Time toTime(LocalDateTime time) {
+        Time getTime = new Time();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getTime.setDate(time.getYear() + "-" + time.getMonthValue() + "-" + time.getDayOfMonth() + " " +
+                time.getHour() + ":" + time.getMinute() + ":" + time.getSecond());
+        }
+        return getTime;
+    }
+
     public static String toDateString(Time date)
     {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O)
@@ -35,6 +45,15 @@ public class DateHelper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDate = LocalDateTime.parse(date.getDate().substring(0, 19), formatter);
         return to2(localDate.getDayOfMonth()) + "-" + to2(localDate.getMonthValue()) + "-" + localDate.getYear();
+    }
+
+    public static String toTimeString(Time date)
+    {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O)
+            return date.getDate().substring(9, date.getDate().length());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDate = LocalDateTime.parse(date.getDate().substring(0, 19), formatter);
+        return to2(localDate.getHour()) + ":" + to2(localDate.getMinute()) + ":" + to2(localDate.getSecond());
     }
 
     public static String toDateString(LocalDate date)
@@ -79,6 +98,18 @@ public class DateHelper {
         LocalDateTime localDate = LocalDateTime.parse(dateTime.getDate().substring(0, 19), formatter);
         return to2(localDate.getDayOfMonth()) + "-" + to2(localDate.getMonthValue()) + "-" + localDate.getYear() + " " +
                 to2(localDate.getHour()) + ":" + to2(localDate.getMinute()) + ":" + to2(localDate.getSecond());
+    }
+
+    public static String toDateTimeServe(LocalDateTime localDateTime)
+    {
+        if (localDateTime == null)
+            return null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return localDateTime.getYear() + "-" + to2(localDateTime.getMonthValue()) + "-" +
+                    to2(localDateTime.getDayOfMonth()) + " " + to2(localDateTime.getHour()) + ":" +
+                    to2(localDateTime.getMinute()) + ":" + to2(localDateTime.getSecond());
+        }
+        return null;
     }
 
     public static String demThoiGian(Time dateTime)

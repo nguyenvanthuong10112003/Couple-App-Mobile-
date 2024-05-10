@@ -1,44 +1,40 @@
 package com.example.myapplication.view.PageMain;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.DateHelper;
-import com.example.myapplication.model.ListMessage;
 import com.example.myapplication.model.Message;
 import com.example.myapplication.view.BasePage.BasePageMainActivity;
+import com.example.myapplication.view.AdapterRecycleView.MessageAdapter;
 import com.example.myapplication.viewmodel.MessageModels;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
 
-import java.time.LocalDate;
-import java.util.LinkedList;
+import java.time.LocalDateTime;
 
 public class MessageActivityPage extends BasePageMainActivity {
     View boxInput;
     EditText inputMessage;
     TextView btnSend;
-    LinearLayout container;
-    ScrollView scrollView;
     ShapeableImageView imageAvatarEnemy;
     TextView textNameEnemy;
+    RecyclerView recyclerView;
+    MessageAdapter messageAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +50,16 @@ public class MessageActivityPage extends BasePageMainActivity {
         inputMessage = findViewById(R.id.idPageMessageInputMessage);
         baseModels = new ViewModelProvider(this).get(MessageModels.class);
         btnSend = findViewById(R.id.idPageMessageBtnSendMessage);
-        container = findViewById(R.id.idPageMessageListMessage);
-        scrollView = (ScrollView) container.getParent();
+        recyclerView = findViewById(R.id.idPageMessageRecycler);
         imageAvatarEnemy = findViewById(R.id.idPageMessageImageAvatar);
         textNameEnemy = findViewById(R.id.idPageMessageTextName);
+        messageAdapter = new MessageAdapter(this);
+    }
+
+    @Override
+    protected void onChangCurrentUser() {
+        super.onChangCurrentUser();
+        messageAdapter.setCurrentUser(userLogin);
     }
 
     @Override
@@ -79,7 +81,6 @@ public class MessageActivityPage extends BasePageMainActivity {
                     boxInput.setPadding(0, 0, 0, keypadHeight - footer.getHeight());
                 else
                     boxInput.setPadding(0,0,0,0);
-                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
         content.setVisibility(View.INVISIBLE);
@@ -113,6 +114,24 @@ public class MessageActivityPage extends BasePageMainActivity {
                 startLoad();
             }
         });
+        messageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                recyclerView.scrollToPosition(0);
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                recyclerView.scrollToPosition(0);
+            }
+        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(messageAdapter);
+
         step = 1;
         startLoad();
     }
@@ -120,13 +139,26 @@ public class MessageActivityPage extends BasePageMainActivity {
     @Override
     protected void startLoad() {
         switch (step) {
-            case 1:
+            case 1: {
                 ((MessageModels) baseModels).getLiveListMessage()
                     .observe(this, list -> {
-                        if (list != null)
-                            setupMessages(list);
+                        if (list != null && list.getMessages() != null && list.getMessages().size() > 0) {
+                            messageAdapter.setData(list);
+                            findViewById(R.id.idPageMessageTextNoAny).setVisibility(View.INVISIBLE);
+                        } else
+                            findViewById(R.id.idPageMessageTextNoAny).setVisibility(View.VISIBLE);
+                        if (content.getVisibility() == View.INVISIBLE)
+                            content.setVisibility(View.VISIBLE);
+                        if (list != null && list.getCouple() != null && list.getCouple().getEnemy() != null) {
+                            textNameEnemy.setText(list.getCouple().getEnemy().getFullName());
+                            String url = list.getCouple().getEnemy().getUrlAvatar();
+                            if (url != null && !url.isEmpty()) {
+                                Picasso.get().load(url).into(imageAvatarEnemy);
+                            }
+                        }
                     });
                 break;
+            }
             case 2:
                 ((MessageModels) baseModels).sendMessage(inputMessage.getText().toString());
                 break;
@@ -135,7 +167,7 @@ public class MessageActivityPage extends BasePageMainActivity {
 
     @Override
     protected void whenNoHaveCouple() {
-        alert.show("Bạn chưa có cặp đôi, vui lòng ghép đôi", new Runnable() {
+        alert.show("Bạn chưa có cặp đôi, vui lòng ghép đôi để sử dụng chức năng này", new Runnable() {
             @Override
             public void run() {
                 toPage(findViewById(R.id.idBtnPageHome));
@@ -147,12 +179,12 @@ public class MessageActivityPage extends BasePageMainActivity {
     protected void whenServerError() {
         String message = "Có lỗi xảy ra, vui lòng thử lại sau";
         switch (step) {
-            case 1:
+            case 1: {
                 alert.show(message, "Trở về", "Tải lại",
                     new Runnable() {
                         @Override
                         public void run() {
-                            onBackPressed();
+                            toPage(findViewById(R.id.idBtnPageHome));
                         }
                     },
                     new Runnable() {
@@ -161,59 +193,26 @@ public class MessageActivityPage extends BasePageMainActivity {
                             startLoad();
                         }
                     });
+            }
         }
     }
 
     @Override
     protected void whenSuccess() {
         switch (step) {
-            case 2:
+            case 1:
+                break;
+            case 2: {
+                Message message = new Message();
+                message.setSenderId(userLogin.getId());
+                message.setContent(inputMessage.getText().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    message.setTimeSend(DateHelper.toTime(LocalDateTime.now()));
+                }
+                messageAdapter.addData(message);
                 inputMessage.setText("");
-        }
-    }
-
-    private void setupMessages(ListMessage listMessages) {
-        content.setVisibility(View.VISIBLE);
-        textNameEnemy.setText(listMessages.getCouple().getEnemy().getFullName());
-        String url = listMessages.getCouple().getEnemy().getUrlAvatar();
-        if (!(url == null || url.isEmpty()))
-            try {
-                Picasso.get().load(url).into(imageAvatarEnemy);
-            } catch (Exception e) {
-                imageAvatarEnemy.setBackgroundResource(R.drawable.account_svgrepo_com);
             }
-        if (listMessages.getMessages() == null)
-            return;
-        if (listMessages.getMessages().size() > 0)
-            container.removeAllViews();
-        for (Message message : listMessages.getMessages()) {
-            View viewChild;
-            if (message.getSenderId() == userLogin.getId())
-                viewChild = LayoutInflater.from(this)
-                    .inflate(R.layout.message_mind, container, false);
-            else
-                viewChild = LayoutInflater.from(this)
-                    .inflate(R.layout.message_enemy, container, false);
-            TextView content = viewChild.findViewById(R.id.idPageMessageItemContent);
-            content.setText(message.getContent());
-            TextView timeRead = viewChild.findViewById(R.id.idPageMessageItemTimeRead);
-            if (timeRead != null)
-                timeRead.setText(message.getTimeRead() == null ? "Chưa đọc" : "Đã xem " +
-                    DateHelper.demThoiGian(message.getTimeRead()));
-            TextView timeSend = viewChild.findViewById(R.id.idPageMessageItemTimeSend);
-            if (timeSend != null)
-                timeSend.setText(DateHelper.demThoiGian(message.getTimeSend()));
-            ShapeableImageView imageAvatarEnemy = viewChild.findViewById(R.id.idPageMessageItemImageAvatar);
-            if (imageAvatarEnemy != null) {
-                if (!(url == null || url.isEmpty()))
-                    try {
-                        Picasso.get().load(url).into(imageAvatarEnemy);
-                    } catch (Exception e) {
-                        imageAvatarEnemy.setBackgroundResource(R.drawable.account_svgrepo_com);
-                    }
-            }
-            container.addView(viewChild);
         }
-        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+        step = -1;
     }
 }
