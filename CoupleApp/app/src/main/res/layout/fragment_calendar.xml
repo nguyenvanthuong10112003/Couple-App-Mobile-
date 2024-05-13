@@ -13,9 +13,11 @@
         android:gravity="center|top"
         />
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="5dp"
         android:id="@+id/idPageCalFragmentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         />
 </FrameLayout>
 

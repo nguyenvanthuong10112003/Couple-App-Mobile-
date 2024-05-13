@@ -41,9 +41,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public void addData(Message message) {
-        LinkedList<Message> list1 = list.getMessages();
-        list1.add(message);
-        this.list.setMessages(list1);
+        if (this.list.getMessages() == null)
+            this.list.setMessages(new LinkedList<>());
+        this.list.getMessages().add(message);
         notifyItemInserted(0);
     }
 

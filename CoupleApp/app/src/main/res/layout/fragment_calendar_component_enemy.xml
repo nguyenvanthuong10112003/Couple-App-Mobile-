@@ -3,152 +3,149 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="10dp"
         >
+        <TextView
+            android:id="@+id/idPageCalFragmentTextNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:textStyle="italic"
+            android:id="@+id/idPageCalFragmentTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:background="@color/white"
+            android:orientation="horizontal"
             >
             <TextView
-                android:id="@+id/idPageCalFragmentTextNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Ngày: "
                 android:textSize="14sp"
-                android:textStyle="bold"
+                android:textStyle="italic"
+                android:textColor="@color/secondary"
                 />
             <TextView
-                android:id="@+id/idPageCalFragmentTextTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/idPageCalFragmentTextDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày: "
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-                <TextView
-                    android:id="@+id/idPageCalFragmentTextDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thời gian: "
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-                <TextView
-                    android:id="@+id/idPageCalFragmentTextTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-            </LinearLayout>
-            <TextView
-                android:id="@+id/idPageCalFragmentTextContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nội dung: "
+                android:textStyle="italic"
                 android:textSize="14sp"
                 android:textColor="@color/secondary"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                >
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-                    <com.example.myapplication.view.Component.ButtonPrimary
-                        android:id="@+id/idPageCalendarFragmentButtonAccept"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Đồng ý"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingRight="5dp"
-                        android:paddingLeft="5dp"
-                        android:clickable="true"
-                        />
-                    <com.example.myapplication.view.Component.ButtonOutlinePrimary
-                        android:id="@+id/idPageCalendarFragmentButtonAccepted"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bạn đã đồng ý"
-                        android:visibility="invisible"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:paddingRight="5dp"
-                        android:paddingLeft="5dp"
-                        />
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    >
-                    <com.example.myapplication.view.Component.ButtonSecondary
-                        android:id="@+id/idPageCalendarFragmentButtonCancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Từ chối"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:clickable="true"
-                        />
-                    <com.example.myapplication.view.Component.ButtonOutlineSecondary
-                        android:id="@+id/idPageCalendarFragmentButtonCanceled"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bạn đã từ chối"
-                        android:visibility="invisible"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        />
-                </FrameLayout>
-            </LinearLayout>
         </LinearLayout>
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/secondary"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời gian: "
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:textColor="@color/secondary"
+                />
+            <TextView
+                android:id="@+id/idPageCalFragmentTextTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="italic"
+                android:textSize="14sp"
+                android:textColor="@color/secondary"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/idPageCalFragmentTextContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="Nội dung: "
+            android:textSize="14sp"
+            android:textColor="@color/secondary"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            >
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <com.example.myapplication.view.Component.ButtonPrimary
+                    android:id="@+id/idPageCalendarFragmentButtonAccept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Đồng ý"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:clickable="true"
+                    />
+                <com.example.myapplication.view.Component.ButtonOutlinePrimary
+                    android:id="@+id/idPageCalendarFragmentButtonAccepted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn đã đồng ý"
+                    android:visibility="invisible"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                >
+                <com.example.myapplication.view.Component.ButtonSecondary
+                    android:id="@+id/idPageCalendarFragmentButtonCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Từ chối"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:clickable="true"
+                    />
+                <com.example.myapplication.view.Component.ButtonOutlineSecondary
+                    android:id="@+id/idPageCalendarFragmentButtonCanceled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn đã từ chối"
+                    android:visibility="invisible"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -137,13 +137,13 @@ public class CalendarTabRecycler {
                         holder.textNote.setTextColor(ContextCompat.getColor(context, R.color.secondary));
                     }
                 } else {
-                    holder.buttonAccept.setOnClickListener(new View.OnClickListener() {
+                    holder.buttonCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             calendarModels.feedBack(schedule.getId(), false);
                         }
                     });
-                    holder.buttonAccepted.setOnClickListener(new View.OnClickListener() {
+                    holder.buttonAccept.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             calendarModels.feedBack(schedule.getId(), true);
@@ -153,9 +153,13 @@ public class CalendarTabRecycler {
                         if (schedule.isAccept()) {
                             holder.buttonAccepted.setVisibility(View.VISIBLE);
                             holder.buttonAccept.setVisibility(View.INVISIBLE);
+                            holder.buttonCancel.setVisibility(View.VISIBLE);
+                            holder.buttonCanceled.setVisibility(View.INVISIBLE);
                         } else {
                             holder.buttonCanceled.setVisibility(View.VISIBLE);
                             holder.buttonCancel.setVisibility(View.INVISIBLE);
+                            holder.buttonAccept.setVisibility(View.VISIBLE);
+                            holder.buttonAccepted.setVisibility(View.INVISIBLE);
                         }
                     }
                     if (schedule.isDeleted()) {

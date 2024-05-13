@@ -36,7 +36,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="30dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="10dp"
                 >
                 <FrameLayout
                     android:id="@+id/idPageUserInfoTabViewContainer"
@@ -57,7 +57,6 @@
                         android:textAlignment="center"
                         app:shapeAppearanceOverlay="@style/circle"
                         android:onClick="viewImageBig"
-                        android:elevation="3dp"
                         />
                 </FrameLayout>
 
@@ -315,7 +314,7 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentBottom="true"
                             >
-                            <com.example.myapplication.view.Component.ButtonPrimary
+                            <com.example.myapplication.view.Component.Button
                                 android:clickable="true"
                                 android:onClick="toggleTabEdit"
                                 android:layout_width="match_parent"
@@ -323,6 +322,8 @@
                                 android:text="Chỉnh sửa"
                                 android:gravity="bottom"
                                 android:layout_gravity="bottom"
+                                android:background="@drawable/button_primary_elip"
+                                android:textColor="@color/white"
                                 />
                         </FrameLayout>
                     </RelativeLayout>

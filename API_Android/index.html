@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <script>
+        var socket = new WebSocket('ws://localhost:8080');
+        socket.onopen = () => {
+            console.log("ket noi thanh cong");
+        }
+    </script>
+</body>
+</html>

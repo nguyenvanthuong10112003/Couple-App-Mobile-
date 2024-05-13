@@ -134,23 +134,22 @@ public class ScheduleRepository extends BaseRepository {
                         Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (response.body().getStatus() == ResponseAPI.SUCCESS) {
-                        LinkedList<Schedule> list = liveListSchedule.getValue();
-                        if (list == null || list.size() == 0)
-                            return;
-                        for (int i = 0; i < list.size(); i++) {
-                            if (list.get(i).getId() == id) {
-                                list.get(i).setAccept(isAccept);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                        response.body().getStatus() == ResponseAPI.SUCCESS) {
+                            LinkedList<Schedule> list = liveListSchedule.getValue();
+                            if (list == null || list.size() == 0)
+                                return;
+                            for (int i = 0; i < list.size(); i++) {
+                                if (list.get(i).getId() == id) {
+                                    list.get(i).setAccept(isAccept);
                                     LocalDateTime now = LocalDateTime.now();
                                     list.get(i).setTimeFeedBack(new Time(now.getYear() + "-" + now.getMonthValue() + now.getDayOfMonth() + " " +
                                             now.getHour() + ":" + now.getMinute() + ":" + now.getSecond()));
+                                    break;
                                 }
-                                break;
                             }
+                            liveListSchedule.setValue(list);
                         }
-                        liveListSchedule.setValue(list);
-                    }
                     responseAPI.setValue(response.body());
                 }
                 @Override

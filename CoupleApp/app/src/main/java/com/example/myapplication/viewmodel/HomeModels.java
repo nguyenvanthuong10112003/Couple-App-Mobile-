@@ -32,16 +32,16 @@ public class HomeModels extends BaseModels {
     private final MutableLiveData<String> nameSearch = new MutableLiveData<>();
     private final MutableLiveData<Couple> couple = new MutableLiveData<>();
     private final MutableLiveData<FarewellRequest> farewellRequestMutableLiveData = new MutableLiveData<>();
-    public void setCoupleLive(Couple couple) {this.couple.setValue(couple);}
-    public HomeModels(@NonNull Application application) {
-        super(application);
-    }
     public void initLiveList() {
         if (listUser.getValue() == null || listUser.getValue().size() == 0)
             dateInvitationRepository.getListUser().observeForever(list -> {
                 if (list != null)
                     listUser.setValue(list);
             });
+    }
+    public void setCoupleLive(Couple couple) {this.couple.setValue(couple);}
+    public HomeModels(@NonNull Application application) {
+        super(application);
     }
     public MutableLiveData<String> getNameSearch() {
         return nameSearch;

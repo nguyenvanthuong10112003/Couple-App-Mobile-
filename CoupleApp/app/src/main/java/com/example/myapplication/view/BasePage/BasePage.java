@@ -75,12 +75,14 @@ public class BasePage extends AppCompatActivity
                     onBackPressed();
                 }
             });
-        startFocus(content);
+        //startFocus(content);
     }
     protected boolean isBusy() {
         return isLoading || alert.isOpenAlert();
     }
     protected boolean startFocus(ViewGroup view) {
+        if (isBusy())
+            return true;
         for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
             if (view.getChildAt(i) instanceof EditText) {
                 EditText firstEditText = (EditText) view.getChildAt(i);
@@ -102,7 +104,8 @@ public class BasePage extends AppCompatActivity
         loading.bringToFront();
         ((AnimationDrawable) imageViewLoading.getDrawable()).start();
         isLoading = true;
-        preventDefaultEvent(body, false);
+        loading.setClickable(true);
+        //preventDefaultEvent(body, false);
     }
 
     @Override
@@ -112,7 +115,7 @@ public class BasePage extends AppCompatActivity
         loading.setVisibility(View.INVISIBLE);
         ((AnimationDrawable) imageViewLoading.getDrawable()).stop();
         isLoading = false;
-        preventDefaultEvent(body, true);
+        //preventDefaultEvent(body, true);
     }
 
     protected void preventDefaultEvent(ViewGroup viewGroup, boolean isPrevent) {

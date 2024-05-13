@@ -196,7 +196,7 @@ public class CalendarActivityPage extends BasePageMainActivity {
                     tabLayout.getTabAt(0).setText(DateHelper.toDateString(currentSelected));
                 } catch (Exception e) {}
         });
-        content.setVisibility(View.INVISIBLE);
+        //content.setVisibility(View.INVISIBLE);
         btnAddSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

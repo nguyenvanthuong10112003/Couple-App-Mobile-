@@ -3,103 +3,100 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="5dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="10dp"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/idPageCalFragmentTextNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+            <ImageButton
+                android:id="@+id/idPageCalFragmentButtonDelete"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_close"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/idPageCalFragmentTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:background="@color/white"
+            android:orientation="horizontal"
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:id="@+id/idPageCalFragmentTextNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    />
-                <ImageButton
-                    android:id="@+id/idPageCalFragmentButtonDelete"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_close"
-                    />
-            </RelativeLayout>
             <TextView
-                android:id="@+id/idPageCalFragmentTextTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:text="Ngày: "
+                android:textStyle="italic"
+                android:textSize="14sp"
+                android:textColor="@color/secondary"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ngày: "
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-                <TextView
-                    android:id="@+id/idPageCalFragmentTextDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Thời gian: "
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-                <TextView
-                    android:id="@+id/idPageCalFragmentTextTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="14sp"
-                    android:textColor="@color/secondary"
-                    />
-            </LinearLayout>
             <TextView
-                android:id="@+id/idPageCalFragmentTextContent"
-                android:layout_width="match_parent"
+                android:id="@+id/idPageCalFragmentTextDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nội dung: "
+                android:text=""
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:textColor="@color/secondary"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời gian: "
+                android:textSize="14sp"
+                android:textColor="@color/secondary"
+                />
+            <TextView
+                android:textStyle="italic"
+                android:id="@+id/idPageCalFragmentTextTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:textSize="14sp"
                 android:textColor="@color/secondary"
                 />
         </LinearLayout>
-        <View
+        <TextView
+            android:textStyle="italic"
+            android:id="@+id/idPageCalFragmentTextContent"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/secondary"
+            android:layout_height="wrap_content"
+            android:text="Nội dung: "
+            android:textSize="14sp"
+            android:textColor="@color/secondary"
             />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

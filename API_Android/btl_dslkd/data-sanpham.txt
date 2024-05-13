@@ -1,0 +1,7 @@
+1|Giay kien cuong|120000|
+2|Giay ho ve|23000|khong can bao quan
+3|Giay phu thuy|44000|tranh nuoc
+4|Giay ho met|630000|tranh chuoi
+5|Giay snek|130023|tranh ga
+6|Giay quenqe|398|khong co
+7|Giaytfrrfrf|9.38474e+07|khong co

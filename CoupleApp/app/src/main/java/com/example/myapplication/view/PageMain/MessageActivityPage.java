@@ -83,7 +83,7 @@ public class MessageActivityPage extends BasePageMainActivity {
                     boxInput.setPadding(0,0,0,0);
             }
         });
-        content.setVisibility(View.INVISIBLE);
+        //content.setVisibility(View.INVISIBLE);
         inputMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

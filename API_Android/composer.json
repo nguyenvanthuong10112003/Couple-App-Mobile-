@@ -1,0 +1,12 @@
+{
+    "require": {
+        "firebase/php-jwt": "5.5.1",
+        "cloudinary/cloudinary_php": "^2.13",
+        "phpmailer/phpmailer": "^6.9.1",
+        "cboden/ratchet": "^0.4.4",
+        "wisembly/elephant.io": "^2.0"
+    }, 
+    "autoload": {
+        
+    }
+}
