@@ -121,7 +121,7 @@ public class InputDateTime extends InputDate {
             int lastLength = -1;
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP) {
+                if (event.getAction() == KeyEvent.ACTION_UP && inputHour.length() == 2) {
                     try {
                         int hourInt = Integer.parseInt(inputHour.getText().toString());
                         if (hourInt > 23 || hourInt < 0) {
@@ -142,7 +142,7 @@ public class InputDateTime extends InputDate {
         inputMinute.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP)
+                if (event.getAction() == KeyEvent.ACTION_UP && inputMinute.length() == 2)
                 {
                     try {
                         int hourInt = Integer.parseInt(inputMinute.getText().toString());
@@ -164,7 +164,7 @@ public class InputDateTime extends InputDate {
         inputSecond.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP)
+                if (event.getAction() == KeyEvent.ACTION_UP && inputSecond.length() == 2)
                 {
                     try {
                         int hourInt = Integer.parseInt(inputSecond.getText().toString());
@@ -182,7 +182,12 @@ public class InputDateTime extends InputDate {
                 return false;
             }
         });
+        inputHour.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
 
+            }
+        });
         inputHour.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -213,6 +218,32 @@ public class InputDateTime extends InputDate {
                 return false;
             }
         });
+        inputSecond.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onFocus();
+            }
+        });
+        inputMinute.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onFocus();
+            }
+        });
+        inputHour.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onFocus();
+            }
+        });
+    }
+
+    @Override
+    protected void onFocus() {
+        super.onFocus();
+        if (inputHour.length() == 1) inputHour.setText("0" + inputHour.getText());
+        if (inputMinute.length() == 1) inputMinute.setText("0" + inputMinute.getText());
+        if (inputSecond.length() == 1) inputSecond.setText("0" + inputSecond.getText());
     }
 
     public boolean setDateTime(int year, int month, int day, int hour, int minute, int second) {
@@ -270,8 +301,7 @@ public class InputDateTime extends InputDate {
                     Integer.parseInt(inputMinute.getText().toString()),
                     Integer.parseInt(inputSecond.getText().toString()));
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         return null;
     }
 }

@@ -1,2 +1,0 @@
-1|Nguyen Van Thuong|1|Quan ly|full time
-2|Nguyen Duc Du|0|Nhan vien|part time

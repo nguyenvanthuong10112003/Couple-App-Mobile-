@@ -12,7 +12,6 @@ import retrofit2.http.Part;
 
 public interface CoupleApiService {
     final String baseUrl = "couple/";
-
     @GET(baseUrl + "get.php")
     Call<ResponseAPI<Couple>> get();
     @Multipart

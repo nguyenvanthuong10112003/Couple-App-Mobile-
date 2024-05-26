@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.PageChild.HomeFindLoveActivityPage"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    android:id="@+id/idScreen"
+    >
+    <!-- Header !-->
+    <include layout="@layout/app_component_header" />
+    <!-- Body !-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="86"
+        android:background="#fff"
+        android:id="@+id/idBody">
+        <!-- Content !-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/idContent"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ghép cặp đôi để tiếp tục..."
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/input_primary_border_full"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_search"
+                    android:layout_marginLeft="10dp"
+                    />
+                <EditText
+                    android:id="@+id/idPageHomeInputSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:hint="Nhập tên người muốn tìm"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/secondary"
+                    android:textColor="@color/black"
+                    android:background="@drawable/transparent_background"
+                    android:textCursorDrawable="@drawable/custom_cursor_color"
+                    />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <com.google.android.material.tabs.TabLayout
+                    android:elevation="5dp"
+                    android:id="@+id/idPageHomeTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabBackground="@color/primary"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/white_active"
+                    >
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/idPagHomeTabNameAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Tất cả" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/idPagHomeTabNameInvited"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Đã mời" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:id="@+id/idPagHomeTabNameSent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Đến tôi" />
+                </com.google.android.material.tabs.TabLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:layout_below="@+id/idPageHomeTabLayout"
+                    android:id="@+id/idPageHomeViewPager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <!-- Loading !-->
+        <include layout="@layout/app_component_loading" />
+    </FrameLayout>
+    <!-- Footer !-->
+    <include layout="@layout/app_component_footer" />
+</LinearLayout>

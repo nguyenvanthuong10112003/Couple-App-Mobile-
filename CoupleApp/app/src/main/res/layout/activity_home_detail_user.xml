@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PageMain.HomeActivityPage"
+    tools:context=".view.PageChild.HomeDetailUserActivityPage"
     android:orientation="vertical"
     android:background="@color/primary"
     android:id="@+id/idScreen"
@@ -19,7 +19,299 @@
         android:background="#fff"
         android:id="@+id/idBody">
         <!-- Content !-->
-        <include layout="@layout/app_component_content_home_detailuser" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/idContent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:alpha="0.8"
+                android:background="@color/primary" />
+            <ScrollView
+                android:elevation="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/tag_borderradius_bg_white"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:scrollbars="none"
+                android:padding="20dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <FrameLayout
+                        android:id="@+id/idPageHomeInfoContainer"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/circle_white"
+                        android:layout_centerHorizontal="true"
+                        android:padding="5dp"
+                        >
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/idPageHomeDetailUserImageAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="avatar"
+                            android:src="@drawable/account_svgrepo_com"
+                            android:textAlignment="center"
+                            app:shapeAppearanceOverlay="@style/circle"
+                            android:onClick="viewImageBig"
+                            android:scaleType="fitCenter"
+                            />
+                    </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/idPageHomeInfoContainer"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleAlias"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Biệt danh"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleAlias"
+                                android:id="@+id/idPageHomeDetailUserTextAlias"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:alpha="0.6"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleFullname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Họ và tên"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleFullname"
+                                android:id="@+id/idPageHomeDetailUserTextFullname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:alpha="0.6"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleGender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Giới tính"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleGender"
+                                android:id="@+id/idPageHomeDetailUserTextGender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:alpha="0.6"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleDob"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ngày sinh"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleDob"
+                                android:id="@+id/idPageHomeDetailUserTextDob"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:alpha="0.6"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Email"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"/>
+
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleEmail"
+                                android:id="@+id/idPageHomeDetailUserTextEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:alpha="0.6"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleTimeCreate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thời gian tạo"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleTimeCreate"
+                                android:id="@+id/idPageHomeDetailUserTextTimeCreate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp" />
+                        </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:alpha="0.6"
+                            android:background="@color/secondary" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <TextView
+                                android:id="@+id/idPageHomeDetailUserTitleLifeStory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tiểu sử"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/user_infouser_2"
+                                android:alpha="0.6"
+                                />
+                            <TextView
+                                android:layout_below="@+id/idPageHomeDetailUserTitleLifeStory"
+                                android:id="@+id/idPageHomeDetailUserTextLifeStory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text=""
+                                android:textColor="@color/secondary"
+                                android:textStyle="italic"
+                                android:textSize="@dimen/user_infouser_3"
+                                android:layout_marginLeft="5dp"
+                                />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </ScrollView>
+        </FrameLayout>
         <!-- Loading !-->
         <include layout="@layout/app_component_loading" />
     </FrameLayout>

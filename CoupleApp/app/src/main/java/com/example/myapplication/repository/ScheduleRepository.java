@@ -24,9 +24,13 @@ import retrofit2.Response;
 public class ScheduleRepository extends BaseRepository {
     private ScheduleApiService scheduleApiService;
     private MutableLiveData<LinkedList<Schedule>> liveListSchedule = new MutableLiveData<>();
+    private MutableLiveData<Schedule> liveNewSchedule = new MutableLiveData<>();
     public ScheduleRepository(Context context, String token) {
         super(context);
         scheduleApiService = ApiService.createApiServiceWithAuth(context,ScheduleApiService.class ,token);
+    }
+    public MutableLiveData<Schedule> getLiveNewSchedule() {
+        return liveNewSchedule;
     }
     public MutableLiveData<LinkedList<Schedule>> getLiveListSchedule() {
         stateLoading.setValue(true);
@@ -94,25 +98,8 @@ public class ScheduleRepository extends BaseRepository {
                         Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                     else {
                         responseAPI.setValue(response.body());
-                        if (response.body().getStatus() == ResponseAPI.SUCCESS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            Schedule newS = response.body().getData();
-                            LinkedList<Schedule> list = liveListSchedule.getValue();
-                            if (list == null || list.size() == 0) {
-                                list = new LinkedList<>();
-                                list.add(newS);
-                            } else {
-                                for (int i = 0; i < list.size(); i++) {
-                                    if (DateHelper.toLocalDateTime(list.get(i).getTime()).compareTo(DateHelper.toLocalDateTime(newS.getTime())) > 0) {
-                                        list.add(i, newS);
-                                        break;
-                                    } else if (i == list.size() - 1) {
-                                        list.add(i + 1, newS);
-                                        break;
-                                    }
-                                }
-                            }
-                            liveListSchedule.setValue(list);
-                        }
+                        if (response.body().getStatus() == ResponseAPI.SUCCESS)
+                            liveNewSchedule.setValue(response.body().getData());
                     }
                 }
 

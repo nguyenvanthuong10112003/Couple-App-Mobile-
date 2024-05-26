@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.PageChild.UserUpdateActivityPage"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    android:id="@+id/idScreen"
+    >
+    <!-- Header !-->
+    <include layout="@layout/app_component_header" />
+    <!-- Body !-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="86"
+        android:background="#fff"
+        android:id="@+id/idBody">
+        <!-- Content !-->
+        <ScrollView
+            android:id="@+id/idScrollScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            >
+            <LinearLayout
+                android:id="@+id/idContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:alpha="0.8"
+                    android:background="@color/primary"/>
+                <FrameLayout
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-80dp"
+                    android:background="@drawable/circle_white"
+                    android:padding="5dp"
+                    android:onClick="openImagePicker"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/idPageInfoUserTabEditImageAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="avatar"
+                        android:src="@drawable/account_svgrepo_com"
+                        android:textAlignment="center"
+                        app:shapeAppearanceOverlay="@style/circle"
+                        android:onClick="openImagePicker"/>
+                    <FrameLayout
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="bottom|right"
+                        android:background="@drawable/circle_white_border"
+                        android:onClick="openImagePicker"
+                        tools:ignore="RtlHardcoded">
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/camera_primary"
+                            android:layout_gravity="center"
+                            android:onClick="openImagePicker"
+                            />
+                    </FrameLayout>
+                </FrameLayout>
+                <LinearLayout
+                    android:id="@+id/idPageInfoUserTabEditGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Họ và tên"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <com.example.myapplication.view.Component.Input
+                        android:id="@+id/idPageInfoUserTabEditInputFullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:maxLines="1"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Biệt danh (nếu có)"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <com.example.myapplication.view.Component.Input
+                        android:id="@+id/idPageInfoUserTabEditInputAlias"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Giới tính"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <RadioGroup
+                        android:id="@+id/idPageInfoUserTabEditRadioGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        >
+                        <RadioButton
+                            android:id="@+id/idPageInfoUserTabEditRadioGenderMale"
+                            style="@style/RadioButtonStyle"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="50dp"
+                            android:text="Nam"
+                            android:textColor="@color/secondary"
+                            android:button="@drawable/radiobutton_primary"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/user_infouser_2"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/idPageInfoUserTabEditRadioGenderFeMale"
+                            style="@style/RadioButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nữ"
+                            android:textColor="@color/secondary"
+                            android:button="@drawable/radiobutton_primary"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/user_infouser_2"
+                            />
+                    </RadioGroup>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Ngày sinh"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <com.example.myapplication.view.Component.InputDate
+                        android:id="@+id/idPageInfoUserTabEditInputDob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                    </com.example.myapplication.view.Component.InputDate>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Email"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <com.example.myapplication.view.Component.Input
+                        android:id="@+id/idPageInfoUserTabEditInputEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:text=""
+                        android:maxLines="1"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Tiểu sử"
+                        android:textColor="@color/secondary"
+                        android:textSize="@dimen/user_infouser_2"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_row="11"
+                        android:layout_column="0"
+                        >
+                        <com.example.myapplication.view.Component.InputArea
+                            android:id="@+id/idPageInfoUserTabEditInputLifeStory"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:scrollbars="vertical"
+                            />
+                    </FrameLayout>
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+                        <com.example.myapplication.view.Component.ButtonSecondary
+                            android:id="@+id/idPageInfoUserTabEditBtnCancel"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:text="Hủy bỏ"
+                            android:layout_marginRight="5dp"/>
+                        <com.example.myapplication.view.Component.ButtonPrimary
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:text="Lưu"
+                            android:layout_marginLeft="5dp"
+                            android:onClick="sendEdit"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <!-- Loading !-->
+        <include layout="@layout/app_component_loading" />
+    </FrameLayout>
+</LinearLayout>

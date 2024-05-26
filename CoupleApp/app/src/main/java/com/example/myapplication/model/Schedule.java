@@ -10,8 +10,9 @@ public class Schedule {
     private String title;
     private String content;
     private boolean isDeleted;
-
-    public Schedule(int id, int senderId, Time time, Time timeSend, Time timeFeedBack, boolean isAccept, String title, String content, boolean isDeleted) {
+    public Schedule() {}
+    public Schedule(int id, int senderId, Time time, Time timeSend, Time timeFeedBack,
+        boolean isAccept, String title, String content, boolean isDeleted) {
         this.id = id;
         this.senderId = senderId;
         this.time = time;

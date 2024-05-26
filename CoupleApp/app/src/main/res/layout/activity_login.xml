@@ -17,7 +17,117 @@
         android:id="@+id/idBody"
         >
         <!-- Content !-->
-        <include layout="@layout/app_component_content_login" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="top"
+            android:padding="20dp"
+            android:id="@+id/idContent"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Couple App"
+                android:textAlignment="center"
+                android:textSize="32sp"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                />
+            <ImageView
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/logo"
+                />
+            <TextView
+                android:id="@+id/messageErrorLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/danger"
+                android:textSize="@dimen/error_text_size_normal"
+                android:text=""
+                android:layout_marginBottom="10dp"
+                />
+            <com.example.myapplication.view.Component.InputUsername
+                android:id="@+id/inputUsernameLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                />
+            <TextView
+                android:id="@+id/messageUsernameLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/danger"
+                android:textSize="@dimen/error_text_size_normal"
+                android:text=""
+                />
+            <com.example.myapplication.view.Component.InputPassword
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputPasswordLogin"
+                android:maxLines="1"
+                />
+            <TextView
+                android:id="@+id/messagePasswordLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:textColor="@color/danger"
+                android:textSize="14sp"
+                android:text=""
+                />
+            <com.example.myapplication.view.Component.ButtonPrimary
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng nhập"
+                android:onClick="login"
+                />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Quên mật khẩu?"
+                android:textAlignment="center"
+                android:textColor="@drawable/link_primary"
+                android:id="@+id/linkToPageForgot"
+                android:onClick="toPage"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center|bottom"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="Không có tài khoản đăng nhập? "
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary"
+                    android:fontFamily="sans-serif"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng ký"
+                    android:textStyle="bold"
+                    android:id="@+id/linkToPageRegister"
+                    android:background="@drawable/input_primary_normal"
+                    android:textSize="14dp"
+                    android:textColor="@drawable/link_primary"
+                    android:onClick="toPage"
+                    />
+            </LinearLayout>
+        </LinearLayout>
         <!-- Loading !-->
         <include layout="@layout/app_component_loading" />
     </FrameLayout>

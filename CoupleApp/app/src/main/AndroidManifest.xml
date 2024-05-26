@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,25 +18,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
-        <receiver android:name=".PhoneCallReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver>
+        tools:targetApi="31"
+        >
         <activity
-            android:name=".view.PageChild.HomeDetailUser"
-            android:exported="false" />
+            android:name=".view.PageChild.HomeDetailUserActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".view.PageChild.HomeUpdateInfoPage"
-            android:exported="false" />
+            android:name=".view.PageChild.HomeUpdateInfoActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PageChild.HomeFindLoveActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.PageChild.UserSecurityActivityPage"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.PageChild.UserInfoActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.PageChild.UserUpdateActivityPage"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -65,15 +73,20 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.PageChild.CalendarAddScheduleActivityPage"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.PageMain.HomeActivityPage"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".service.system_service.ForeGroundService" />
     </application>
 
 </manifest>

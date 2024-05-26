@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
-import com.example.myapplication.model.Couple;
+import com.example.myapplication.view.PageChild.HomeFindLoveActivityPage;
 import com.example.myapplication.view.PageMain.CalendarActivityPage;
 import com.example.myapplication.view.PageMain.HomeActivityPage;
 import com.example.myapplication.view.PageMain.MessageActivityPage;
@@ -39,7 +39,8 @@ public class BasePageMainActivity extends BasePageAuthActivity {
         View parent = (View) view.getParent();
         if ((view.getId() == R.id.idBtnPageHome ||
                 parent.getId() == R.id.idBtnPageHome) &&
-                !this.getClass().equals(HomeActivityPage.class))
+                !(this.getClass().equals(HomeActivityPage.class) ||
+                this.getClass().equals(HomeFindLoveActivityPage.class)))
             intent = new Intent(this, HomeActivityPage.class);
         else if ((view.getId() == R.id.idBtnPageCalendar ||
                 parent.getId() == R.id.idBtnPageCalendar) &&

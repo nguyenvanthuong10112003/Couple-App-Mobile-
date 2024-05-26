@@ -124,7 +124,7 @@ public class InputDate extends LinearLayout {
             int lastLength = -1;
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP) {
+                if (event.getAction() == KeyEvent.ACTION_UP && inputMonth.length() == 2) {
                     try {
                         int monthInt = Integer.parseInt(inputMonth.getText().toString());
                         if (monthInt > 12 || monthInt < 1) {
@@ -132,7 +132,7 @@ public class InputDate extends LinearLayout {
                         }
                         checkInput();
                     } catch (Exception e) {
-                        inputMonth.setText("1");
+                        inputMonth.setText("01");
                     } finally {
                         inputMonth.setSelection(inputMonth.getText().length());
                     }
@@ -167,16 +167,18 @@ public class InputDate extends LinearLayout {
         inputDay.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP)
+                if (event.getAction() == KeyEvent.ACTION_UP && inputDay.length() == 2)
                 {
                     String day = inputDay.getText().toString();
                     try {
                         int dayInt = Integer.parseInt(day);
-                        if (!(dayInt > 0 && dayInt <= 28))
+                        if (dayInt <= 0)
+                            inputDay.setText("01");
+                        else if (dayInt > 28)
                             checkInput();
                     } catch (Exception e)
                     {
-                        inputDay.setText("1");
+                        inputDay.setText("01");
                     } finally {
                         inputDay.setSelection(inputDay.getText().length());
                     }
@@ -213,6 +215,20 @@ public class InputDate extends LinearLayout {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 return false;
+            }
+        });
+
+        inputMonth.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onFocus();
+            }
+        });
+
+        inputDay.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                onFocus();
             }
         });
     }
@@ -258,5 +274,10 @@ public class InputDate extends LinearLayout {
                 return true;
             }
         return false;
+    }
+
+    protected void onFocus() {
+        if (inputDay.length() == 1) inputDay.setText("0" + inputDay.getText());
+        if (inputMonth.length() == 1) inputMonth.setText("0" + inputMonth.getText());
     }
 }

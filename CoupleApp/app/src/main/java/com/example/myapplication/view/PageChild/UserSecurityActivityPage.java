@@ -2,6 +2,8 @@ package com.example.myapplication.view.PageChild;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -56,7 +58,11 @@ public class UserSecurityActivityPage extends BasePageAuthActivity {
             inputNewPassword.setText("");
             inputRepeatNewPassword.setText("");
             inputOldPassword.setText("");
+            inputOldPassword.requestFocus();
+            imm.showSoftInput(inputOldPassword, InputMethodManager.SHOW_IMPLICIT);
         } else {
+            if (getCurrentFocus() != null)
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             layoutView.setVisibility(View.VISIBLE);
             layoutChangePw.setVisibility(View.INVISIBLE);
         }

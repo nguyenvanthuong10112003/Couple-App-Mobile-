@@ -1,5 +1,7 @@
 package com.example.myapplication.model;
 
+import com.example.myapplication.parcelable.CoupleParcelable;
+
 public class Couple {
     private int id;
     private Time timeStart;
@@ -7,6 +9,8 @@ public class Couple {
     private String photoUrl;
     private User mind;
     private User enemy;
+
+    public Couple() {}
 
     public Couple(int id, Time timeStart, int dateInvitationId, String photoUrl, User mind, User enemy) {
         this.id = id;

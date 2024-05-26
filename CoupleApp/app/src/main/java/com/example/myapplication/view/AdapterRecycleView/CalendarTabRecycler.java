@@ -1,15 +1,10 @@
 package com.example.myapplication.view.AdapterRecycleView;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,23 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.model.Schedule;
-import com.example.myapplication.model.User;
 import com.example.myapplication.model.UserLogin;
-import com.example.myapplication.parcelable.UserParcelable;
 import com.example.myapplication.view.BasePage.BasePage;
 import com.example.myapplication.view.Component.Button;
-import com.example.myapplication.view.PageChild.HomeDetailUser;
 import com.example.myapplication.viewmodel.CalendarModels;
-import com.example.myapplication.viewmodel.HomeModels;
-import com.google.android.material.imageview.ShapeableImageView;
-import com.squareup.picasso.Picasso;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CalendarTabRecycler {
     static final int VIEW_TYPE_MIND = 1;
@@ -77,10 +67,28 @@ public class CalendarTabRecycler {
             this.calendarModels = calendarModels;
             this.calendarModels.getUserLogin().observeForever(userLogin -> this.currentUser = userLogin);
             this.calendarModels.getLiveList().observeForever(list -> setData(list));
+            this.calendarModels.getLiveNewSchedule().observeForever(newSchedule -> addData(newSchedule));
         }
         protected void setData(LinkedList<Schedule> list) {
             this.list = list;
             notifyDataSetChanged();
+        }
+        protected void addData(Schedule newSchedule) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                return;
+            if (list == null) {
+                list = new ArrayList<>(Arrays.asList(newSchedule));
+                return;
+            }
+            for (int i = 0; i < list.size(); i++)
+            {
+                if (DateHelper.toLocalDateTime(list.get(i).getTime())
+                    .until(DateHelper.toLocalDateTime(newSchedule.getTime()), ChronoUnit.SECONDS) < 0) {
+                    list.add(i, newSchedule);
+                    notifyItemInserted(i);
+                    return;
+                }
+            }
         }
         @Override
         public int getItemViewType(int position) {
@@ -92,7 +100,6 @@ public class CalendarTabRecycler {
             else
                 return VIEW_TYPE_ENEMY;
         }
-
         @NonNull
         @Override
         public CalendarTabRecycler.ScheduleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -126,7 +133,7 @@ public class CalendarTabRecycler {
                                 });
                         }
                     });
-                    if (schedule.getTimeFeedBack() == null) {
+                    if (schedule.getTimeFeedBack() == null || schedule.getTimeFeedBack().getDate() == null) {
                         holder.textNote.setText("Đang chờ phản hồi");
                         holder.textNote.setTextColor(ContextCompat.getColor(context, R.color.primary));
                     } else if (schedule.isAccept()) {
@@ -213,6 +220,15 @@ public class CalendarTabRecycler {
             } catch (Exception e) {}
         }
 
+        protected void addData(Schedule newSchedule) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                return;
+            LocalDate day = DateHelper.toLocalDate(newSchedule.getTime());
+            if (day == null || currentDate == null || currentDate.until(day, ChronoUnit.DAYS) != 0)
+                return;
+            super.addData(newSchedule);
+        }
+
         @Override
         public void onBindViewHolder(@NonNull ScheduleViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
@@ -229,15 +245,26 @@ public class CalendarTabRecycler {
         protected void setData(LinkedList<Schedule> list) {
             this.list = new ArrayList<>();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                LocalDate now = LocalDate.now();
+                LocalDateTime now = LocalDateTime.now();
                 try {
                     list.stream().forEach(item -> {
-                        if (DateHelper.toLocalDate(item.getTime()).compareTo(now) > 0)
+                        if (DateHelper.toLocalDateTime(item.getTime()).compareTo(now) > 0)
                             this.list.add(item);
                     });
                 } catch (Exception e) {}
                 notifyDataSetChanged();
             }
+        }
+
+        @Override
+        protected void addData(Schedule newSchedule) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                return;
+            LocalDateTime time = DateHelper.toLocalDateTime(newSchedule.getTime());
+            LocalDateTime now = LocalDateTime.now();
+            if (time == null || now == null || now.until(time, ChronoUnit.SECONDS) <= 0)
+                return;
+            super.addData(newSchedule);
         }
     }
 }

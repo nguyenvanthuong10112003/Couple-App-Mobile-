@@ -11,10 +11,11 @@
     <color name="dark">#343a40</color>
     <color name="secondary">#757575</color>
     <color name="secondary_active">#9E9E9E</color>
-    <color name="bg_alert">#1A000000</color>
+    <color name="bg_alert">#0DFFFFFF</color>
     <color name="hint">#75757533</color>
-    <color name="black_alpha">#E6000000</color>
+    <color name="black_alpha">#1AFFFFFF</color>
     <color name="black_alpha_2">#33000000</color>
     <color name="blue">#3F51B5</color>
     <color name="mau_trong_suot">#00FFFFFF</color>
+    <color name="mau_be">#F5F5DC</color>
 </resources>

@@ -17,6 +17,7 @@ public class CalendarModels extends BaseModels {
     private ScheduleRepository scheduleRepository;
     private MutableLiveData<LinkedList<Schedule>> liveListSchedule = new MutableLiveData<>();
     private MutableLiveData<LocalDate> liveSelectedDate = new MutableLiveData<>();
+    private MutableLiveData<Schedule> newSchedule = new MutableLiveData<>();
     public CalendarModels(@NonNull Application application) {
         super(application);
     }
@@ -27,12 +28,17 @@ public class CalendarModels extends BaseModels {
         UserLogin userLogin = this.userLogin.getValue();
         if (userLogin.getToken() != null && !userLogin.getToken().isEmpty()) {
             String token = HttpHelper.createToken(userLogin.getToken());
-            if (scheduleRepository == null)
+            if (scheduleRepository == null) {
                 scheduleRepository = new ScheduleRepository(application, token);
+                scheduleRepository.getLiveNewSchedule().observeForever(newSchedule -> this.newSchedule.setValue(newSchedule));
+            }
         }
         return this.userLogin;
     }
-
+    public void setNewSchedule(Schedule newSchedule) {
+        this.newSchedule.setValue(newSchedule);
+    }
+    public MutableLiveData<Schedule> getLiveNewSchedule() {return newSchedule;}
     public void initLiveList() {
         if (liveListSchedule.getValue() == null || liveListSchedule.getValue().size() == 0)
             scheduleRepository.getLiveListSchedule()

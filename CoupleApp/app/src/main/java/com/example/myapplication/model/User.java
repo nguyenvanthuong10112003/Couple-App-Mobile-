@@ -1,5 +1,6 @@
 package com.example.myapplication.model;
 
+import com.example.myapplication.parcelable.UserParcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDate;

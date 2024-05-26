@@ -2,25 +2,21 @@ package com.example.myapplication.view.PageMain;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.widget.ViewPager2;
-
 import com.example.myapplication.R;
 import com.example.myapplication.define.DefineCoupleAttrRequest;
 import com.example.myapplication.helper.DateHelper;
@@ -29,19 +25,16 @@ import com.example.myapplication.model.Couple;
 import com.example.myapplication.model.FarewellRequest;
 import com.example.myapplication.parcelable.UserParcelable;
 import com.example.myapplication.view.BasePage.BasePageMainActivity;
-import com.example.myapplication.view.PageChild.HomeDetailUser;
-import com.example.myapplication.view.PageChild.HomeUpdateInfoPage;
-import com.example.myapplication.view.ViewPager.HomeViewPagerAdapter;
+import com.example.myapplication.view.PageChild.HomeDetailUserActivityPage;
+import com.example.myapplication.view.PageChild.HomeFindLoveActivityPage;
+import com.example.myapplication.view.PageChild.HomeUpdateInfoActivityPage;
 import com.example.myapplication.viewmodel.HomeModels;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
-
 import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -49,9 +42,6 @@ import okhttp3.RequestBody;
 public class HomeActivityPage extends BasePageMainActivity {
     private Toolbar toolBarMenu;
     private View hinhAnhTraiTim;
-    TabLayout tabLayout;
-    HomeViewPagerAdapter viewPagerAdapter;
-    ViewPager2 viewPager2;
     private ShapeableImageView imageDoiPhuong;
     private TextView textTenDoiPhuong;
     private ImageView iconGioiTinhDoiPhuong;
@@ -64,8 +54,6 @@ public class HomeActivityPage extends BasePageMainActivity {
     private TextView textNgayBatDau;
     private TextView textNgayYeuNhau;
     private ViewGroup listTime;
-    private EditText inputSearch;
-    private boolean loaded = false;
     private FarewellRequest farewellRequest;
     private Couple couple;
     @Override
@@ -80,9 +68,6 @@ public class HomeActivityPage extends BasePageMainActivity {
         super.getData();
         toolBarMenu = findViewById(R.id.idPageHomeToolBarMenu);
         hinhAnhTraiTim = findViewById(R.id.idPageHomeImageHinhTraiTim);
-        tabLayout = findViewById(R.id.idPageHomeTabLayout);
-        viewPager2 = findViewById(R.id.idPageHomeViewPager2);
-        viewPagerAdapter = new HomeViewPagerAdapter(this);
         baseModels = new ViewModelProvider(this).get(HomeModels.class);
         imageDoiPhuong = findViewById(R.id.idPageHomeLayoutCoupleImageDoiPhuong);
         textTenDoiPhuong = findViewById(R.id.idPageHomeLayoutCoupleTenDoiPhuong);
@@ -96,7 +81,6 @@ public class HomeActivityPage extends BasePageMainActivity {
         textNgayBatDau = findViewById(R.id.idPageHomeLayoutCoupleNgayBatDau);
         textNgayYeuNhau = findViewById(R.id.idPageHomeLayoutCoupleSoNgayYeuNhau);
         listTime = findViewById(R.id.idPageHomeListTime);
-        inputSearch = findViewById(R.id.idPageHomeInputSearch);
     }
     @Override
     protected void setting() {
@@ -104,86 +88,70 @@ public class HomeActivityPage extends BasePageMainActivity {
         setSupportActionBar(toolBarMenu);
         Animation animationCoGiat = AnimationUtils.loadAnimation(this, R.anim.traitimcogiat);
         hinhAnhTraiTim.startAnimation(animationCoGiat);
-        inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        imageHinhNen.setOnClickListener(v -> ImagePicker.with(HomeActivityPage.this)
+            .crop()
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .start());
+        ((HomeModels)baseModels).getLiveCouple().observe(this, couple -> {
+            this.couple = couple;
+            if (couple == null) {
+                Intent intent = new Intent(HomeActivityPage.this, HomeFindLoveActivityPage.class);
+                activityLaucher.launch(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                return;
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                ((HomeModels) baseModels).setNameSearch(inputSearch.getText().toString());
-            }
-        });
-        imageHinhNen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImagePicker.with(HomeActivityPage.this)
-                    .crop()
-                    .compress(1024)
-                    .maxResultSize(1080, 1080)
-                    .start();
-            }
+            setupCouple();
         });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data.getData() != null) {
-            MediaType type = MediaType.parse("multipart/form-data");
-            String realPath = RealPathUtil.getRealPath(this, data.getData());
-            File file = new File(realPath);
-            RequestBody requestBodyBackground = RequestBody.create(file, type);
-            MultipartBody.Part multipartBodyAvt  =
+        if (data != null && data.getData() != null) {
+            try {
+                MediaType type = MediaType.parse("multipart/form-data");
+                String realPath = RealPathUtil.getRealPath(this, data.getData());
+                File file = new File(realPath);
+                RequestBody requestBodyBackground = RequestBody.create(file, type);
+                MultipartBody.Part multipartBodyAvt  =
                     MultipartBody.Part.createFormData(DefineCoupleAttrRequest.imageBg, file.getName(), requestBodyBackground);
-            ((HomeModels) baseModels).changeBg(multipartBodyAvt);
+                ((HomeModels) baseModels).changeBg(multipartBodyAvt);
+            } catch (Exception ignored) {}
         }
     }
 
     @Override
     protected void onChangCurrentUser() {
-        if (userLogin.getFullName() == null || userLogin.getFullName().isEmpty()) {
-            toPageForResult(HomeUpdateInfoPage.class);
-        }
-        else if (!loaded) {
+        if (userLogin.getFullName() == null || userLogin.getFullName().isEmpty())
+            toPageForResult(HomeUpdateInfoActivityPage.class);
+        else {
             step = 1;
             startLoad();
         }
     }
 
     @Override
-    protected void resert() {
-        super.resert();
+    protected void resume(Intent data) {
         baseModels.getUserLogin();
-        startLoad();
+        try {
+            if (data != null)
+                ((HomeModels) baseModels).setCoupleLive(data.getParcelableExtra("new-couple"));
+        } catch (Exception e) {}
     }
 
     public void startLoad() {
-        loaded = true;
         switch (step) {
-            case 1: ((HomeModels)baseModels).getLiveCouple().observe(this, couple -> {
-                this.couple = couple;
-                if (couple == null)
-                    setupTab();
-                else
-                    setupCouple();
-            }); break;
-            case 2: ((HomeModels)baseModels).initLiveList(); break;
-            case 3:
+            case 1: ((HomeModels) baseModels).initCouple(); break;
+            case 2:
                 ((HomeModels) baseModels).getFarewellRequestLiveData()
                     .observe(this, farewellRequest -> {
                         this.farewellRequest = farewellRequest;
                     }); break;
-            case 4:
+            case 3:
                 ((HomeModels) baseModels).phanHoiYeuCauChiaTay(false); break;
-            case 5:
+            case 4:
                 ((HomeModels) baseModels).phanHoiYeuCauChiaTay(true); break;
-            case 6:
+            case 5:
                 ((HomeModels) baseModels).yeuCauChiaTay(); break;
         }
     }
@@ -192,19 +160,13 @@ public class HomeActivityPage extends BasePageMainActivity {
         if (farewellRequest != null && farewellRequest.getSenderId() != userLogin.getId())
             alert.show("Đối phương yêu cầu chia tay, bạn có đồng ý chứ?",
                 "Từ chối", "Đồng ý",
-                new Runnable() {
-                    @Override
-                    public void run() {
+                    () -> {
+                        step = 3;
+                        startLoad();
+                    }, () -> {
                         step = 4;
                         startLoad();
-                    }
-                }, new Runnable() {
-                    @Override
-                    public void run() {
-                        step = 5;
-                        startLoad();
-                    }
-                });
+                    });
     }
 
     @Override
@@ -213,15 +175,9 @@ public class HomeActivityPage extends BasePageMainActivity {
         switch (step) {
             case 1:
             case 2:
-            case 3:
-                alert.show(message, "Tải lại", new Runnable() {
-                    @Override
-                    public void run() {
-                        startLoad();
-                    }
-                });
+                alert.show(message, "Tải lại", this::startLoad);
                 break;
-            case 4: case 5: {
+            case 3: case 4: {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 alertChiaTay();
             } break;
@@ -232,12 +188,12 @@ public class HomeActivityPage extends BasePageMainActivity {
     @Override
     protected void whenSuccess() {
         switch (step) {
-            case 3: {
+            case 2: {
                 alertChiaTay();
             } break;
-            case 5:
+            case 4:
                 ((HomeModels) baseModels).setCoupleLive(null); break;
-            case 6:
+            case 5:
                 Toast.makeText(this, "Đã gửi yêu cầu chia tay đến đối phương, vui lòng chờ phản hồi",
                         Toast.LENGTH_SHORT).show();
                 break;
@@ -249,37 +205,7 @@ public class HomeActivityPage extends BasePageMainActivity {
         getMenuInflater().inflate(R.menu.menu_toolbar_home, menu);
         return true;
     }
-    private void setupTab() {
-        findViewById(R.id.idPageHomeLayoutCouple).setVisibility(View.INVISIBLE);
-        findViewById(R.id.idPageHomeLayoutGhepCap).setVisibility(View.VISIBLE);
-        viewPager2.setAdapter(viewPagerAdapter);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-            super.onPageSelected(position);
-            tabLayout.getTabAt(position).select();
-            }
-        });
-        step = 2;
-        startLoad();
-    }
     private void setupCouple() {
-        findViewById(R.id.idPageHomeLayoutCouple).setVisibility(View.VISIBLE);
-        findViewById(R.id.idPageHomeLayoutGhepCap).setVisibility(View.INVISIBLE);
         try {
             if (couple.getPhotoUrl() != null && !couple.getPhotoUrl().isEmpty())
                 Picasso.get().load(couple.getPhotoUrl()).into(imageHinhNen);
@@ -298,21 +224,15 @@ public class HomeActivityPage extends BasePageMainActivity {
         } catch (Exception e) {
             imageBanThan.setBackgroundResource(R.drawable.account_svgrepo_com);
         }
-        imageDoiPhuong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeDetailUser.class);
-                intent.putExtra("data", new UserParcelable(couple.getEnemy()));
-                startActivity(intent);
-            }
+        imageDoiPhuong.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HomeDetailUserActivityPage.class);
+            intent.putExtra("data", new UserParcelable(couple.getEnemy()));
+            startActivity(intent);
         });
-        imageBanThan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeDetailUser.class);
-                intent.putExtra("data", new UserParcelable(couple.getMind()));
-                startActivity(intent);
-            }
+        imageBanThan.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HomeDetailUserActivityPage.class);
+            intent.putExtra("data", new UserParcelable(couple.getMind()));
+            startActivity(intent);
         });
         textTenDoiPhuong.setText(couple.getEnemy().getFullName());
         textNgaySinhDoiPhuong.setText(DateHelper.toDateString(couple.getEnemy().getDob()));
@@ -322,49 +242,41 @@ public class HomeActivityPage extends BasePageMainActivity {
         iconGioiTinhBanThan.setImageResource(couple.getMind().getGender() ? R.drawable.ic_male : R.drawable.ic_female);
         textNgayBatDau.setText(DateHelper.toDateString(couple.getTimeStart()));
         textNgayYeuNhau.setText(String.valueOf(DateHelper.demNgay(couple.getTimeStart())));
-        findViewById(R.id.idPageHomeLayoutCouple).setVisibility(View.VISIBLE);
         LocalDateTime begin = DateHelper.toLocalDateTime(couple.getTimeStart());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O)
-                                return;
-                            LocalDateTime now = LocalDateTime.now();
-                            Duration duration = Duration.between(begin, now);
+        new Thread(() -> {
+            while (couple != null) {
+                runOnUiThread(() -> {
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) return;
+                    LocalDateTime now = LocalDateTime.now();
+                    Duration duration = Duration.between(begin, now);
 
-                            long years = duration.toDays() / 365;
-                            long months = (duration.toDays() % 365) / 30;
-                            long days = duration.toDays() % 365 % 30;
-                            long hours = duration.toHours() % 24;
-                            long minutes = duration.toMinutes() % 60;
-                            long seconds = duration.getSeconds() % 60;
+                    long years = duration.toDays() / 365;
+                    long months = (duration.toDays() % 365) / 30;
+                    long days = duration.toDays() % 365 % 30;
+                    long hours = duration.toHours() % 24;
+                    long minutes = duration.toMinutes() % 60;
+                    long seconds = duration.getSeconds() % 60;
 
-                            ((TextView)listTime.getChildAt(0)).setText(DateHelper.to2(years));
-                            ((TextView)listTime.getChildAt(2)).setText(DateHelper.to2(months));
-                            ((TextView)listTime.getChildAt(4)).setText(DateHelper.to2(days));
-                            ((TextView)listTime.getChildAt(6)).setText(DateHelper.to2(hours));
-                            ((TextView)listTime.getChildAt(8)).setText(DateHelper.to2(minutes));
-                            ((TextView)listTime.getChildAt(10)).setText(DateHelper.to2(seconds));
+                    ((TextView) listTime.getChildAt(0)).setText(DateHelper.to2(years));
+                    ((TextView) listTime.getChildAt(2)).setText(DateHelper.to2(months));
+                    ((TextView) listTime.getChildAt(4)).setText(DateHelper.to2(days));
+                    ((TextView) listTime.getChildAt(6)).setText(DateHelper.to2(hours));
+                    ((TextView) listTime.getChildAt(8)).setText(DateHelper.to2(minutes));
+                    ((TextView) listTime.getChildAt(10)).setText(DateHelper.to2(seconds));
 
-                            long day = Integer.parseInt(textNgayYeuNhau.getText().toString());
-                            long nextDay = DateHelper.demNgay(couple.getTimeStart());
-                            if (day < nextDay) 
-                                textNgayYeuNhau.setText(String.valueOf(nextDay));
-                        }
-                    });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    };
+                    long day = Integer.parseInt(textNgayYeuNhau.getText().toString());
+                    long nextDay = DateHelper.demNgay(couple.getTimeStart());
+                    if (day < nextDay)
+                        textNgayYeuNhau.setText(String.valueOf(nextDay));
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }).start();
-        step = 3;
+        step = 2;
         startLoad();
     }
     @Override
@@ -372,12 +284,9 @@ public class HomeActivityPage extends BasePageMainActivity {
         int id = item.getItemId();
         if (id == R.id.idTitleFinish) {
             alert.show("Bạn có chắc chắn muốn gửi yêu cầu chia tay chứ?", "Hủy bỏ", "Xác nhận",
-                null, new Runnable() {
-                    @Override
-                    public void run() {
-                        step = 6;
-                        startLoad();
-                    }
+                null, () -> {
+                    step = 5;
+                    startLoad();
                 });
         }
         return super.onOptionsItemSelected(item);

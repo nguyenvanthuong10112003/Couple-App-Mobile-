@@ -16,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.DateHelper;
-import com.example.myapplication.model.DateInvitation;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.UserLogin;
 import com.example.myapplication.parcelable.UserParcelable;
-import com.example.myapplication.view.PageChild.HomeDetailUser;
+import com.example.myapplication.view.PageChild.HomeDetailUserActivityPage;
 import com.example.myapplication.viewmodel.HomeModels;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.squareup.picasso.Picasso;
@@ -133,7 +132,7 @@ public class HomeTabRecycler {
                     holder.imageAvt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context, HomeDetailUser.class);
+                            Intent intent = new Intent(context, HomeDetailUserActivityPage.class);
                             intent.putExtra("data", new UserParcelable(user));
                             startActivity(context, intent, Bundle.EMPTY);
                         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.PageMain.HomeActivityPage"
+    tools:context=".view.PageChild.HomeUpdateInfoActivityPage"
     android:orientation="vertical"
     android:background="@color/primary"
     android:id="@+id/idScreen"
@@ -19,7 +19,164 @@
         android:background="#fff"
         android:id="@+id/idBody">
         <!-- Content !-->
-        <include layout="@layout/app_component_content_home_updateinfo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/idContent"
+            android:orientation="vertical"
+            android:gravity="top|center"
+            android:padding="20dp"
+            >
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xin chào,"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/primary"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hoàn thiện hồ sơ của bạn để tiếp tục"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Họ và tên"
+                />
+            <com.example.myapplication.view.Component.Input
+                android:id="@+id/idPageHomeUpdateInfoInputFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập họ và tên"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:text="Biệt danh (nếu có)"
+                android:textColor="@color/black"
+                />
+            <com.example.myapplication.view.Component.Input
+                android:id="@+id/idPageHomeUpdateInfoAlias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập biệt danh"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:text="Giới tính"
+                android:textColor="@color/black"
+                />
+            <RadioGroup
+                android:id="@+id/idPageHomeUpdateInfoInputGender"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/idPageHomeUpdateInfoInputGenderMale"
+                    style="@style/RadioButtonStyle"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:text="Nam"
+                    android:textColor="@color/black"
+                    android:button="@drawable/radiobutton_primary"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/user_infouser_2"
+                    />
+
+                <RadioButton
+                    android:id="@+id/idPageHomeUpdateInfoInputGenderFeMale"
+                    style="@style/RadioButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nữ"
+                    android:textColor="@color/black"
+                    android:button="@drawable/radiobutton_primary"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/user_infouser_2"
+                    />
+            </RadioGroup>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:text="Ngày sinh"
+                android:textColor="@color/black"
+                />
+            <com.example.myapplication.view.Component.InputDate
+                android:id="@+id/idPageHomeUpdateInfoInputDob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                >
+            </com.example.myapplication.view.Component.InputDate>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:text="Email"
+                android:textColor="@color/black"
+                />
+            <com.example.myapplication.view.Component.Input
+                android:id="@+id/idPageHomeUpdateInfoEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nhập email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                >
+            </com.example.myapplication.view.Component.Input>
+            <com.example.myapplication.view.Component.ButtonPrimary
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hoàn tất"
+                android:onClick="update"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="right|bottom"
+                android:orientation="vertical"
+                android:layout_gravity="right"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng xuất"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp"
+                    android:id="@+id/idPageHomeUpdateInfo"
+                    />
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="1dp"
+                    android:background="@color/blue"
+                    />
+            </LinearLayout>
+        </LinearLayout>
         <!-- Loading !-->
         <include layout="@layout/app_component_loading" />
     </FrameLayout>

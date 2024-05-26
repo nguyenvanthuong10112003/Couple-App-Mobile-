@@ -1,21 +1,38 @@
 package com.example.myapplication.view.BasePage;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
+import com.example.myapplication.service.system_service.ForeGroundService;
 import com.example.myapplication.view.Component.Alert;
 import com.example.myapplication.view.Interface.SystemLoading;
-
 public class BasePage extends AppCompatActivity
         implements SystemLoading {
     protected ViewGroup content;
@@ -29,6 +46,9 @@ public class BasePage extends AppCompatActivity
     protected ActivityResultLauncher<Intent> activityLaucher;
     protected View header;
     protected View footer;
+    //Ban phim
+    protected InputMethodManager imm;
+    private final int PERMISSION_POST_NOTIFICATION = 100;
     protected void init() {
         getData();
         setting();
@@ -41,6 +61,7 @@ public class BasePage extends AppCompatActivity
         body = findViewById(R.id.idBody);
         header = findViewById(R.id.idHeader);
         footer = findViewById(R.id.idFooter);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         alert = new Alert(getBaseContext(), new Runnable() {
             @Override
             public void run() {
@@ -53,8 +74,8 @@ public class BasePage extends AppCompatActivity
             }
         });
         activityLaucher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if(result.getResultCode() == RESULT_OK)
-                resert();
+            if(result.getResultCode() == RESULT_OK && result.getData() != null)
+                resume(result.getData());
         });
     }
 
@@ -62,11 +83,11 @@ public class BasePage extends AppCompatActivity
     protected void setting() {
         //Hide thanh điều hướng
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         body.addView(alert);
         if (findViewById(R.id.header_backPage) != null)
             findViewById(R.id.header_backPage).setOnClickListener(new View.OnClickListener() {
@@ -161,7 +182,11 @@ public class BasePage extends AppCompatActivity
     public Alert getAlert() {
         return alert;
     }
-    protected void resert() {
-
+    protected void resume(Intent intent) {}
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, ForeGroundService.class);
+        startService(intent);
+        super.onDestroy();
     }
 }

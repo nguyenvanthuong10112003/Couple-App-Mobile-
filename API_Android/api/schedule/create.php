@@ -39,12 +39,16 @@ try {
         exit(0);
     }
 }
+$context = new ScheduleRepository();
+if ($context->findByTime($couple->id, $scheduleAdd->time)) {
+    echo json_encode(new RequestAPI(RequestAPI::$ERROR, "Thời gian này đã có lịch trình trước đó rồi", null), JSON_UNESCAPED_UNICODE);
+    exit(0);
+}
 if (isset($_POST[ScheduleAttr::content[KeyTable::name]]))
     $scheduleAdd->content = $_POST[ScheduleAttr::content[KeyTable::name]];
 $scheduleAdd->coupleId = $couple->id;
 $scheduleAdd->senderId = $currentUser->id;
 $scheduleAdd->timeSend = new DateTime();
-$context = new ScheduleRepository();
 $result = $context->create($scheduleAdd);
 if ($result) 
     echo json_encode(new RequestAPI(RequestAPI::$SUCCESS, "Thành công", $result), JSON_UNESCAPED_UNICODE);

@@ -1,7 +1,14 @@
 package com.example.myapplication.view.BasePage;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
@@ -30,6 +37,34 @@ public class BasePageAuthActivity extends BasePage {
         dataLocalManager.removeDatas(DefineSharedPreferencesUserAuthen.PATH);
         toPage(LoginActivity.class);
     }
+    protected void requirePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Thông báo");
+                builder.setMessage("Cho phép ứng dụng thông báo");
+                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                        intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("Không", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } catch (Exception e) {}
+        }
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        requirePermission();
+    }
+
     @Override
     protected void setting() {
         super.setting();
@@ -80,5 +115,7 @@ public class BasePageAuthActivity extends BasePage {
     protected void onChangCurrentUser() {}
     protected void startLoad() {}
     protected void whenSuccess() {}
-    protected void whenServerError() {}
+    protected void whenServerError() {
+        Toast.makeText(this, "Có lỗi xảy ra, vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
+    }
 }

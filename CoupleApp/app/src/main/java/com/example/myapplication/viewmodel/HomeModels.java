@@ -39,6 +39,11 @@ public class HomeModels extends BaseModels {
                     listUser.setValue(list);
             });
     }
+    public void initCouple() {
+        if (userLogin.getValue() == null)
+            return;
+        coupleRepository.getCoupleMutableLiveData().observeForever(this.couple::setValue);
+    }
     public void setCoupleLive(Couple couple) {this.couple.setValue(couple);}
     public HomeModels(@NonNull Application application) {
         super(application);
@@ -55,10 +60,6 @@ public class HomeModels extends BaseModels {
         return listUser;
     }
     public MutableLiveData<Couple> getLiveCouple() {
-        if (userLogin.getValue() == null)
-            return null;
-        if (couple.getValue() == null)
-            coupleRepository.getCoupleMutableLiveData().observeForever(this.couple::setValue);
         return couple;
     }
     public MutableLiveData<FarewellRequest> getFarewellRequestLiveData() {return farewellRequestRepository.getFarewellRequestMutableLiveData();}

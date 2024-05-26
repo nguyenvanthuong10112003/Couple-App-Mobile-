@@ -1,5 +1,6 @@
 package com.example.myapplication.view.PageMain;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -46,7 +47,7 @@ public class UserActivityPage extends BasePageMainActivity {
     }
 
     @Override
-    protected void resert() {
+    protected void resume(Intent intent) {
         baseModels.getUserLogin();
     }
 

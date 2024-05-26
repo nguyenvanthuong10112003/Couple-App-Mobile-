@@ -24,7 +24,150 @@
             <!-- Loading !-->
             <include layout="@layout/app_component_loading" />
             <!-- Content !-->
-            <include layout="@layout/app_component_content_user"/>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/idContent"
+                tools:ignore="UselessParent">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    tools:ignore="UselessParent"
+                    android:id="@+id/ibBtnToPageInfoUser"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/idImgAvatarTabUser"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="avatar"
+                        app:shapeAppearanceOverlay="@style/circle"
+                        android:src="@drawable/account_svgrepo_com"
+                        android:layout_marginEnd="15dp"
+                        />
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/idTextNameUser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:fontFamily="sans-serif"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:textStyle="italic"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Xem thông tin cá nhân"
+                            android:fontFamily="sans-serif"
+                            android:textSize="14sp"
+                            android:textColor="@color/secondary"
+                            />
+                    </LinearLayout>
+                </TableRow>
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="@color/secondary_active"
+                    android:alpha="0.1"
+                    />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    tools:ignore="UselessParent"
+                    android:id="@+id/ibBtnToPageSecurity"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="avatar"
+                        app:shapeAppearanceOverlay="@style/circle"
+                        android:src="@drawable/account_svgrepo_com"
+                        android:layout_marginEnd="15dp"
+                        />
+                    <TextView
+                        android:layout_gravity="start|center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tài khoản và bảo mật"
+                        android:fontFamily="sans-serif"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        />
+                </TableRow>
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/secondary_active"
+                    android:alpha="0.1"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    />
+                <TableRow android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    tools:ignore="UselessParent"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="avatar"
+                        app:shapeAppearanceOverlay="@style/circle"
+                        android:src="@drawable/icons8_setting"
+                        android:layout_marginEnd="15dp"
+                        />
+                    <TextView
+                        android:layout_gravity="start|center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cài đặt"
+                        android:fontFamily="sans-serif"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        />
+                </TableRow>
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/secondary_active"
+                    android:alpha="0.1"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="70dp"
+                    />
+                <TableRow
+                    android:id="@+id/ibBtnToLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    tools:ignore="UselessParent"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:textAlignment="center"
+                        android:layout_marginEnd="15dp"
+                        android:contentDescription="avatar"
+                        android:src="@drawable/icons8_logout_100"
+                        app:shapeAppearanceOverlay="@style/circle"
+                        android:paddingStart="10dp"/>
+                    <TextView
+                        android:layout_gravity="start|center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Đăng xuất"
+                        android:fontFamily="sans-serif"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        />
+                </TableRow>
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/secondary_active"
+                    android:alpha="0.1"
+                    />
+            </TableLayout>
         </FrameLayout>
         <!-- Footer !-->
         <include layout="@layout/app_component_footer" />

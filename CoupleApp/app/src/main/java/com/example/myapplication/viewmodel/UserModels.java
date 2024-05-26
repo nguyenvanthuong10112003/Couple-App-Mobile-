@@ -28,6 +28,10 @@ public class UserModels extends BaseModels {
         if (userLogin.getValue() != null) {
             String token = HttpHelper.createToken(userLogin.getValue().getToken());
             userRepository = new UserRepository(application, token);
+            userRepository.getLiveUser().observeForever(user -> {
+                if (user != null)
+                    userMutableLiveData.setValue(user);
+            });
         }
         return userLogin;
     }
@@ -37,10 +41,7 @@ public class UserModels extends BaseModels {
     }
 
     public void initUser() {
-        userRepository.getUser().observeForever(user -> {
-            if (user != null)
-                userMutableLiveData.setValue(user);
-        });
+        userRepository.initUser();
     }
 
     public MutableLiveData<User> getUser() {

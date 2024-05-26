@@ -35,7 +35,7 @@ public class UserRepository extends BaseRepository {
             public void onResponse(Call<ResponseAPI> call, Response<ResponseAPI> response) {
                 stateLoading.setValue(false);
                 if (!response.isSuccessful())
-                    Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                 else
                     responseAPI.setValue(response.body());
             }
@@ -48,7 +48,11 @@ public class UserRepository extends BaseRepository {
         });
     }
 
-    public MutableLiveData<User> getUser() {
+    public MutableLiveData<User> getLiveUser() {
+        return userMutableLiveData;
+    }
+
+    public void initUser() {
         stateLoading.setValue(true);
         userApiService.mind()
             .enqueue(new Callback<ResponseAPI<User>>() {
@@ -56,7 +60,7 @@ public class UserRepository extends BaseRepository {
                 public void onResponse(Call<ResponseAPI<User>> call, Response<ResponseAPI<User>> response) {
                     stateLoading.setValue(false);
                     if (!response.isSuccessful())
-                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
+                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                     else {
                         responseAPI.setValue(response.body());
                         userMutableLiveData.setValue(response.body().getData());
@@ -68,7 +72,6 @@ public class UserRepository extends BaseRepository {
                     responseAPI.setValue(new ResponseAPI(ResponseAPI.SERVER_ERROR));
                 }
             });
-        return userMutableLiveData;
     }
 
     public void edit(MultipartBody.Part image, RequestBody fullName,
@@ -82,7 +85,7 @@ public class UserRepository extends BaseRepository {
                 public void onResponse(Call<ResponseAPI<User>> call, Response<ResponseAPI<User>> response) {
                     stateLoading.setValue(false);
                     if (!response.isSuccessful())
-                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
+                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                     else {
                         if (response.body().getStatus() == ResponseAPI.SUCCESS && response.body().getData() != null)
                             userMutableLiveData.setValue(response.body().getData());

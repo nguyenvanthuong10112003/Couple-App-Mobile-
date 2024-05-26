@@ -117,4 +117,30 @@ class ScheduleRepository
         } catch(Exception $e) {}
         return null;
     }
+    public function findByTime(int $coupleId, DateTime $time) {
+        $this->sql = "SELECT * FROM $this->tableName WHERE " . CoupleAttr::id[KeyTable::name] . " = $coupleId AND " . 
+            ScheduleAttr::time[KeyTable::name] . " = '" . $time->format("Y-m-d H:i:s") . "'";
+        try {
+            $stmt = $this->pdo->prepare($this->sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if (count($result) == 0)
+                return null;
+            $row = $result[0];
+            $schedule = new Schedule();
+            $schedule->id = $row[ScheduleAttr::id[KeyTable::name]];
+            $schedule->senderId = $row[ScheduleAttr::senderId[KeyTable::name]];
+            $schedule->coupleId = $row[ScheduleAttr::coupleId[KeyTable::name]];
+            $schedule->time = new DateTime($row[ScheduleAttr::time[KeyTable::name]]);
+            $schedule->timeSend = new DateTime($row[ScheduleAttr::timeSend[KeyTable::name]]);
+            $schedule->timeFeedBack = $row[ScheduleAttr::timeFeedBack[KeyTable::name]] 
+                ? new DateTime($row[ScheduleAttr::timeFeedBack[KeyTable::name]]) : null;
+            $schedule->isAccept = $row[ScheduleAttr::isAccept[KeyTable::name]];
+            $schedule->title = $row[ScheduleAttr::title[KeyTable::name]];
+            $schedule->content = $row[ScheduleAttr::content[KeyTable::name]];
+            $schedule->isDeleted = $row[ScheduleAttr::deleted[KeyTable::name]];
+            return $schedule;
+        } catch(Exception $e) {}
+        return null;
+    }
 }

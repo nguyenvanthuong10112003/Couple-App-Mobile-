@@ -33,7 +33,7 @@ public class MessageRepository extends BaseRepository {
                 public void onResponse(Call<ResponseAPI<ListMessage>> call, Response<ResponseAPI<ListMessage>> response) {
                     stateLoading.setValue(false);
                     if (!response.isSuccessful())
-                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT);
+                        Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                     else {
                         if (response.body().getStatus() == ResponseAPI.SUCCESS)
                             liveListMessage.setValue(response.body().getData());

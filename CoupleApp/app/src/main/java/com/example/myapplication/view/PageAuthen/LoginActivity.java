@@ -1,6 +1,7 @@
 package com.example.myapplication.view.PageAuthen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -48,15 +49,16 @@ public class LoginActivity extends BasePage {
         broad = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         accountApiService = ApiService.createApiService(this, AccountApiService.class);
     }
+
     @Override
-    protected void resert() {
-        super.resert();
+    protected void resume(Intent intent) {
         messageErrorUsername.setText("");
         messageErrorPassword.setText("");
         messageError.setText("");
     }
+
     public void login(View view) {
-        resert();
+        resume(null);
         String username = inputUsername.getText().toString();
         String password = inputPassword.getText().toString();
         if (!StringHelper.isValidUsername(username))

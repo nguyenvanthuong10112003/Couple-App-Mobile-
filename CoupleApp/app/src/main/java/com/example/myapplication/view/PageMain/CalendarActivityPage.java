@@ -1,18 +1,13 @@
 package com.example.myapplication.view.PageMain;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
@@ -21,29 +16,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.myapplication.R;
 import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.view.Component.CalendarTable;
 import com.example.myapplication.view.Component.CustomSpinnerAdapter;
-import com.example.myapplication.helper.SlideByMarginAnimation;
 import com.example.myapplication.view.BasePage.BasePageMainActivity;
-import com.example.myapplication.view.Component.InputDateTime;
+import com.example.myapplication.view.PageChild.CalendarAddScheduleActivityPage;
 import com.example.myapplication.view.ViewPager.CalendarViewPagerAdapter;
 import com.example.myapplication.viewmodel.CalendarModels;
 import com.google.android.material.tabs.TabLayout;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,13 +50,6 @@ public class CalendarActivityPage extends BasePageMainActivity {
     ImageButton btnTangNam;
     LocalDate currentSelected;
     View btnAddSchedule;
-    View layoutMain;
-    View layoutAddSchedule;
-    View btnCancel;
-    View btnAccept;
-    EditText inputTitle;
-    EditText inputContent;
-    InputDateTime inputDateTime;
     boolean isOpenCal = true;
     ImageButton btnToggle;
     @Override
@@ -93,13 +74,6 @@ public class CalendarActivityPage extends BasePageMainActivity {
         btnTangNam = findViewById(R.id.idPageCalendarBtnUpYear);
         baseModels = new ViewModelProvider(this).get(CalendarModels.class);
         btnAddSchedule = findViewById(R.id.idPageCalendarBtnAddSchedule);
-        layoutMain = findViewById(R.id.idPageCalendarLayoutMain);
-        layoutAddSchedule = findViewById(R.id.idPageCalendarLayoutAddSchedule);
-        btnCancel = findViewById(R.id.idPageCalAddScheBtnCancel);
-        btnAccept = findViewById(R.id.idPageCalAddScheBtnAdd);
-        inputTitle = findViewById(R.id.idPageCalendarInputTitle);
-        inputDateTime = findViewById(R.id.idPageCalendarInputTime);
-        inputContent = findViewById(R.id.idPageCalendarInputContent);
         btnToggle = findViewById(R.id.idPageCalendarBtnToggle);
     }
 
@@ -116,7 +90,7 @@ public class CalendarActivityPage extends BasePageMainActivity {
     protected void setting() {
         super.setting();
         List<String> data = new ArrayList<String>(
-                Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+            Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
         );
         adapter = new CustomSpinnerAdapter(this, R.layout.spinner_item_selected, data);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -196,24 +170,11 @@ public class CalendarActivityPage extends BasePageMainActivity {
                     tabLayout.getTabAt(0).setText(DateHelper.toDateString(currentSelected));
                 } catch (Exception e) {}
         });
-        //content.setVisibility(View.INVISIBLE);
         btnAddSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toogleLayout();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toogleLayout();
-            }
-        });
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                step = 2;
-                startLoad();
+                Intent intent = new Intent(CalendarActivityPage.this, CalendarAddScheduleActivityPage.class);
+                activityLaucher.launch(intent);
             }
         });
         btnToggle.setOnClickListener(new View.OnClickListener() {
@@ -291,24 +252,13 @@ public class CalendarActivityPage extends BasePageMainActivity {
         step = 1;
         startLoad();
     }
-    private void toogleLayout() {
-        if (layoutMain.getVisibility() == View.INVISIBLE) {
-            layoutMain.setVisibility(View.VISIBLE);
-            layoutAddSchedule.setVisibility(View.INVISIBLE);
-        } else {
-            layoutAddSchedule.setVisibility(View.VISIBLE);
-            layoutMain.setVisibility(View.INVISIBLE);
-            inputContent.setText("");
-            inputTitle.setText("");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                try {
-                    inputDateTime.setDate(currentSelected);
-                } catch(Exception e){
-                    LocalDate date = LocalDate.now();
-                    inputDateTime.setDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
-                }
-            }
-        }
+
+    @Override
+    protected void resume(Intent dt) {
+        try {
+            if (dt != null)
+                ((CalendarModels) baseModels).setNewSchedule(dt.getParcelableExtra("new-schedule"));
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -317,27 +267,6 @@ public class CalendarActivityPage extends BasePageMainActivity {
             case 1:
                 ((CalendarModels) baseModels).initLiveList();
                 break;
-            case 2: {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    LocalDateTime time = inputDateTime.getValueTime();
-                    if (time == null) {
-                        alert.show("Thời gian không hợp lệ");
-                        return;
-                    }
-                    if (LocalDateTime.now().compareTo(time) > 0) {
-                        alert.show("Không thể thêm lịch trình ở quá khứ");
-                        return;
-                    }
-                    String title = inputTitle.getText().toString();
-                    if (title == null || title.isEmpty()) {
-                        alert.show("Tiêu để không được để trống");
-                        return;
-                    }
-                    String content = inputContent.getText().toString();
-                    ((CalendarModels) baseModels).add(title,
-                        DateHelper.toDateTimeServe(time), content);
-                }
-            }
         }
     }
 
@@ -348,12 +277,9 @@ public class CalendarActivityPage extends BasePageMainActivity {
             case 1: {
                 setupTabLayout();
                 content.setVisibility(View.VISIBLE);
-                step = -1;
             } break;
-            case 2: {
-                toogleLayout();
-            }
         }
+        step = -1;
     }
 
     private void setupTabLayout() {
@@ -375,8 +301,8 @@ public class CalendarActivityPage extends BasePageMainActivity {
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
+            super.onPageSelected(position);
+            tabLayout.getTabAt(position).select();
             }
         });
         viewPager2.setOffscreenPageLimit(1);

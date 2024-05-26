@@ -52,8 +52,6 @@ public class ApiService {
 
         return retrofit.create(interfaceName);
     }
-
-
     private static Interceptor getInterceptor(Context context, String token) {
         return new Interceptor() {
             @NonNull
