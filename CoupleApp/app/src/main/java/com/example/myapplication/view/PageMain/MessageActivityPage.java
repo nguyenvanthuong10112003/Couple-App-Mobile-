@@ -35,6 +35,7 @@ public class MessageActivityPage extends BasePageMainActivity {
     TextView textNameEnemy;
     RecyclerView recyclerView;
     MessageAdapter messageAdapter;
+    TextView textNoAny;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,7 @@ public class MessageActivityPage extends BasePageMainActivity {
         imageAvatarEnemy = findViewById(R.id.idPageMessageImageAvatar);
         textNameEnemy = findViewById(R.id.idPageMessageTextName);
         messageAdapter = new MessageAdapter(this);
+        textNoAny = findViewById(R.id.idPageMessageTextNoAny);
     }
 
     @Override
@@ -142,11 +144,11 @@ public class MessageActivityPage extends BasePageMainActivity {
             case 1: {
                 ((MessageModels) baseModels).getLiveListMessage()
                     .observe(this, list -> {
-                        if (list != null && list.getMessages() != null && list.getMessages().size() > 0) {
-                            messageAdapter.setData(list);
-                            findViewById(R.id.idPageMessageTextNoAny).setVisibility(View.INVISIBLE);
-                        } else
-                            findViewById(R.id.idPageMessageTextNoAny).setVisibility(View.VISIBLE);
+                        messageAdapter.setData(list);
+                        if (list != null && list.getMessages() != null && list.getMessages().size() > 0)
+                            textNoAny.setVisibility(View.INVISIBLE);
+                        else
+                            textNoAny.setVisibility(View.VISIBLE);
                         if (content.getVisibility() == View.INVISIBLE)
                             content.setVisibility(View.VISIBLE);
                         if (list != null && list.getCouple() != null && list.getCouple().getEnemy() != null) {
@@ -211,6 +213,8 @@ public class MessageActivityPage extends BasePageMainActivity {
                 }
                 messageAdapter.addData(message);
                 inputMessage.setText("");
+                if (textNoAny.getVisibility() == View.VISIBLE)
+                    textNoAny.setVisibility(View.INVISIBLE);
             }
         }
         step = -1;

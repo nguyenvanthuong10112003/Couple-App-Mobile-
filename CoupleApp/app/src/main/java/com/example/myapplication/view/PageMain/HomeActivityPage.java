@@ -2,6 +2,7 @@ package com.example.myapplication.view.PageMain;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,11 @@ import com.example.myapplication.view.PageChild.HomeUpdateInfoActivityPage;
 import com.example.myapplication.viewmodel.HomeModels;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.gson.JsonSerializer;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
 import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -68,7 +73,6 @@ public class HomeActivityPage extends BasePageMainActivity {
         super.getData();
         toolBarMenu = findViewById(R.id.idPageHomeToolBarMenu);
         hinhAnhTraiTim = findViewById(R.id.idPageHomeImageHinhTraiTim);
-        baseModels = new ViewModelProvider(this).get(HomeModels.class);
         imageDoiPhuong = findViewById(R.id.idPageHomeLayoutCoupleImageDoiPhuong);
         textTenDoiPhuong = findViewById(R.id.idPageHomeLayoutCoupleTenDoiPhuong);
         iconGioiTinhDoiPhuong = findViewById(R.id.idPageHomeLayoutCoupleGioiTinhDoiPhuong);
@@ -81,6 +85,7 @@ public class HomeActivityPage extends BasePageMainActivity {
         textNgayBatDau = findViewById(R.id.idPageHomeLayoutCoupleNgayBatDau);
         textNgayYeuNhau = findViewById(R.id.idPageHomeLayoutCoupleSoNgayYeuNhau);
         listTime = findViewById(R.id.idPageHomeListTime);
+        baseModels = new ViewModelProvider(this).get(HomeModels.class);
     }
     @Override
     protected void setting() {
@@ -132,10 +137,11 @@ public class HomeActivityPage extends BasePageMainActivity {
 
     @Override
     protected void resume(Intent data) {
-        baseModels.getUserLogin();
-        try {
-            if (data != null)
-                ((HomeModels) baseModels).setCoupleLive(data.getParcelableExtra("new-couple"));
+        if (userLogin.getFullName() == null || userLogin.getFullName().isEmpty())
+            baseModels.getUserLogin();
+        else try {
+            Couple couple = data.getParcelableExtra("new-couple");
+            ((HomeModels) baseModels).setCoupleLive(couple);
         } catch (Exception e) {}
     }
 

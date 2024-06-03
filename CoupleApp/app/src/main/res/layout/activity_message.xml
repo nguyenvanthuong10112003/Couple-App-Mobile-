@@ -145,6 +145,7 @@
                                 android:background="@drawable/background_box_inputmessage"
                                 android:textSize="16sp"
                                 android:layout_weight="9"
+                                android:maxLines="4"
                                 />
                             <TextView
                                 android:id="@+id/idPageMessageBtnSendMessage"

@@ -42,17 +42,14 @@ public class UserParcelable extends User implements Parcelable {
         dest.writeInt(getId());
         dest.writeString(getFullName());
         dest.writeString(getAlias());
-        if (getDob() != null)
-            dest.writeParcelable(new TimeParcelable(getDob()), flags);
+        dest.writeParcelable(new TimeParcelable(getDob()), flags);
         dest.writeByte((byte) (getGender() ? 1 : 0));
         dest.writeString(getLifeStory());
         dest.writeString(getUsername());
         dest.writeString(getEmail());
-        if (getTimeCreate() != null)
-            dest.writeParcelable(new TimeParcelable(getTimeCreate()), flags);
+        dest.writeParcelable(new TimeParcelable(getTimeCreate()), flags);
         dest.writeString(getUrlAvatar());
-        if (getInvite() != null)
-            dest.writeParcelable(new DateInvitationParcelable(getInvite()), flags);
+        dest.writeParcelable(new DateInvitationParcelable(getInvite()), flags);
     }
 
     @Override

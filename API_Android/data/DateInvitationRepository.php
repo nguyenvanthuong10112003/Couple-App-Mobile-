@@ -110,7 +110,6 @@ class DateInvitationRepository
             return true;
         } catch(Exception $e) {
             $this->pdo->rollBack();
-            echo $e->getMessage();
         }   
         return false;
     }

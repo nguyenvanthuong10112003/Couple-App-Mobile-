@@ -94,10 +94,6 @@
                                     android:textStyle="normal"
                                     android:textColor="@color/black"
                                     />
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="20dp"
-                                    android:src="@drawable/ic_baseline_eye_2_32" />
                             </LinearLayout>
                         </LinearLayout>
                         <com.example.myapplication.view.Component.ButtonPrimary

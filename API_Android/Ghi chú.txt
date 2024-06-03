@@ -1,0 +1,1 @@
+Mở terminal tại đây và chạy lệnh composer update

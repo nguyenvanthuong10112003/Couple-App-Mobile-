@@ -152,10 +152,10 @@ public class InputDate extends LinearLayout {
                         try {
                             int yearInt = Integer.parseInt(inputYear.getText().toString());
                             if (yearInt <= 0)
-                                inputYear.setText(LocalDate.now().getYear());
+                                inputYear.setText(String.valueOf(LocalDate.now().getYear()));
                             checkInput();
                         } catch (Exception e) {
-                            inputYear.setText(LocalDate.now().getYear());
+                            inputYear.setText(String.valueOf(LocalDate.now().getYear()));
                         } finally {
                             inputYear.setSelection(inputYear.getText().length());
                         }

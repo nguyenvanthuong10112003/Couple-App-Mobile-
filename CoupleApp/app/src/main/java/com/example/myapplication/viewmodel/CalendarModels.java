@@ -1,16 +1,19 @@
 package com.example.myapplication.viewmodel;
 
 import android.app.Application;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.myapplication.helper.DateHelper;
 import com.example.myapplication.helper.HttpHelper;
 import com.example.myapplication.model.Schedule;
 import com.example.myapplication.model.UserLogin;
 import com.example.myapplication.repository.ScheduleRepository;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 
 public class CalendarModels extends BaseModels {
@@ -31,6 +34,44 @@ public class CalendarModels extends BaseModels {
             if (scheduleRepository == null) {
                 scheduleRepository = new ScheduleRepository(application, token);
                 scheduleRepository.getLiveNewSchedule().observeForever(newSchedule -> this.newSchedule.setValue(newSchedule));
+                scheduleRepository.getLiveDeletedSchedule().observeForever(id -> {
+                    if (id == null || liveListSchedule.getValue() == null)
+                        return;
+                    LinkedList<Schedule> list = liveListSchedule.getValue();
+                    for (int i = 0; i < list.size(); i++)
+                        if (liveListSchedule.getValue().get(i).getId() == id) {
+                            liveListSchedule.getValue().remove(i);
+                            return;
+                        }
+                    liveListSchedule.setValue(list);
+                });
+                newSchedule.observeForever(newSchedule -> {
+                    if (newSchedule != null) {
+                        if (liveListSchedule.getValue() == null) {
+                            LinkedList<Schedule> list = new LinkedList<>();
+                            list.add(newSchedule);
+                            liveListSchedule.setValue(list);
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            boolean added = false;
+                            LinkedList<Schedule> list = liveListSchedule.getValue();
+                            for (int i = 0; i < list.size(); i++) {
+                                if (DateHelper.toLocalDateTime(list.get(i).getTime())
+                                        .until(DateHelper.toLocalDateTime(newSchedule.getTime()), ChronoUnit.SECONDS) <= 0) {
+                                    if (newSchedule.getId() == list.get(i).getId())
+                                        added = true;
+                                    if (!added) {
+                                        list.add(i, newSchedule);
+                                        added = true;
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!added)
+                                list.add(newSchedule);
+                            liveListSchedule.setValue(list);
+                        }
+                    }
+                });
             }
         }
         return this.userLogin;
@@ -56,7 +97,6 @@ public class CalendarModels extends BaseModels {
     public void add(String title, String time, String content) {
         scheduleRepository.add(title, time, content);
     }
-
     public void delete(int id) {
         scheduleRepository.delete(id);
     }

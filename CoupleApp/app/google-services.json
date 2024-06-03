@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1068764849462",
+    "firebase_url": "https://couple-app-22fda-default-rtdb.firebaseio.com",
+    "project_id": "couple-app-22fda",
+    "storage_bucket": "couple-app-22fda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068764849462:android:c94aa529bec59ec17f3f97",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3RNYfohv1xIgTSUz_GViZ-gHnLEmZV0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

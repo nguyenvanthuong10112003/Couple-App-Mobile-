@@ -27,7 +27,7 @@ if (!$couple) {
 $context = new FarewellRequestRepository();
 $farewell = $context->get($couple->id);
 if ($farewell) {
-    echo json_encode(new RequestAPI(RequestAPI::$ERROR, "Bạn đã gửi yêu cầu trước đó, vui lòng đợi phản hồi", null), JSON_UNESCAPED_UNICODE);
+    echo json_encode(new RequestAPI(RequestAPI::$ERROR, "Bạn hoặc đối phương đã gửi yêu cầu trước đó, vui lòng đợi phản hồi", null), JSON_UNESCAPED_UNICODE);
     exit(0);   
 }
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +29,9 @@ public class HomeModels extends BaseModels {
     private DateInvitationRepository dateInvitationRepository;
     private CoupleRepository coupleRepository;
     private FarewellRequestRepository farewellRequestRepository;
-    private final MutableLiveData<LinkedList<User>> listUser = new MutableLiveData<>();
-    private final MutableLiveData<String> nameSearch = new MutableLiveData<>();
-    private final MutableLiveData<Couple> couple = new MutableLiveData<>();
-    private final MutableLiveData<FarewellRequest> farewellRequestMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<LinkedList<User>> listUser = new MutableLiveData<>();
+    private MutableLiveData<String> nameSearch = new MutableLiveData<>();
+    private MutableLiveData<Couple> couple = new MutableLiveData<>();
     public void initLiveList() {
         if (listUser.getValue() == null || listUser.getValue().size() == 0)
             dateInvitationRepository.getListUser().observeForever(list -> {

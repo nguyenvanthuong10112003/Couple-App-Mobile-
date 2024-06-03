@@ -66,29 +66,11 @@ public class CalendarTabRecycler {
             this.context = context;
             this.calendarModels = calendarModels;
             this.calendarModels.getUserLogin().observeForever(userLogin -> this.currentUser = userLogin);
-            this.calendarModels.getLiveList().observeForever(list -> setData(list));
-            this.calendarModels.getLiveNewSchedule().observeForever(newSchedule -> addData(newSchedule));
+            this.calendarModels.getLiveList().observeForever(this::setData);
         }
         protected void setData(LinkedList<Schedule> list) {
             this.list = list;
             notifyDataSetChanged();
-        }
-        protected void addData(Schedule newSchedule) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-                return;
-            if (list == null) {
-                list = new ArrayList<>(Arrays.asList(newSchedule));
-                return;
-            }
-            for (int i = 0; i < list.size(); i++)
-            {
-                if (DateHelper.toLocalDateTime(list.get(i).getTime())
-                    .until(DateHelper.toLocalDateTime(newSchedule.getTime()), ChronoUnit.SECONDS) < 0) {
-                    list.add(i, newSchedule);
-                    notifyItemInserted(i);
-                    return;
-                }
-            }
         }
         @Override
         public int getItemViewType(int position) {
@@ -220,15 +202,6 @@ public class CalendarTabRecycler {
             } catch (Exception e) {}
         }
 
-        protected void addData(Schedule newSchedule) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-                return;
-            LocalDate day = DateHelper.toLocalDate(newSchedule.getTime());
-            if (day == null || currentDate == null || currentDate.until(day, ChronoUnit.DAYS) != 0)
-                return;
-            super.addData(newSchedule);
-        }
-
         @Override
         public void onBindViewHolder(@NonNull ScheduleViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
@@ -254,17 +227,6 @@ public class CalendarTabRecycler {
                 } catch (Exception e) {}
                 notifyDataSetChanged();
             }
-        }
-
-        @Override
-        protected void addData(Schedule newSchedule) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-                return;
-            LocalDateTime time = DateHelper.toLocalDateTime(newSchedule.getTime());
-            LocalDateTime now = LocalDateTime.now();
-            if (time == null || now == null || now.until(time, ChronoUnit.SECONDS) <= 0)
-                return;
-            super.addData(newSchedule);
         }
     }
 }

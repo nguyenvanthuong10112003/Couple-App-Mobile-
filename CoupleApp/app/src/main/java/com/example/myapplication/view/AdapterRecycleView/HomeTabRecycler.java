@@ -5,6 +5,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,13 +72,11 @@ public class HomeTabRecycler {
             });
             homeModels.getNameSearch().observeForever(nameSearch -> {
                 this.nameSearch = nameSearch;
-                try {
-                    list = homeModels.getLiveList().getValue().stream().filter(item -> item.getFullName().startsWith(nameSearch)).collect(Collectors.toList());
-                } catch (Exception e) {}
-                notifyDataSetChanged();
+                this.setData(homeModels.getLiveList().getValue());
             });
         }
         protected void setData(LinkedList<User> list) {
+            if (list == null) return;
             if (nameSearch == null || nameSearch.isEmpty())
                 this.list = list;
             else
@@ -123,11 +122,14 @@ public class HomeTabRecycler {
                     if (user.getUrlAvatar() != null && !user.getUrlAvatar().isEmpty()) {
                         Picasso.get().load(user.getUrlAvatar()).into(holder.imageAvt);
                     } else {
+                        holder.imageAvt.setImageBitmap(null);
+                        holder.imageAvt.setBackground(null);
+                        holder.imageAvt.setImageDrawable(null);
+                        holder.imageAvt.setImageURI(null);
                         holder.imageAvt.setBackgroundResource(R.drawable.account_svgrepo_com);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    holder.imageAvt.setBackgroundResource(R.drawable.account_svgrepo_com);
                 } finally {
                     holder.imageAvt.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -191,8 +193,8 @@ public class HomeTabRecycler {
                        (nameSearch == null || item.getFullName().startsWith(nameSearch)))
                        this.list.add(item);
                });
+               notifyDataSetChanged();
             } catch (Exception e) {}
-            notifyDataSetChanged();
         }
     }
     public static class AddedAdapter extends Adapter {
@@ -210,8 +212,8 @@ public class HomeTabRecycler {
                         (nameSearch == null || item.getFullName().startsWith(nameSearch)))
                         this.list.add(item);
                 });
+                notifyDataSetChanged();
             } catch (Exception e) {}
-            notifyDataSetChanged();
         }
     }
 }

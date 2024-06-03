@@ -8,7 +8,7 @@ class EmailService
 {
     private const host = 'smtp.gmail.com';
     private const username = 'thuong0206066@huce.edu.vn';
-    private const password = 'Thuong2003@';
+    private const password = 'Namdinh1@';
     private const smtpAuth = true;
     private const port = 465;
     private const smtpSecure = PHPMailer::ENCRYPTION_SMTPS;
@@ -20,6 +20,14 @@ class EmailService
     private const isHtml = true;
     public static function sendEmailAuthenCode($toEmail, $nameUser, $code) {
         $mail = new PHPMailer(true);
+        $mail->SMTPSecure = 'ssl';
+        $mail->SMTPOptions = array (
+            'ssl' => array (
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
         try {
             $mail->setLanguage('vi');
             $mail->SMTPDebug = EmailService::smtpDebug;                      

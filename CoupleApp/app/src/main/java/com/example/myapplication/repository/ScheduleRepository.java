@@ -15,6 +15,7 @@ import com.example.myapplication.service.api_service.ApiService;
 import com.example.myapplication.service.api_service.ScheduleApiService;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 
 import retrofit2.Call;
@@ -25,10 +26,12 @@ public class ScheduleRepository extends BaseRepository {
     private ScheduleApiService scheduleApiService;
     private MutableLiveData<LinkedList<Schedule>> liveListSchedule = new MutableLiveData<>();
     private MutableLiveData<Schedule> liveNewSchedule = new MutableLiveData<>();
+    private MutableLiveData<Integer> liveDeletedSchedule = new MutableLiveData<>();
     public ScheduleRepository(Context context, String token) {
         super(context);
         scheduleApiService = ApiService.createApiServiceWithAuth(context,ScheduleApiService.class ,token);
     }
+    public MutableLiveData<Integer> getLiveDeletedSchedule() {return liveDeletedSchedule;}
     public MutableLiveData<Schedule> getLiveNewSchedule() {
         return liveNewSchedule;
     }
@@ -67,16 +70,8 @@ public class ScheduleRepository extends BaseRepository {
                         Toast.makeText(context, "Get an error", Toast.LENGTH_SHORT).show();
                     else {
                         responseAPI.setValue(response.body());
-                        if (response.body().getStatus() == ResponseAPI.SUCCESS) {
-                            LinkedList<Schedule> list = liveListSchedule.getValue();
-                            for (int i = 0; i < list.size(); i++)
-                                if (list.get(i).getId() == id)
-                                {
-                                    list.remove(i);
-                                    break;
-                                }
-                            liveListSchedule.setValue(list);
-                        }
+                        if (response.body().getStatus() == ResponseAPI.SUCCESS)
+                            liveDeletedSchedule.setValue(id);
                     }
                 }
 
